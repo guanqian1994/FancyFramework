@@ -75,8 +75,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application\ffAppImpl.h" />
-    <ClInclude Include="ffGlobal.h" />
+    <ClInclude Include="Application\ffObjectImpl.h" />
+    <ClInclude Include="ff.h" />
+    <ClInclude Include="ffBase.h" />
     <ClInclude Include="ffApp.h" />
+    <ClInclude Include="ffManager.h" />
+    <ClInclude Include="ffResource.h" />
     <ClInclude Include="ffScene.h" />
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,10 @@ ffApp *ffApp::Create(fFloat width, fFloat height, fcStrW title, fBool windowed, 
     return pApp;
 }
 
+void ffApp::Destroy(ffApp *pffApp) {
+    delete pffApp;
+}
+
 ffAppImpl::ffAppImpl(fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
     if (FCYFAILED(CreateF2DEngineAndInit
         (F2DVERSION, fcyRect(50, 50, width, height),

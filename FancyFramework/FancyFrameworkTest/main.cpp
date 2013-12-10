@@ -1,6 +1,7 @@
 #include "f2d.h"
-#include "ffApp.h"
+#include "ff.h"
 
 int main() {
-    ffApp *app = ffApp::Create(800, 600);
+    ffApp *pApp = ffApp::Create(800, 600);
+    ffApp::Destroy(pApp);
 }
