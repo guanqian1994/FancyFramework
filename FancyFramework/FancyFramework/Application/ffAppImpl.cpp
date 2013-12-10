@@ -14,10 +14,6 @@ ffApp *ffApp::Create(fFloat width, fFloat height, fcStrW title, fBool windowed, 
     return pApp;
 }
 
-void ffApp::Destroy(ffApp *pffApp) {
-    delete pffApp;
-}
-
 ffAppImpl::ffAppImpl(fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
     if (FCYFAILED(CreateF2DEngineAndInit
         (F2DVERSION, fcyRect(50, 50, width, height),
@@ -38,7 +34,7 @@ ffAppImpl::ffAppImpl(fFloat width, fFloat height, fcStrW title, fBool windowed, 
     m_pEngine->Run(F2DENGTHREADMODE_MULTITHREAD);
 }
 
-fBool ffAppImpl::OnUpdate(fDouble ElapsedTime, f2dFPSController *pFPSController, f2dMsgPump *pMsgPump) {
+fBool ffAppImpl::OnUpdate(fDouble elapsedTime, f2dFPSController *pFPSController, f2dMsgPump *pMsgPump) {
     f2dMsg tMsg;
     while (FCYOK(pMsgPump->GetMsg(&tMsg)))
     {
@@ -90,7 +86,7 @@ fBool ffAppImpl::OnUpdate(fDouble ElapsedTime, f2dFPSController *pFPSController,
     return true;
 }
 
-fBool ffAppImpl::OnRender(fDouble ElapsedTime, f2dFPSController *pFPSController) {
+fBool ffAppImpl::OnRender(fDouble elapsedTime, f2dFPSController *pFPSController) {
     m_pDev->Clear();
     return true;
 }

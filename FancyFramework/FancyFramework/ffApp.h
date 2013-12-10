@@ -3,7 +3,6 @@
 struct ffApp {
     static ffApp *Get();
     static ffApp *Create(fFloat width, fFloat height, fcStrW title = L"ffApp", fBool windowed = true, fBool vsync = false, F2DAALEVEL aa = F2DAALEVEL::F2DAALEVEL_NONE);
-    static void Destroy(ffApp *pffApp);
 };
 
 struct ffDrawer {
