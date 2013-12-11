@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application\ffAppImpl.h" />
+    <ClInclude Include="Application\ffDrawerImpl.h" />
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffApp.h" />
     <ClInclude Include="ffManager.h" />
@@ -83,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ffAppImpl.cpp" />
+    <ClCompile Include="Application\ffDrawerImpl.cpp" />
+    <ClCompile Include="ffApp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

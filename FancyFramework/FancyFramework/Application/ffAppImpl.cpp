@@ -1,11 +1,23 @@
 #include "ffAppImpl.h"
+
+#include <cassert>
+#include "ffDrawerImpl.h"
 #include "fcyException.h"
 
-// create in public method
-ffApp *ffApp::Create(fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
+ffApp &ffApp::Get() {
+    return ffAppImpl::Get();
+}
+
+ffAppImpl *ffAppImpl::s_singleton = NULL;
+
+ffAppImpl &ffAppImpl::Get() {
+    return *s_singleton;
+}
+
+ffApp *ffApp::Create(ffAppEventListener *pListener, fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
     ffApp *pApp = NULL;
     try {
-        pApp = new ffAppImpl(width, height, title, windowed, vsync, aa);
+        pApp = new ffAppImpl(pListener, width, height, title, windowed, vsync, aa);
     }
     catch (const fcyException &exc) {
         MessageBoxA(NULL, exc.GetSrc(), "exception", 0);
@@ -14,7 +26,8 @@ ffApp *ffApp::Create(fFloat width, fFloat height, fcStrW title, fBool windowed, 
     return pApp;
 }
 
-ffAppImpl::ffAppImpl(fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
+ffAppImpl::ffAppImpl(ffAppEventListener *pListener, fFloat width, fFloat height, fcStrW title, fBool windowed, fBool vsync, F2DAALEVEL aa) {
+    assert(!s_singleton);
     if (FCYFAILED(CreateF2DEngineAndInit
         (F2DVERSION, fcyRect(50, 50, width, height),
         title, windowed, vsync, aa, this, &m_pEngine))) {
@@ -29,9 +42,56 @@ ffAppImpl::ffAppImpl(fFloat width, fFloat height, fcStrW title, fBool windowed, 
     m_pDev->AttachListener(this);
     m_pEngine->GetInputSys()->CreateKeyboard(-1, false, &m_pInputKeyboard);
 
-    m_pEngine->GetMainWindow()->SetVisiable(true);
+    m_pDrawer = new ffDrawerImpl(m_pEngine->GetRenderer(), m_pGraph);
 
+    s_singleton = this;
+
+    m_eventListener = pListener;
+
+    if (m_eventListener)
+        m_eventListener->OnCreate(this);
+}
+
+ffAppImpl::~ffAppImpl() {
+
+    if (m_eventListener)
+        m_eventListener->OnDestroy(this);
+
+    FCYSAFEKILL(m_pDrawer);
+    FCYSAFEKILL(m_pInputKeyboard);
+    FCYSAFEKILL(m_pGraph);
+    FCYSAFEKILL(m_pEngine);
+
+    s_singleton = NULL;
+}
+
+f2dEngine *ffAppImpl::GetEngine() {
+    return m_pEngine;
+}
+
+f2dRenderDevice *ffAppImpl::GetRenderDevice() {
+    return m_pDev;
+}
+
+f2dGraphics2D *ffAppImpl::GetRenderGraphics2D() {
+    return m_pGraph;
+}
+
+fcyVec2 ffAppImpl::GetScreenSize() {
+    return fcyVec2(m_pDev->GetBufferWidth(), m_pDev->GetBufferHeight());
+}
+
+void ffAppImpl::SetBackgroundColor(const fcyColor &color) {
+    m_backgroundColor = color;
+}
+
+void ffAppImpl::Run() {
+    m_pEngine->GetMainWindow()->SetVisiable(true);
     m_pEngine->Run(F2DENGTHREADMODE_MULTITHREAD);
+}
+
+void ffAppImpl::ScreenClear() {
+    m_pDev->Clear(m_backgroundColor);
 }
 
 fBool ffAppImpl::OnUpdate(fDouble elapsedTime, f2dFPSController *pFPSController, f2dMsgPump *pMsgPump) {
@@ -83,10 +143,17 @@ fBool ffAppImpl::OnUpdate(fDouble elapsedTime, f2dFPSController *pFPSController,
             break;
         }
     }
+
+    if (m_eventListener)
+        m_eventListener->OnUpdate(elapsedTime);
+
     return true;
 }
 
 fBool ffAppImpl::OnRender(fDouble elapsedTime, f2dFPSController *pFPSController) {
-    m_pDev->Clear();
+    
+    if (m_eventListener)
+        m_eventListener->OnRender(elapsedTime, m_pGraph);
+
     return true;
 }
