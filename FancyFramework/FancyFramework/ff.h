@@ -12,5 +12,5 @@
 #define FF_VER_REVISION 1
 #define FF_VER_SUBREVISION 0
 
-#include <f2d.h>
 #include "ffApp.h"
+#include "ffScene.h"

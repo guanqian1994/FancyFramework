@@ -39,12 +39,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Extern\fancy2D;..\FancyFramework;..\Extern\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\Extern\fancy2D;..\FancyFramework;..\Extern\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -75,6 +75,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SceneA.cpp" />
+    <ClCompile Include="SceneB.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SceneA.h" />
+    <ClInclude Include="SceneB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
