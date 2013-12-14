@@ -74,8 +74,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application\ffAppImpl.h" />
-    <ClInclude Include="Application\ffDrawerImpl.h" />
+    <ClInclude Include="App\ffAppImpl.h" />
+    <ClInclude Include="App\ffDrawerImpl.h" />
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffApp.h" />
     <ClInclude Include="ffManager.h" />
@@ -83,8 +83,8 @@
     <ClInclude Include="ffScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application\ffAppImpl.cpp" />
-    <ClCompile Include="Application\ffDrawerImpl.cpp" />
+    <ClCompile Include="App\ffAppImpl.cpp" />
+    <ClCompile Include="App\ffDrawerImpl.cpp" />
     <ClCompile Include="ffApp.cpp" />
     <ClCompile Include="ffScene.cpp" />
   </ItemGroup>
