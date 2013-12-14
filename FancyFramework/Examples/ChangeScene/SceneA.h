@@ -23,19 +23,14 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   ff.h
+///        file :   SceneA.h
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#define FF_VERSION "0.0.1"
-#define FF_VERNUM 0x0010
-
-#define FF_VER_MAJOR 0
-#define FF_VER_MINOR 0
-#define FF_VER_REVISION 1
-#define FF_VER_SUBREVISION 0
-
-#include "ffApp.h"
-#include "ffScene.h"
+class SceneA : public ffScene {
+public:
+    bool OnMsg(const f2dMsg &pMsg);
+    void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph);
+};

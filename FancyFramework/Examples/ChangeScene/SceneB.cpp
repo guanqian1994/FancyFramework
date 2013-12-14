@@ -23,19 +23,49 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   ff.h
+///        file :   SceneB.cpp
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include <windows.h>
+#include "f2d.h"
+#include "ff.h"
+#include "SceneA.h"
+#include "SceneB.h"
 
-#define FF_VERSION "0.0.1"
-#define FF_VERNUM 0x0010
+bool SceneB::OnMsg(const f2dMsg &pMsg) {
+    switch (pMsg.Type)
+    {
+    case F2DMSG_WINDOW_ONKEYUP:
+        switch (pMsg.Param1)
+        {
+        case 'C':
+            ffApp::Get().AddScene(new SceneA);
+            ffApp::Get().NextScene();
+            break;
+        case 'W':
+            ffApp::Get().SetWindow(800, 600, true);
+            break;
+        case 'F':
+            ffApp::Get().SetWindow(800, 600, false);
+            break;
+        default:
+            return false;
+        }
+        return true;
+        return true;
+    default:
+        return false;
+    }
+}
 
-#define FF_VER_MAJOR 0
-#define FF_VER_MINOR 0
-#define FF_VER_REVISION 1
-#define FF_VER_SUBREVISION 0
+void SceneB::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+    ffDrawer &drawer = ffDrawer::Get();
 
-#include "ffApp.h"
-#include "ffScene.h"
+    drawer.SetColor(ffColors::Black);
+    drawer.DrawWString(fcyVec2(70, 70),
+        L"This is scene B.\n\n"
+        L"Press W key , set to window mode\n"
+        L"Press F key , set to full screen mode\n\n"
+        L"Press C key , go to scene A");
+}
