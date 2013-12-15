@@ -34,7 +34,8 @@
 #include "SceneB.h"
 
 bool SceneA::OnMsg(const f2dMsg &pMsg) {
-    ffApp &pApp = ffApp::Get();
+    ffApp &app = ffApp::Get();
+    ffMouse &mouse = ffMouse::Get();
 
     switch (pMsg.Type)
     {
@@ -42,11 +43,11 @@ bool SceneA::OnMsg(const f2dMsg &pMsg) {
         switch (pMsg.Param1)
         {
         case 'C':
-            pApp.AddScene(new SceneB);
-            pApp.NextScene();
+            app.AddScene(new SceneB);
+            app.NextScene();
             break;
         case 'M':
-            pApp.MouseLock(!pApp.IsEnabledMouseLock());
+            mouse.Limit(!mouse.IsLimit());
             break;
         default:
             return false;
@@ -63,6 +64,6 @@ void SceneA::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
     drawer.SetColor(ffColors::Black);
     drawer.DrawWString(fcyVec2(70, 70),
         L"This is scene A.\n"
-        L"Press M key , enable/disable mouse lock\n\n"
+        L"Press M key , enable/disable mouse limit\n\n"
         L"Press C key , go to scene B");
 }

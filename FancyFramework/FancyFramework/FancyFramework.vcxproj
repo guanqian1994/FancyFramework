@@ -78,15 +78,19 @@
     <ClInclude Include="App\ffDrawerImpl.h" />
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffApp.h" />
-    <ClInclude Include="ffManager.h" />
-    <ClInclude Include="ffResource.h" />
+    <ClInclude Include="ffInput.h" />
+    <ClInclude Include="ffRes.h" />
     <ClInclude Include="ffScene.h" />
+    <ClInclude Include="Input\ffKeyboardImpl.h" />
+    <ClInclude Include="Input\ffMouseImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\ffAppImpl.cpp" />
     <ClCompile Include="App\ffDrawerImpl.cpp" />
     <ClCompile Include="ffApp.cpp" />
     <ClCompile Include="ffScene.cpp" />
+    <ClCompile Include="Input\ffKeyboardImpl.cpp" />
+    <ClCompile Include="Input\ffMouseImpl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

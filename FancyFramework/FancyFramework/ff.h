@@ -38,4 +38,6 @@
 #define FF_VER_SUBREVISION 0
 
 #include "ffApp.h"
+#include "ffInput.h"
 #include "ffScene.h"
+#include "ffRes.h"

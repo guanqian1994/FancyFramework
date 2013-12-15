@@ -54,10 +54,6 @@ public:
     bool OnMsg(const f2dMsg &pMsg) {
         switch (pMsg.Type)
         {
-        case F2DMSG_WINDOW_ONMOUSEMOVE:
-            m_mousePos.x = (fInt)pMsg.Param1;
-            m_mousePos.y = (fInt)pMsg.Param2;
-            return true;
         case F2DMSG_WINDOW_ONKEYUP:
             switch (pMsg.Param1)
             {
@@ -88,18 +84,18 @@ public:
 
     void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
         ffDrawer &drawer = ffDrawer::Get();
+        ffMouse &mouse = ffMouse::Get();
 
         drawer.SetColor(ffColors::White);
         drawer.DrawSolidRectangle(fcyRect(50, 50, 750, 550));
         drawer.SetColor(ffColors::Black);
-        drawer.DrawSolidRectangle(fcyRect(m_mousePos.x, m_mousePos.y, m_mousePos.x + 20, m_mousePos.y + 20));
+        drawer.DrawSolidRectangle(fcyRect(mouse.GetPos(), mouse.GetPos() + fcyVec2(20, 20)));
 
         drawer.DrawWString(fcyVec2(70, 70), 
             L"Hello, world!\n\nPress W key , set to window mode\nPress F key , set to full screen mode");
     }
 private:
     ffApp *m_pApp;
-    fcyVec2 m_mousePos;
 };
 
 int main() {
