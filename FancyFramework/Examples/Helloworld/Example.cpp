@@ -94,6 +94,7 @@ public:
         drawer.DrawWString(fcyVec2(70, 70), 
             L"Hello, world!\n\nPress W key , set to window mode\nPress F key , set to full screen mode");
     }
+
 private:
     ffApp *m_pApp;
 };

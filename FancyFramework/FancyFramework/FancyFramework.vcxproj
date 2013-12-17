@@ -83,6 +83,8 @@
     <ClInclude Include="ffScene.h" />
     <ClInclude Include="Input\ffKeyboardImpl.h" />
     <ClInclude Include="Input\ffMouseImpl.h" />
+    <ClInclude Include="Res\ffResImpl.h" />
+    <ClInclude Include="Res\ffResTypesImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\ffAppImpl.cpp" />
@@ -91,6 +93,8 @@
     <ClCompile Include="ffScene.cpp" />
     <ClCompile Include="Input\ffKeyboardImpl.cpp" />
     <ClCompile Include="Input\ffMouseImpl.cpp" />
+    <ClCompile Include="Res\ffResImpl.cpp" />
+    <ClCompile Include="Res\ffResTypesImpl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
