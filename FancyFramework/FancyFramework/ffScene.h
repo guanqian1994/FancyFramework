@@ -81,7 +81,7 @@ public:
     /// @brief 移除场景层
     void RemoveLayer(ffLayer *pLayer);
 
-    /// @brief 清楚所有场景层
+    /// @brief 清除所有场景层
     void ClearLayers();
 
     /// @brief 将场景层移至最前
