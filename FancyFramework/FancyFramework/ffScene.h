@@ -76,22 +76,22 @@ public:
     void SetCreated();
 
     /// @brief 添加场景层
-    void AddLayer(ffLayer *pLayer);
+    void AddLayer(ffLayer *pLayer, fInt group = 0);
 
     /// @brief 移除场景层
-    void RemoveLayer(ffLayer *pLayer);
+    void RemoveLayer(ffLayer *pLayer, fInt group = 0);
 
     /// @brief 清除所有场景层
-    void ClearLayers();
+    void ClearLayers(fInt group = 0);
 
     /// @brief 将场景层移至最前
-    void BringLayerToFront(ffLayer *pLayer);
+    void BringLayerToFront(ffLayer *pLayer, fInt group = 0);
 
     /// @brief 将场景层移至最后
-    void BringLayerToBack(ffLayer *pLayer);
+    void BringLayerToBack(ffLayer *pLayer, fInt group = 0);
 
     /// @brief 检查是否存在制定场景层
-    fBool HasLayer(ffLayer *pLayer);
+    fBool HasLayer(ffLayer *pLayer, fInt group = 0);
 
 protected:
 
