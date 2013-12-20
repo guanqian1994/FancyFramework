@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Extern\Visual Leak Detector\lib\Win32;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
@@ -54,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>FancyFramework_d.lib;fancy2D_d.lib;fancylib_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FancyFramework_d.lib;fancy2D_d.lib;fancylib_d.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,12 +75,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SceneA.cpp" />
-    <ClCompile Include="SceneB.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SceneA.h" />
-    <ClInclude Include="SceneB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

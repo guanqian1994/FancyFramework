@@ -41,7 +41,8 @@ typedef std::vector<ffLayer*> ffLayers;
 class ffScene {
 public:
     ffScene();
-    ~ffScene();
+
+    virtual ~ffScene();
 
     /// @brief 被创建时调用
     virtual void OnCreate();
@@ -78,8 +79,17 @@ public:
     /// @brief 添加场景层
     void AddLayer(ffLayer *pLayer, fInt group = 0);
 
+    /// @brief 添加场景层到图层最后（渲染顺序最先）
+    void AddLayerBack(ffLayer *pLayer, fInt group = 0);
+
+    /// @brief 添加一个场景层组
+    fInt AddLayerGroup();
+
     /// @brief 移除场景层
     void RemoveLayer(ffLayer *pLayer, fInt group = 0);
+
+    /// @brief 移除场景层组
+    void RemoveLayerGroup(fInt group = 0);
 
     /// @brief 清除所有场景层
     void ClearLayers(fInt group = 0);
@@ -89,13 +99,26 @@ public:
 
     /// @brief 将场景层移至最后
     void BringLayerToBack(ffLayer *pLayer, fInt group = 0);
+    
+    /// @brief 获得场景层数量
+    fInt GetLayerCount(fInt group = 0) const;
+
+    /// @brief 获得场景层组数量
+    fInt GetLayerGroupCount() const;
+
+    /// @brief 获得场景图层在组的索引
+    /// @return 不在此组则返回 -1
+    fInt GetLayerIndex(ffLayer *pLayer, fInt group = 0) const;
+
+    /// @brief 从索引获得指定图层
+    ffLayer *GetLayerOfIndex(fInt index, fInt group = 0);
 
     /// @brief 检查是否存在制定场景层
-    fBool HasLayer(ffLayer *pLayer, fInt group = 0);
+    fBool HasLayer(ffLayer *pLayer, fInt group = 0) const;
 
 protected:
 
 private:
     fBool m_created;
-    ffLayers m_layers
+    ffLayers m_layers;
 };

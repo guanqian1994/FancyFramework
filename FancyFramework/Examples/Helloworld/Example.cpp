@@ -37,12 +37,12 @@
 class ExampleApp : public ffAppEventListener {
 public:
     ExampleApp() {
-        m_pApp = ffApp::Create(this, WINDOW_WIDTH, WINDOW_HWIGHT);
-        if (m_pApp)
-            m_pApp->Run();
+        ffApp::Run(this, WINDOW_WIDTH, WINDOW_HWIGHT);
     }
 
     void OnCreate(ffApp *pApp) {
+        m_pApp = pApp;
+
         ShowCursor(FALSE);
         pApp->SetBackgroundColor(ffColors::Brown);
     }
@@ -87,11 +87,11 @@ public:
         ffMouse &mouse = ffMouse::Get();
 
         drawer.SetColor(ffColors::White);
-        drawer.DrawSolidRectangle(fcyRect(50, 50, 750, 550));
+        drawer.DrawSolidRectangle(pGraph, fcyRect(50, 50, 750, 550));
         drawer.SetColor(ffColors::Black);
-        drawer.DrawSolidRectangle(fcyRect(mouse.GetPos(), mouse.GetPos() + fcyVec2(20, 20)));
+        drawer.DrawSolidRectangle(pGraph, fcyRect(mouse.GetPos(), mouse.GetPos() + fcyVec2(20, 20)));
 
-        drawer.DrawWString(fcyVec2(70, 70), 
+        drawer.DrawWString(pGraph, fcyVec2(70, 70),
             L"Hello, world!\n\nPress W key , set to window mode\nPress F key , set to full screen mode");
     }
 

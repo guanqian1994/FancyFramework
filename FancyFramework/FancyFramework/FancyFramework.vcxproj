@@ -79,6 +79,7 @@
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffAction.h" />
     <ClInclude Include="ffApp.h" />
+    <ClInclude Include="ffReport.h" />
     <ClInclude Include="ffInput.h" />
     <ClInclude Include="ffLayer.h" />
     <ClInclude Include="ffRes.h" />

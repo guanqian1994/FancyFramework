@@ -63,7 +63,7 @@ void SceneB::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
     ffDrawer &drawer = ffDrawer::Get();
 
     drawer.SetColor(ffColors::Black);
-    drawer.DrawWString(fcyVec2(70, 70),
+    drawer.DrawWString(pGraph, fcyVec2(70, 70),
         L"This is scene B.\n\n"
         L"Press W key , set to window mode\n"
         L"Press F key , set to full screen mode\n\n"
