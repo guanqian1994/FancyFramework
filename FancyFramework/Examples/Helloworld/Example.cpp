@@ -37,7 +37,7 @@
 class ExampleApp : public ffAppEventListener {
 public:
     ExampleApp() {
-        ffApp::Run(this, WINDOW_WIDTH, WINDOW_HWIGHT);
+        ffApp::Run(this, 800, 600, L"Helloworld - FancyFramework " FF_VERSION_W);
     }
 
     void OnCreate(ffApp *pApp) {

@@ -30,6 +30,7 @@
 #pragma once
 
 #define FF_VERSION "0.0.1"
+#define FF_VERSION_W L"0.0.1"
 #define FF_VERNUM 0x0010
 
 #define FF_VER_MAJOR 0
