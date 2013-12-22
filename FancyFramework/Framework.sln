@@ -59,6 +59,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFImagesetEditor", "Tools\FFImagesetEditor\FFImagesetEditor.csproj", "{0CDE6F86-1101-43C3-B2A6-939A5D9E7D23}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawLogo", "Examples\DrawLogo\DrawLogo.vcxproj", "{56168C50-8487-470F-AF50-5B2453ABC73F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{823088CA-22B2-448C-973C-035980773730} = {823088CA-22B2-448C-973C-035980773730}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

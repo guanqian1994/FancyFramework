@@ -47,10 +47,6 @@ public:
         pApp->SetBackgroundColor(ffColors::Brown);
     }
 
-    void OnDestroy(ffApp *pApp) {
-
-    }
-
     bool OnMsg(const f2dMsg &pMsg) {
         switch (pMsg.Type)
         {
@@ -76,10 +72,6 @@ public:
         default:
             return false;
         }
-    }
-
-    void OnUpdate(fDouble elapsedTime) {
-
     }
 
     void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {

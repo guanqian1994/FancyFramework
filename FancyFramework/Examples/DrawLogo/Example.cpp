@@ -30,10 +30,6 @@ public:
         m_pSprite->Release();
     }
 
-    void OnRemoveScene(ffScene *pScene) {
-        delete pScene;
-    }
-
     bool OnMsg(const f2dMsg &pMsg) {
         switch (pMsg.Type)
         {
