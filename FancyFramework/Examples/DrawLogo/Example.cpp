@@ -23,7 +23,7 @@ public:
 
         m_endRotation = 0.f;
 
-        m_pSprite = ffSprite::Create(L"Res\\logo_256.png");
+        m_pSprite = ffSprite::Create(L"Res\\logo.png");
     }
 
     void OnDestroy(ffApp *pApp) {
