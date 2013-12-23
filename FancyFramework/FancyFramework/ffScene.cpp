@@ -29,14 +29,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "ffScene.h"
 
+#include "ffLayer.h"
 
 ffScene::ffScene()
     : m_created(false) {
 }
 
 ffScene::~ffScene() {
-    if (IsCreated())
-        OnDestroy();
+    
+}
+
+void ffScene::Release() {
+    if (this->IsCreated()) {
+        this->OnDestroy();
+    }
+    delete this;
 }
 
 void ffScene::OnCreate() {
@@ -59,10 +66,113 @@ bool ffScene::HandleMsg(const f2dMsg &pMsg) {
     return this->OnMsg(pMsg);
 }
 
+void ffScene::HandleUpdate(fDouble elapsedTime) {
+    this->OnUpdate(elapsedTime);
+}
+
+void ffScene::HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+    this->OnRender(elapsedTime, pGraph);
+}
+
 bool ffScene::IsCreated() {
     return m_created;
 }
 
 void ffScene::SetCreated() {
     m_created = true;
+}
+
+void ffScene::AddLayer(ffLayer *pLayer, fInt group) {
+    m_layerGroup[group].push_back(pLayer);
+    pLayer->SetParent(this, group);
+}
+
+void ffScene::AddLayerBack(ffLayer *pLayer, fInt group) {
+    m_layerGroup[group].insert(m_layerGroup[group].begin(), pLayer);
+}
+
+fInt ffScene::AddLayerGroup() {
+    m_layerGroup.push_back(ffLayers());
+    return m_layerGroup.size() - 1;
+}
+
+void ffScene::RemoveLayer(ffLayer *pLayer, fInt group) {
+    ffLayers::iterator result = 
+        std::find(m_layerGroup[group].begin(), m_layerGroup[group].end(), pLayer);
+
+    if (result != m_layerGroup[group].end()) {
+        m_layerGroup[group].erase(result);
+        pLayer->SetParent(NULL, -1);
+    }
+}
+
+void ffScene::RemoveLayerGroup(fInt group) {
+    if (m_layerGroup.size() == 1) {
+        this->ClearLayers(0);
+    } else {
+        ffLayerGroup::iterator removePos = (m_layerGroup.begin() += group);
+        m_layerGroup.erase(removePos);
+    }
+}
+
+void ffScene::ClearLayers(fInt group) {
+    ffLayers::iterator iter = m_layerGroup[group].begin();
+
+    for (; iter != m_layerGroup[group].end(); ++iter) {
+        (*iter)->SetParent(NULL, -1);
+    }
+
+    m_layerGroup[group].clear();
+}
+
+void ffScene::BringLayerToFront(ffLayer *pLayer, fInt group) {
+    ffLayers::iterator result =
+        std::find(m_layerGroup[group].begin(), m_layerGroup[group].end(), pLayer);
+
+    if (result != m_layerGroup[group].end()) {
+        ffLayer *pLayerTemp = *result;
+        m_layerGroup[group].erase(result);
+        m_layerGroup[group].insert(m_layerGroup[group].begin(), pLayerTemp);
+    }
+}
+
+void ffScene::BringLayerToBack(ffLayer *pLayer, fInt group) {
+    ffLayers::iterator result =
+        std::find(m_layerGroup[group].begin(), m_layerGroup[group].end(), pLayer);
+
+    if (result != m_layerGroup[group].end()) {
+        ffLayer *pLayerTemp = *result;
+        m_layerGroup[group].erase(result);
+        m_layerGroup[group].push_back(pLayerTemp);
+    }
+}
+
+fInt ffScene::GetLayerCount(fInt group) const {
+    return m_layerGroup[group].size();
+}
+
+fInt ffScene::GetLayerGroupCount() const {
+    return m_layerGroup.size();
+}
+
+fInt ffScene::GetLayerIndex(ffLayer *pLayer, fInt group) const {
+    ffLayers::const_iterator begin = m_layerGroup[group].begin();
+    ffLayers::const_iterator result =
+        std::find(m_layerGroup[group].begin(), m_layerGroup[group].end(), pLayer);
+
+    if (result == m_layerGroup[group].end())
+        return -1;
+
+    return result - begin;
+}
+
+ffLayer *ffScene::GetLayerOfIndex(fInt index, fInt group) {
+    return m_layerGroup[group][index];
+}
+
+fBool ffScene::HasLayer(ffLayer *pLayer, fInt group) const {
+    ffLayers::const_iterator result =
+        std::find(m_layerGroup[group].begin(), m_layerGroup[group].end(), pLayer);
+
+    return result != m_layerGroup[group].end();
 }

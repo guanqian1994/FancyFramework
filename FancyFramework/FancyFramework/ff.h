@@ -41,4 +41,5 @@
 #include "ffApp.h"
 #include "ffInput.h"
 #include "ffScene.h"
+#include "fflayer.h"
 #include "ffRes.h"

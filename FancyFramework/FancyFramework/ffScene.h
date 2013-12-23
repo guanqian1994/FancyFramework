@@ -34,6 +34,7 @@
 
 class ffLayer;
 typedef std::vector<ffLayer*> ffLayers;
+typedef std::vector<ffLayers> ffLayerGroup;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief 场景类
@@ -43,6 +44,8 @@ public:
     ffScene();
 
     virtual ~ffScene();
+
+    virtual void Release();
 
     /// @brief 被创建时调用
     virtual void OnCreate();
@@ -65,10 +68,10 @@ public:
     bool HandleMsg(const f2dMsg &pMsg);
 
     /// @brief 处理更新
-    bool HandleUpdate(fDouble elapsedTime);
+    void HandleUpdate(fDouble elapsedTime);
 
     /// @brief 处理渲染
-    bool HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph);
+    void HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph);
 
     /// @brief 当前场景是否已经被创建
     bool IsCreated();
@@ -89,6 +92,7 @@ public:
     void RemoveLayer(ffLayer *pLayer, fInt group = 0);
 
     /// @brief 移除场景层组
+    /// @note 如果当场景层组只存在一个时效果与 ffScene::ClearLayers 效果相同
     void RemoveLayerGroup(fInt group = 0);
 
     /// @brief 清除所有场景层
@@ -115,10 +119,9 @@ public:
 
     /// @brief 检查是否存在制定场景层
     fBool HasLayer(ffLayer *pLayer, fInt group = 0) const;
-
 protected:
 
 private:
     fBool m_created;
-    ffLayers m_layers;
+    ffLayerGroup m_layerGroup;
 };
