@@ -30,9 +30,11 @@
 #include "ffScene.h"
 
 #include "ffLayer.h"
+#include "ffReport.h"
 
 ffScene::ffScene()
     : m_created(false) {
+    ffAssert(AddLayerGroup() == 0);
 }
 
 ffScene::~ffScene() {
@@ -52,6 +54,10 @@ void ffScene::OnCreate() {
 void ffScene::OnDestroy() {
 }
 
+void ffScene::OnRemoveScene(ffScene *pScene) {
+    pScene->Release();
+}
+
 bool ffScene::OnMsg(const f2dMsg &pMsg) {
     return false;
 }
@@ -63,15 +69,34 @@ void ffScene::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
 }
 
 bool ffScene::HandleMsg(const f2dMsg &pMsg) {
+    for (int i = 0; i != m_layerGroup.size(); ++i) {
+        for (int j = 0; j != m_layerGroup[i].size(); ++j) {
+            if (m_layerGroup[i][j]->OnMsg(pMsg) == true)
+                return true;
+        }
+    }
+
     return this->OnMsg(pMsg);
 }
 
 void ffScene::HandleUpdate(fDouble elapsedTime) {
     this->OnUpdate(elapsedTime);
+
+    for (int i = 0; i != m_layerGroup.size(); ++i) {
+        for (int j = 0; j != m_layerGroup[i].size(); ++j) {
+            m_layerGroup[i][j]->OnUpdate(elapsedTime);
+        }
+    }
 }
 
 void ffScene::HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
     this->OnRender(elapsedTime, pGraph);
+
+    for (int i = 0; i != m_layerGroup.size(); ++i) {
+        for (int j = 0; j != m_layerGroup[i].size(); ++j) {
+            m_layerGroup[i][j]->OnRender(elapsedTime, pGraph);
+        }
+    }
 }
 
 bool ffScene::IsCreated() {
@@ -103,23 +128,27 @@ void ffScene::RemoveLayer(ffLayer *pLayer, fInt group) {
     if (result != m_layerGroup[group].end()) {
         m_layerGroup[group].erase(result);
         pLayer->SetParent(NULL, -1);
+        pLayer->Release();
     }
 }
 
 void ffScene::RemoveLayerGroup(fInt group) {
     if (m_layerGroup.size() == 1) {
-        this->ClearLayers(0);
+        this->ClearLayerGroup(0);
     } else {
+        ClearLayerGroup(group);
+
         ffLayerGroup::iterator removePos = (m_layerGroup.begin() += group);
         m_layerGroup.erase(removePos);
     }
 }
 
-void ffScene::ClearLayers(fInt group) {
+void ffScene::ClearLayerGroup(fInt group) {
     ffLayers::iterator iter = m_layerGroup[group].begin();
 
     for (; iter != m_layerGroup[group].end(); ++iter) {
         (*iter)->SetParent(NULL, -1);
+        (*iter)->Release();
     }
 
     m_layerGroup[group].clear();

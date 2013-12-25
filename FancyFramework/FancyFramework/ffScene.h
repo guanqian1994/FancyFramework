@@ -53,6 +53,9 @@ public:
     /// @brief 被销毁时调用
     virtual void OnDestroy();
 
+    /// @bridef 场景层被移除时调用
+    virtual void OnRemoveScene(ffScene *pScene);
+
     /// @brief 有消息需要处理时被调用
     virtual bool OnMsg(const f2dMsg &pMsg);
 
@@ -95,13 +98,14 @@ public:
     /// @note 如果当场景层组只存在一个时效果与 ffScene::ClearLayers 效果相同
     void RemoveLayerGroup(fInt group = 0);
 
-    /// @brief 清除所有场景层
-    void ClearLayers(fInt group = 0);
+    /// @brief 清除指定场景层组
+    void ClearLayerGroup(fInt group = 0);
 
-    /// @brief 将场景层移至最前
+    /// @brief 将场景层移至渲染队列最前
+    /// @warning 渲染队列最前表示在整个绘制结果的“后面”
     void BringLayerToFront(ffLayer *pLayer, fInt group = 0);
 
-    /// @brief 将场景层移至最后
+    /// @brief 将场景层移至染队列最后
     void BringLayerToBack(ffLayer *pLayer, fInt group = 0);
     
     /// @brief 获得场景层数量
