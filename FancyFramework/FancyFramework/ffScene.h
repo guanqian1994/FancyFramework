@@ -123,7 +123,6 @@ public:
 
     /// @brief 检查是否存在制定场景层
     fBool HasLayer(ffLayer *pLayer, fInt group = 0) const;
-protected:
 
 private:
     fBool m_created;

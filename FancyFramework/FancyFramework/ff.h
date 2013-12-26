@@ -43,3 +43,4 @@
 #include "ffScene.h"
 #include "fflayer.h"
 #include "ffRes.h"
+#include "ffConstant.h"

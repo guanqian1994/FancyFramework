@@ -30,7 +30,7 @@
 #include "ffScene.h"
 
 #include "ffLayer.h"
-#include "ffReport.h"
+#include "ffAssert.h"
 
 ffScene::ffScene()
     : m_created(false) {
