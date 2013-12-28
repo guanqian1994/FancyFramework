@@ -129,7 +129,7 @@ public:
 class ExampleApp : public ffAppEventListener {
 public:
     ExampleApp() {
-        ffApp::Run(this, 800, 600, L"FancyFramework " FF_VERSION_W);
+        ffApp::Run(this, 800, 600, L"SolidLayers - FancyFramework " FF_VERSION_W);
     }
 
     void OnCreate(ffApp *pApp) {
