@@ -74,9 +74,9 @@ void ffScene::OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
 }
 
 bool ffScene::HandleMsg(const f2dMsg &pMsg) {
-    for (int i = 0; i != m_layerGroup.size(); ++i) {
-        for (int j = 0; j != m_layerGroup[i].size(); ++j) {
-            if (m_layerGroup[i][j]->OnMsg(pMsg) == true)
+    for (ffLayerGroup::reverse_iterator iter = m_layerGroup.rbegin(); iter != m_layerGroup.rend(); ++iter) {
+        for (ffLayers::reverse_iterator subiter = iter->rbegin(); subiter != iter->rend(); ++subiter) {
+            if ((*subiter)->OnMsg(pMsg) == true)
                 return true;
         }
     }
