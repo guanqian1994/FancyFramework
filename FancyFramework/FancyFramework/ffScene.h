@@ -54,7 +54,7 @@ public:
     virtual void OnDestroy();
 
     /// @bridef 场景层被移除时调用
-    virtual void OnRemoveScene(ffScene *pScene);
+    virtual void OnRemoveLayer(ffLayer *pLayer);
 
     /// @brief 有消息需要处理时被调用
     virtual bool OnMsg(const f2dMsg &pMsg);
@@ -63,7 +63,7 @@ public:
     virtual void OnUpdate(fDouble elapsedTime);
 
     /// @brief 画面更新时被调用
-    virtual void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph);
+    virtual void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 
     /// @brief 处理消息
     /// @note 不可重写，上层消息首先将消息发送给此方法，如果消息没有经过处理则调用 OnMsg 供场景
@@ -74,7 +74,7 @@ public:
     void HandleUpdate(fDouble elapsedTime);
 
     /// @brief 处理渲染
-    void HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph);
+    void HandleRender(fDouble elapsedTime, ffGraphics *pGraph);
 
     /// @brief 当前场景是否已经被创建
     bool IsCreated();

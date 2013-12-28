@@ -74,7 +74,9 @@ public:
         }
     }
 
-    void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+    void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
+        pGraph->Begin();
+
         ffDrawer &drawer = ffDrawer::Get();
         ffMouse &mouse = ffMouse::Get();
 
@@ -85,6 +87,8 @@ public:
 
         drawer.DrawWString(pGraph, fcyVec2(70, 70),
             L"Hello, world!\n\nPress W key , set to window mode\nPress F key , set to full screen mode");
+
+        pGraph->End();
     }
 
 private:

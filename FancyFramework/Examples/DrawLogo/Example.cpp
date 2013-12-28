@@ -90,7 +90,9 @@ public:
         }
     }
 
-    void OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+    void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
+        pGraph->Begin();
+
         if (m_pSprite) {
             (*m_pSprite)->Draw(pGraph, fcyVec2(400, 300), fcyVec2(m_curScale, m_curScale), m_curRotation);
         }
@@ -100,6 +102,7 @@ public:
         drawer.SetColor(ffColors::Black);
         drawer.DrawWString(pGraph, fcyVec2(50, 50), L"Press SPACE to play again.");
 
+        pGraph->End();
     }
 
 private:

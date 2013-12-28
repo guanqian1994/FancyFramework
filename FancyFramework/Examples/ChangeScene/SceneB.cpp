@@ -59,7 +59,9 @@ bool SceneB::OnMsg(const f2dMsg &pMsg) {
     }
 }
 
-void SceneB::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+void SceneB::OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
+    pGraph->Begin();
+
     ffDrawer &drawer = ffDrawer::Get();
 
     drawer.SetColor(ffColors::Black);
@@ -68,4 +70,6 @@ void SceneB::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
         L"Press W key , set to window mode\n"
         L"Press F key , set to full screen mode\n\n"
         L"Press C key , go to scene A");
+
+    pGraph->End();
 }

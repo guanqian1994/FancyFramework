@@ -11,19 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{823088CA-22B2-448C-973C-035980773730}</ProjectGuid>
-    <RootNamespace>FancyFramework</RootNamespace>
-    <ProjectName>FancyFramework</ProjectName>
+    <ProjectGuid>{6DCB9DB9-31C3-4936-A558-66E814D16285}</ProjectGuid>
+    <RootNamespace>SolidLayers</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -40,13 +39,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\DSS;$(SolutionDir)\Extern\;$(SolutionDir)\Extern\fancy2D\;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\Extern\luaPlus\;$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Include;$(SolutionDir)\Extern\fancyLib\;$(SolutionDir)\Extern\Profile\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\DSS;$(SolutionDir)\Extern\;$(SolutionDir)\Extern\fancy2D\;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\Extern\luaPlus\;$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Include;$(SolutionDir)\Extern\fancyLib\;$(SolutionDir)\Extern\Profile\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -56,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>fancy2D_d.lib;fancylib_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FancyFramework_d.lib;fancy2D_d.lib;fancylib_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -66,46 +64,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>fancy2D.lib;fancylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FancyFramework.lib;fancy2D.lib;fancylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="App\ffAppImpl.h" />
-    <ClInclude Include="App\ffCameraImpl.h" />
-    <ClInclude Include="App\ffDrawerImpl.h" />
-    <ClInclude Include="App\ffGraphicsImpl.h" />
-    <ClInclude Include="ff.h" />
-    <ClInclude Include="ffAction.h" />
-    <ClInclude Include="ffApp.h" />
-    <ClInclude Include="ffAssert.h" />
-    <ClInclude Include="ffConstant.h" />
-    <ClInclude Include="ffInput.h" />
-    <ClInclude Include="ffLayer.h" />
-    <ClInclude Include="ffRes.h" />
-    <ClInclude Include="ffScene.h" />
-    <ClInclude Include="Input\ffKeyboardImpl.h" />
-    <ClInclude Include="Input\ffMouseImpl.h" />
-    <ClInclude Include="Res\ffResImpl.h" />
-    <ClInclude Include="Res\ffResTypesImpl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="App\ffAppImpl.cpp" />
-    <ClCompile Include="App\ffCameraImpl.cpp" />
-    <ClCompile Include="App\ffDrawerImpl.cpp" />
-    <ClCompile Include="App\ffGraphicsImpl.cpp" />
-    <ClCompile Include="ffApp.cpp" />
-    <ClCompile Include="ffConstant.cpp" />
-    <ClCompile Include="ffScene.cpp" />
-    <ClCompile Include="Input\ffKeyboardImpl.cpp" />
-    <ClCompile Include="Input\ffMouseImpl.cpp" />
-    <ClCompile Include="Res\ffResImpl.cpp" />
-    <ClCompile Include="Res\ffResTypesImpl.cpp" />
+    <ClCompile Include="Example.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

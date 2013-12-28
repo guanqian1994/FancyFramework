@@ -43,6 +43,11 @@ ffScene::~ffScene() {
 
 void ffScene::Release() {
     if (this->IsCreated()) {
+        for (int i = 0; i != m_layerGroup.size(); ++i) {
+            for (int j = 0; j != m_layerGroup[i].size(); ++j) {
+                OnRemoveLayer(m_layerGroup[i][j]);
+            }
+        }
         this->OnDestroy();
     }
     delete this;
@@ -54,8 +59,8 @@ void ffScene::OnCreate() {
 void ffScene::OnDestroy() {
 }
 
-void ffScene::OnRemoveScene(ffScene *pScene) {
-    pScene->Release();
+void ffScene::OnRemoveLayer(ffLayer *pLayer) {
+    pLayer->Release();
 }
 
 bool ffScene::OnMsg(const f2dMsg &pMsg) {
@@ -65,7 +70,7 @@ bool ffScene::OnMsg(const f2dMsg &pMsg) {
 void ffScene::OnUpdate(fDouble elapsedTime) {
 }
 
-void ffScene::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+void ffScene::OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
 }
 
 bool ffScene::HandleMsg(const f2dMsg &pMsg) {
@@ -89,7 +94,7 @@ void ffScene::HandleUpdate(fDouble elapsedTime) {
     }
 }
 
-void ffScene::HandleRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+void ffScene::HandleRender(fDouble elapsedTime, ffGraphics *pGraph) {
     this->OnRender(elapsedTime, pGraph);
 
     for (int i = 0; i != m_layerGroup.size(); ++i) {

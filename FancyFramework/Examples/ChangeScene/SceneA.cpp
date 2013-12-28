@@ -58,7 +58,9 @@ bool SceneA::OnMsg(const f2dMsg &pMsg) {
     }
 }
 
-void SceneA::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
+void SceneA::OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
+    pGraph->Begin();
+
     ffDrawer &drawer = ffDrawer::Get();
 
     drawer.SetColor(ffColors::Black);
@@ -66,4 +68,6 @@ void SceneA::OnRender(fDouble elapsedTime, f2dGraphics2D *pGraph) {
         L"This is scene A.\n"
         L"Press M key , enable/disable mouse limit\n\n"
         L"Press C key , go to scene B");
+
+    pGraph->End();
 }
