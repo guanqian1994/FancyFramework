@@ -60,8 +60,7 @@ public:
     }
 
     bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type)
-        {
+        switch (pMsg.Type) {
         case F2DMSG_WINDOW_ONKEYUP:
             if (pMsg.Param1 == VK_SPACE) {
                 m_curScale = 2.f;

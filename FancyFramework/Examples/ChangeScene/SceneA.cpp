@@ -37,11 +37,9 @@ bool SceneA::OnMsg(const f2dMsg &pMsg) {
     ffApp &app = ffApp::Get();
     ffMouse &mouse = ffMouse::Get();
 
-    switch (pMsg.Type)
-    {
+    switch (pMsg.Type) {
     case F2DMSG_WINDOW_ONKEYUP:
-        switch (pMsg.Param1)
-        {
+        switch (pMsg.Param1) {
         case 'C':
             app.AddScene(new SceneB);
             app.NextScene();

@@ -48,11 +48,9 @@ public:
     }
 
     bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type)
-        {
+        switch (pMsg.Type) {
         case F2DMSG_WINDOW_ONKEYUP:
-            switch (pMsg.Param1)
-            {
+            switch (pMsg.Param1) {
             case 'W':
                 m_pApp->SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, true);
                 break;

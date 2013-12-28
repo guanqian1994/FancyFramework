@@ -138,8 +138,7 @@ public:
     }
 
     bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type)
-        {
+        switch (pMsg.Type) {
         case F2DMSG_WINDOW_ONCLOSE:
             if (IDYES == MessageBoxW(NULL, L"Are you sure to exit the program ?", L"Exit",
                 MB_YESNO | MB_ICONQUESTION))
