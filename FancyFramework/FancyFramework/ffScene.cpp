@@ -63,7 +63,7 @@ void ffScene::OnRemoveLayer(ffLayer *pLayer) {
     pLayer->Release();
 }
 
-bool ffScene::OnMsg(const f2dMsg &pMsg) {
+fBool ffScene::OnMsg(const f2dMsg &pMsg) {
     return false;
 }
 

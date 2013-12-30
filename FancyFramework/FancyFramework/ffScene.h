@@ -57,7 +57,7 @@ public:
     virtual void OnRemoveLayer(ffLayer *pLayer);
 
     /// @brief 有消息需要处理时被调用
-    virtual bool OnMsg(const f2dMsg &pMsg);
+    virtual fBool OnMsg(const f2dMsg &pMsg);
 
     /// @brief 更新时被调用
     virtual void OnUpdate(fDouble elapsedTime);
