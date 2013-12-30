@@ -42,8 +42,6 @@ public:
     void OnCreate(ffApp *pApp) {
         pApp->SetBackgroundColor(ffColors::White);
 
-        ffRes::Get().LoadPath(L"Res", L"data");
-
         m_curScale = 2.f;
 
         m_curRotation = PI;
