@@ -8,7 +8,7 @@ You have to open it with VS2013.
 Module
 ==============
 * FancyFramework : 基础框架
-* FancyFrameworkImageSet : 图片集合扩展
+* FancyFrameworkImageSet (Future) : 图片集合扩展
 * FancyFrameworkUI (Future) : UI扩展
 * FancyFrameworkLayers (Future) : 场景&层渲染扩展
 * FancyFrameworkLua (Future) : Lua脚本绑定扩展
