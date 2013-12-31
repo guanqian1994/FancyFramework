@@ -48,8 +48,8 @@ public:
     }
 
     ~CameraStatusPrintLayer() {
-        FCYSAFEKILL(m_pScaleSprite);
-        FCYSAFEKILL(m_pMoveSprite);
+        m_pScaleSprite.Release();
+        m_pMoveSprite.Release();
     }
 
     bool OnMsg(const f2dMsg &pMsg) {
@@ -112,11 +112,11 @@ public:
         drawer.SetColor(ffColors::Black);
         drawer.DrawWString(pGraph, fcyVec2(50, 50), m_buffer);
 
-        (*m_pScaleSprite)->Draw(pGraph, fcyVec2(66, 291));
+        m_pScaleSprite->Draw(pGraph, fcyVec2(66, 291));
 
         drawer.DrawWString(pGraph, fcyVec2(102, 271), L"Scale\nWheel");
 
-        (*m_pMoveSprite)->Draw(pGraph, fcyVec2(66, 337));
+        m_pMoveSprite->Draw(pGraph, fcyVec2(66, 337));
 
         drawer.DrawWString(pGraph, fcyVec2(102, 317), L"Rotate\nLeft mouse button & move");
 
@@ -136,8 +136,8 @@ private:
 
     fDouble m_delay;
     fDouble m_elapse;
-    ffSprite *m_pScaleSprite;
-    ffSprite *m_pMoveSprite;
+    ffSpriteRef m_pScaleSprite;
+    ffSpriteRef m_pMoveSprite;
     ffCameraStatus targetStatus;
     wchar_t m_buffer[128];
 };

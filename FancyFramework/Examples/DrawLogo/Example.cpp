@@ -54,7 +54,7 @@ public:
     }
 
     void OnDestroy(ffApp *pApp) {
-        m_pSprite->Release();
+        m_pSprite.Release();
     }
 
     bool OnMsg(const f2dMsg &pMsg) {
@@ -90,8 +90,8 @@ public:
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
         pGraph->Begin();
 
-        if (m_pSprite) {
-            (*m_pSprite)->Draw(pGraph, fcyVec2(400, 300), fcyVec2(m_curScale, m_curScale), m_curRotation);
+        if (m_pSprite.Valid()) {
+            m_pSprite->Draw(pGraph, fcyVec2(400, 300), fcyVec2(m_curScale, m_curScale), m_curRotation);
         }
 
         ffDrawer &drawer = ffDrawer::Get();
@@ -111,7 +111,7 @@ private:
 
     fFloat m_endRotation;
 
-    ffSprite *m_pSprite;
+    ffSpriteRef m_pSprite;
 };
 
 int main() {
