@@ -15,7 +15,7 @@ Module
 Reference
 ==============
 
-FancyFrameworks是基于fancy2D的一个轻量级框架，它可以让你方便地创建图形应用程序。
+FancyFrameworks是基于Fancy2D的一个轻量级框架，它可以让你方便地创建图形应用程序。
 
 * [创建第一个应用程序](https://github.com/frimin/FancyFramework/wiki/%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F)
 * [处理框架事件](https://github.com/frimin/FancyFramework/wiki/%E5%A4%84%E7%90%86%E6%A1%86%E6%9E%B6%E4%BA%8B%E4%BB%B6)
