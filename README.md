@@ -1,9 +1,9 @@
 FancyFramework
 ==============
 
-You have to open it with VS2013.
+你必须使用 VS2013 打开这个项目.
 
-* Go to [Fancy2D](https://github.com/9chu/fancy2d)
+* 前往 [Fancy2D](https://github.com/9chu/fancy2d)
 
 Module
 ==============
