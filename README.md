@@ -1,9 +1,9 @@
-![FancyFramework](http://www.frimin.com/download/logo.png "FancyFramework")  
+FancyFramework
 ==============
 
 You have to open it with VS2013.
 
-* [Fancy2D](https://github.com/9chu/fancy2d)
+* Go to [Fancy2D](https://github.com/9chu/fancy2d)
 
 Module
 ==============
