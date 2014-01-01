@@ -1,6 +1,3 @@
-#define _CRT_NON_CONFORMING_SWPRINTFS
-
-#include <windows.h>
 ////////////////////////////////////////////////////////////////////////////////
 /// Copyright(c) 2013, frimin
 /// All rights reserved.
@@ -30,6 +27,9 @@
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
+#define _CRT_NON_CONFORMING_SWPRINTFS
+
+#include <windows.h>
 #include "f2d.h"
 #include "ff.h"
 
