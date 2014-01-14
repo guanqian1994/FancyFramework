@@ -57,10 +57,10 @@ public:
         m_pSprite.Release();
     }
 
-    bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type) {
+    bool OnMsg(const ffMsg &msg) {
+        switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONKEYUP:
-            if (pMsg.Param1 == VK_SPACE) {
+            if (msg[0].ToInt() == VK_SPACE) {
                 m_curScale = 2.f;
                 m_curRotation = PI;
             }

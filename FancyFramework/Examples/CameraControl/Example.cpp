@@ -52,18 +52,18 @@ public:
         m_pMoveSprite.Release();
     }
 
-    bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type) {
+    bool OnMsg(const ffMsg &msg) {
+        switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONMOUSEWHEEL: {
-            if (*(fDouble*)&(pMsg.Param3) > 0) {
+            if (msg[2].ToDouble() > 0) {
                 targetStatus.scale += 0.3;
             } else {
                 targetStatus.scale -= 0.3;
             }
         }
-            return true;
+        return true;
         case F2DMSG_WINDOW_ONKEYUP:
-            if (pMsg.Param1 == 'R') {
+            if (msg[0].ToChar() == 'R') {
                 targetStatus.scale = 1.0;
                 targetStatus.position.x = 0;
                 targetStatus.position.y = 0;

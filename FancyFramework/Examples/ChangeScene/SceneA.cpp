@@ -33,13 +33,13 @@
 #include "SceneA.h"
 #include "SceneB.h"
 
-bool SceneA::OnMsg(const f2dMsg &pMsg) {
+bool SceneA::OnMsg(const ffMsg &msg) {
     ffApp &app = ffApp::Get();
     ffMouse &mouse = ffMouse::Get();
 
-    switch (pMsg.Type) {
+    switch (msg.GetType()) {
     case F2DMSG_WINDOW_ONKEYUP:
-        switch (pMsg.Param1) {
+        switch (msg[0].ToChar()) {
         case 'C':
             app.AddScene(new SceneB);
             app.NextScene();

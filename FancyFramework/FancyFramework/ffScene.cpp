@@ -63,7 +63,7 @@ void ffScene::OnRemoveLayer(ffLayer *pLayer) {
     pLayer->Release();
 }
 
-fBool ffScene::OnMsg(const f2dMsg &pMsg) {
+fBool ffScene::OnMsg(const ffMsg &msg) {
     return false;
 }
 
@@ -73,15 +73,15 @@ void ffScene::OnUpdate(fDouble elapsedTime) {
 void ffScene::OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
 }
 
-bool ffScene::HandleMsg(const f2dMsg &pMsg) {
+bool ffScene::HandleMsg(const ffMsg &msg) {
     for (ffLayerGroup::reverse_iterator iter = m_layerGroup.rbegin(); iter != m_layerGroup.rend(); ++iter) {
         for (ffLayers::reverse_iterator subiter = iter->rbegin(); subiter != iter->rend(); ++subiter) {
-            if ((*subiter)->OnMsg(pMsg) == true)
+            if ((*subiter)->OnMsg(msg) == true)
                 return true;
         }
     }
 
-    return this->OnMsg(pMsg);
+    return this->OnMsg(msg);
 }
 
 void ffScene::HandleUpdate(fDouble elapsedTime) {

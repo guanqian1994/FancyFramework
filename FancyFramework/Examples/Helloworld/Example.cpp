@@ -47,10 +47,10 @@ public:
         pApp->SetBackgroundColor(ffColors::Brown);
     }
 
-    bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type) {
+    bool OnMsg(const ffMsg &msg) {
+        switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONKEYUP:
-            switch (pMsg.Param1) {
+            switch (msg[0].ToInt()) {
             case 'W':
                 m_pApp->SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, true);
                 break;

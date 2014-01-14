@@ -137,8 +137,8 @@ public:
         pApp->AddScene(new ExampleScene);
     }
 
-    bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type) {
+    bool OnMsg(const ffMsg &msg) {
+        switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONCLOSE:
             if (IDYES == MessageBoxW(NULL, L"Are you sure to exit the program ?", L"Exit",
                 MB_YESNO | MB_ICONQUESTION))

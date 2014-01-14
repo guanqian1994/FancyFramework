@@ -31,6 +31,6 @@
 
 class SceneB : public ffScene {
 public:
-    bool OnMsg(const f2dMsg &pMsg);
+    bool OnMsg(const ffMsg &msg);
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 };

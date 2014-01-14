@@ -33,10 +33,10 @@
 #include "SceneA.h"
 #include "SceneB.h"
 
-bool SceneB::OnMsg(const f2dMsg &pMsg) {
-    switch (pMsg.Type) {
+bool SceneB::OnMsg(const ffMsg &msg) {
+    switch (msg.GetType()) {
     case F2DMSG_WINDOW_ONKEYUP:
-        switch (pMsg.Param1) {
+        switch (msg[0].ToChar()) {
         case 'C':
             ffApp::Get().AddScene(new SceneA);
             ffApp::Get().NextScene();
@@ -50,7 +50,6 @@ bool SceneB::OnMsg(const f2dMsg &pMsg) {
         default:
             return false;
         }
-        return true;
         return true;
     default:
         return false;

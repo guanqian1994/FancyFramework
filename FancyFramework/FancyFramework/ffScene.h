@@ -57,7 +57,7 @@ public:
     virtual void OnRemoveLayer(ffLayer *pLayer);
 
     /// @brief 有消息需要处理时被调用
-    virtual fBool OnMsg(const f2dMsg &pMsg);
+    virtual fBool OnMsg(const ffMsg &msg);
 
     /// @brief 更新时被调用
     virtual void OnUpdate(fDouble elapsedTime);
@@ -68,7 +68,7 @@ public:
     /// @brief 处理消息
     /// @note 不可重写，上层消息首先将消息发送给此方法，如果消息没有经过处理则调用 OnMsg 供场景
     /// 来处理。若场景没有处理则交给框架来处理这个消息。
-    bool HandleMsg(const f2dMsg &pMsg);
+    bool HandleMsg(const ffMsg &msg);
 
     /// @brief 处理更新
     void HandleUpdate(fDouble elapsedTime);
