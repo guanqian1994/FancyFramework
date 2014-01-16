@@ -83,7 +83,7 @@
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffApp.h" />
     <ClInclude Include="ffAssert.h" />
-    <ClInclude Include="ffConstant.h" />
+    <ClInclude Include="ffConstants.h" />
     <ClInclude Include="ffInput.h" />
     <ClInclude Include="ffLayer.h" />
     <ClInclude Include="ffRes.h" />
@@ -99,7 +99,7 @@
     <ClCompile Include="App\ffDrawerImpl.cpp" />
     <ClCompile Include="App\ffGraphicsImpl.cpp" />
     <ClCompile Include="ffApp.cpp" />
-    <ClCompile Include="ffConstant.cpp" />
+    <ClCompile Include="ffConstants.cpp" />
     <ClCompile Include="ffScene.cpp" />
     <ClCompile Include="Input\ffKeyboardImpl.cpp" />
     <ClCompile Include="Input\ffMouseImpl.cpp" />
