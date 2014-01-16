@@ -110,13 +110,16 @@ public:
         ffDrawer &drawer = ffDrawer::Get();
 
         drawer.SetColor(ffColors::Black);
+
         drawer.DrawWString(pGraph, fcyVec2(50, 50), m_buffer);
 
-        m_pScaleSprite->Draw(pGraph, fcyVec2(66, 291));
+        if (m_pScaleSprite.Valid())
+            m_pScaleSprite->Draw(pGraph, fcyVec2(66, 291));
 
         drawer.DrawWString(pGraph, fcyVec2(102, 271), L"Scale\nWheel");
 
-        m_pMoveSprite->Draw(pGraph, fcyVec2(66, 337));
+        if (m_pMoveSprite.Valid())
+            m_pMoveSprite->Draw(pGraph, fcyVec2(66, 337));
 
         drawer.DrawWString(pGraph, fcyVec2(102, 317), L"Rotate\nLeft mouse button & move");
 
@@ -170,19 +173,20 @@ public:
         ffApp::Run(this, 800, 600, L"CameraControl - FancyFramework " FF_VERSION_W, true, false, F2DAALEVEL_4);
     }
 
-    void OnCreate(ffApp *pApp) {
-        pApp->SetBackgroundColor(ffColors::White);
-        pApp->AddScene(new CameraViewScene);
+    void OnCreate(ffApp &app) {
+        app.SetBackgroundColor(ffColors::White);
+        app.AddScene(new CameraViewScene);
+        ffRes::Get().LoadPath(L"Res", L"Data");
     }
 
-    bool OnMsg(const f2dMsg &pMsg) {
-        switch (pMsg.Type) {
+    bool OnMsg(const ffMsg &msg) {
+        switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONCLOSE:
             if (IDYES == MessageBoxW(NULL, L"Are you sure to exit the program ?", L"Exit",
                 MB_YESNO | MB_ICONQUESTION))
                 return false;
             else
-                return true; /// 拦截退出的消息
+                return true;
         default:
             break;
         }

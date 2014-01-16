@@ -132,9 +132,9 @@ public:
         ffApp::Run(this, 800, 600, L"SolidLayers - FancyFramework " FF_VERSION_W);
     }
 
-    void OnCreate(ffApp *pApp) {
-        pApp->SetBackgroundColor(ffColors::White);
-        pApp->AddScene(new ExampleScene);
+    void OnCreate(ffApp &app) {
+        app.SetBackgroundColor(ffColors::White);
+        app.AddScene(new ExampleScene);
     }
 
     bool OnMsg(const ffMsg &msg) {
@@ -144,7 +144,7 @@ public:
                 MB_YESNO | MB_ICONQUESTION))
                 return false;
             else
-                return true; /// 拦截退出的消息
+                return true;
         default:
             break;
         }

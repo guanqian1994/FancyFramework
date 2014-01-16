@@ -40,11 +40,9 @@ public:
         ffApp::Run(this, 800, 600, L"Helloworld - FancyFramework " FF_VERSION_W);
     }
 
-    void OnCreate(ffApp *pApp) {
-        m_pApp = pApp;
-
+    void OnCreate(ffApp &app) {
         ShowCursor(FALSE);
-        pApp->SetBackgroundColor(ffColors::Brown);
+        app.SetBackgroundColor(ffColors::Brown);
     }
 
     bool OnMsg(const ffMsg &msg) {
@@ -52,10 +50,10 @@ public:
         case F2DMSG_WINDOW_ONKEYUP:
             switch (msg[0].ToInt()) {
             case 'W':
-                m_pApp->SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, true);
+                ffApp::Get().SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, true);
                 break;
             case 'F':
-                m_pApp->SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, false);
+                ffApp::Get().SetWindow(WINDOW_WIDTH, WINDOW_HWIGHT, false);
                 break;
             default:
                 return false;
@@ -88,9 +86,6 @@ public:
 
         pGraph->End();
     }
-
-private:
-    ffApp *m_pApp;
 };
 
 int main() {

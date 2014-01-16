@@ -39,8 +39,8 @@ public:
         ffApp::Run(this, 800, 600, L"DrawLogo - FancyFramework " FF_VERSION_W);
     }
 
-    void OnCreate(ffApp *pApp) {
-        pApp->SetBackgroundColor(ffColors::White);
+    void OnCreate(ffApp &app) {
+        app.SetBackgroundColor(ffColors::White);
 
         m_curScale = 2.f;
 
@@ -70,7 +70,7 @@ public:
                 MB_YESNO | MB_ICONQUESTION))
                 return false;
             else
-                return true; /// 拦截退出的消息
+                return true;
         default:
             break;
         }
