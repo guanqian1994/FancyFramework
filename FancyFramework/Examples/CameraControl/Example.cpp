@@ -176,7 +176,6 @@ public:
     void OnCreate(ffApp &app) {
         app.SetBackgroundColor(ffColors::White);
         app.AddScene(new CameraViewScene);
-        ffRes::Get().LoadPath(L"Res", L"Data");
     }
 
     bool OnMsg(const ffMsg &msg) {
