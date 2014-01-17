@@ -45,7 +45,12 @@ bool SceneA::OnMsg(const ffMsg &msg) {
             app.NextScene();
             break;
         case 'M':
-            mouse.Limit(!mouse.IsLimit());
+            if (mouse.IsLimit()) {
+                mouse.Limit(ffMouse::Disable);
+            } else {
+                mouse.Limit(ffMouse::Enable);
+            }
+            
             break;
         default:
             return false;
