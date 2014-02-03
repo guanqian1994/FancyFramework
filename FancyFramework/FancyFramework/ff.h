@@ -29,14 +29,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#define FF_VERSION "0.0.1"
-#define FF_VERSION_W L"0.0.1"
-#define FF_VERNUM 0x0010
+#define FF_VERSION "0.1.0"
+#define FF_VERSION_W L"0.1.0"
+#define FF_VERNUM 0x0100
 
 #define FF_VER_MAJOR 0
-#define FF_VER_MINOR 0
-#define FF_VER_REVISION 1
+#define FF_VER_MINOR 1
+#define FF_VER_REVISION 0
 #define FF_VER_SUBREVISION 0
+
+#include <windows.h>
 
 #include "ffApp.h"
 #include "ffInput.h"

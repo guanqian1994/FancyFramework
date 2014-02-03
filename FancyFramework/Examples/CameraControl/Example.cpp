@@ -29,8 +29,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define _CRT_NON_CONFORMING_SWPRINTFS
 
-#include <windows.h>
-#include "f2d.h"
 #include "ff.h"
 
 #define PI 3.1415926

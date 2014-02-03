@@ -27,8 +27,6 @@
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
-#include <windows.h>
-#include "f2d.h"
 #include "ff.h"
 
 #define PI 3.14159
