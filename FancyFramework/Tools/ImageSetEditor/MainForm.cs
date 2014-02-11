@@ -34,7 +34,6 @@ namespace ImageSetEditor
         public MainForm()
         {
             InitializeComponent();
-            this.Controls.Add(new EditControl.ImagesetEditControl());
         }
 
         #endregion Constructors
