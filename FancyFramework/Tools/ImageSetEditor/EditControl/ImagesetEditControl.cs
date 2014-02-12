@@ -80,7 +80,6 @@ namespace ImageSetEditor.EditControl
                 rectToolStripTextBox.Text = "不可用";
                 sizeToolStripTextBox.Text = "不可用";
                 nameToolStripTextBox.ReadOnly = true;
-                previrePanel.Visible = false;
             }
             else
             {
@@ -91,7 +90,6 @@ namespace ImageSetEditor.EditControl
                 sizeToolStripTextBox.Text =
                     String.Format("{0},{1}", select.Size.Width, select.Size.Height);
                 nameToolStripTextBox.ReadOnly = false;
-                previrePanel.Visible = true;
             }
             m_select = select;
         }
@@ -194,6 +192,8 @@ namespace ImageSetEditor.EditControl
                 item.Tag = image;
                 image.BindItem = item;
             }
+
+            imageSetBoxUpdate();
         }
 
         #endregion Methods
@@ -238,23 +238,10 @@ namespace ImageSetEditor.EditControl
                     newImage.BindItem = newItem;
                     newItem.Tag = newImage;
                     newItem.Text = newImage.Name;
-                    unusedListView.Items.Add(newItem);
+                    usedListView.Items.Add(newItem);
                 }
-            }
-        }
 
-        private void clearMenuItem_Click(object sender, EventArgs e)
-        {
-            if (unusedListView.Items.Count == 0)
-                return;
-            if (DialogResult.OK == MessageBox.Show("删除所有？", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
-            {
-                foreach (ListViewItem item in unusedListView.Items)
-                {
-                    ((SubImage)item.Tag).Dispose();
-                    item.Tag = null;
-                    item.Remove();
-                }
+                imageSetBoxUpdate();
             }
         }
 
@@ -264,6 +251,7 @@ namespace ImageSetEditor.EditControl
                 return;
             if (DialogResult.OK == MessageBox.Show("删除所有？", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
             {
+                SetSelect(null);
                 foreach (ListViewItem item in usedListView.Items)
                 {
                     ((SubImage)item.Tag).Dispose();
@@ -275,43 +263,13 @@ namespace ImageSetEditor.EditControl
             imageSetBoxUpdate();
         }
 
-        private void enableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in unusedListView.SelectedItems)
-            {
-                ListViewItem newItem = (ListViewItem)item.Clone();
-
-                ((SubImage)newItem.Tag).BindItem = newItem;
-
-                usedListView.Items.Add(newItem);
-
-                item.Remove();
-            }
-
-            imageSetBoxUpdate();
-        }
-
-        private void delImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (unusedListView.SelectedItems.Count == 0)
-                return;
-            if (DialogResult.OK == MessageBox.Show("确定从列表中删除所选的 " + unusedListView.SelectedItems.Count + " 个图片？", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
-            {
-                foreach (ListViewItem item in unusedListView.SelectedItems)
-                {
-                    ((SubImage)item.Tag).Dispose();
-                    item.Tag = null;
-                    item.Remove();
-                }
-            }
-        }
-
         private void delusedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (usedListView.SelectedItems.Count == 0)
                 return;
             if (DialogResult.OK == MessageBox.Show("确定从列表中删除所选的 " + usedListView.SelectedItems.Count + " 个图片？", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
             {
+                SetSelect(null);
                 foreach (ListViewItem item in usedListView.SelectedItems)
                 {
                     ((SubImage)item.Tag).Dispose();
@@ -323,49 +281,10 @@ namespace ImageSetEditor.EditControl
             imageSetBoxUpdate();
         }
 
-        private void disableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in usedListView.SelectedItems)
-            {
-                ListViewItem newItem = (ListViewItem)item.Clone();
-
-                ((SubImage)newItem.Tag).BindItem = newItem;
-
-                unusedListView.Items.Add(newItem);
-
-                item.Remove();
-            }
-
-            imageSetBoxUpdate();
-        }
-
-        private void unusedListView_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                delImageToolStripMenuItem_Click(null, null);
-            }
-        }
-
-        private void usedListView_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                delusedToolStripMenuItem_Click(null, null);
-            }
-        }
-
         private void sizeSetToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int n = int.Parse(((ToolStripComboBox)sender).Text.Split('*')[0]);
             
-        }
-
-        private void unusedListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (unusedListView.SelectedItems.Count != 1)
-                return;
-            SetSelect((SubImage)unusedListView.SelectedItems[0].Tag);
         }
 
         private void nameToolStripTextBox_Leave(object sender, EventArgs e)
@@ -384,19 +303,6 @@ namespace ImageSetEditor.EditControl
                 }
                 m_select.Name = nameToolStripTextBox.Text;
                 m_select.BindItem.Text = m_select.Name;
-            }
-        }
-
-        private void unusedListView_Leave(object sender, EventArgs e)
-        {
-            previrePanel.Visible = false;
-        }
-
-        private void unusedListView_Enter(object sender, EventArgs e)
-        {
-            if (m_select != null)
-            {
-                previrePanel.Visible = true;
             }
         }
 
@@ -428,6 +334,46 @@ namespace ImageSetEditor.EditControl
             SortItems(SortTypes.SizeReverse, usedListView.SelectedItems);
         }
 
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in usedListView.Items)
+            {
+                item.Selected = true;
+            }
+        }
+
+        private void imageSetBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            imageSetBox.Select();
+        }
+
+        private void usedListView_SizeChanged(object sender, EventArgs e)
+        {
+            usedColumnHeader.Width = usedListView.Width;
+        }
+
+        private void usedListView_Enter(object sender, EventArgs e)
+        {
+            previewPictureBox.Visible = true;
+        }
+
+        private void usedListView_Leave(object sender, EventArgs e)
+        {
+            previewPictureBox.Visible = false;
+        }
+
+        private void usedListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (usedListView.SelectedItems.Count != 1)
+            {
+                SetSelect(null);
+            }
+            else
+            {
+                SetSelect((SubImage)usedListView.SelectedItems[0].Tag);
+            }
+        }
+
         #endregion Events
 
         #region Constructors
@@ -439,7 +385,7 @@ namespace ImageSetEditor.EditControl
             SetSelect(null);
         }
 
-        #endregion Constructors
+        #endregion Constructors    
     }
 
     /// <summary>
