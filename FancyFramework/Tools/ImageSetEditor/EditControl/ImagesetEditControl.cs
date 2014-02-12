@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -31,6 +32,19 @@ namespace ImageSetEditor.EditControl
         /// </summary>
         private Canvas m_canvas;
 
+        /// <summary>
+        /// 当前选中的图片
+        /// </summary>
+        private SubImage m_select;
+
+        private enum SortTypes
+        {
+            Name        = 0,
+            NameReverse = 1,
+            Size        = 2,
+            SizeReverse = 3,
+        };
+
         #endregion Fields
 
         #region Methods
@@ -55,6 +69,131 @@ namespace ImageSetEditor.EditControl
         private void imageSetBoxUpdate()
         {
             imageSetBox.Invalidate();
+        }
+
+        private void SetSelect(SubImage select)
+        {
+            if (select == null)
+            {
+                previewPictureBox.Image = null;
+                nameToolStripTextBox.Text = "不可用";
+                rectToolStripTextBox.Text = "不可用";
+                sizeToolStripTextBox.Text = "不可用";
+                nameToolStripTextBox.ReadOnly = true;
+                previrePanel.Visible = false;
+            }
+            else
+            {
+                previewPictureBox.Image = select.Image;
+                nameToolStripTextBox.Text = select.Name;
+                rectToolStripTextBox.Text =
+                    String.Format("{0},{1}", select.Position.X, select.Position.Y);
+                sizeToolStripTextBox.Text =
+                    String.Format("{0},{1}", select.Size.Width, select.Size.Height);
+                nameToolStripTextBox.ReadOnly = false;
+                previrePanel.Visible = true;
+            }
+            m_select = select;
+        }
+
+        private class CompareName : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                return CompareOriginal(x, y);
+            }
+
+            public static int CompareOriginal(object x, object y)
+            {
+                SubImage imageX = (SubImage)x;
+                SubImage imageY = (SubImage)y;
+
+                return String.CompareOrdinal(imageX.Name, imageY.Name);
+            }
+        }
+
+        private class CompareNameReverse : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                return CompareName.CompareOriginal(x, y) * -1;
+            }
+        }
+
+        private class CompareSize : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                return CompareOriginal(x, y);
+            }
+
+            public static int CompareOriginal(object x, object y)
+            {
+                SubImage imageX = (SubImage)x;
+                SubImage imageY = (SubImage)y;
+
+                int areaX = imageX.Size.Width * imageX.Size.Height;
+                int areaY = imageY.Size.Width * imageY.Size.Height;
+
+                if (areaX > areaY && imageX.Size.Width > imageY.Size.Width)
+                {
+                    return 1;
+                }
+
+                if (imageX.Size == imageY.Size)
+                {
+                    return String.CompareOrdinal(imageX.Name, imageY.Name);
+                }
+
+                return -1;
+            }
+        }
+
+        private class CompareSizeReverse : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                return CompareSize.CompareOriginal(x, y) * -1;
+            }
+        }
+
+        private void SortItems(SortTypes type, IList items)
+        {
+            ArrayList list = new ArrayList();
+
+            foreach (ListViewItem item in items)
+            {
+                list.Add(item.Tag);
+            }
+
+            IComparer sorter = null;
+
+            switch (type)
+            {
+                case SortTypes.Name:
+                    sorter = new CompareName();
+                    break;
+                case SortTypes.NameReverse:
+                    sorter = new CompareNameReverse();
+                    break;
+                case SortTypes.Size:
+                    sorter = new CompareSize();
+                    break;
+                case SortTypes.SizeReverse:
+                    sorter = new CompareSizeReverse();
+                    break;
+            };
+
+            list.Sort((IComparer)sorter);
+
+            for (int i = 0; i != list.Count; ++i)
+            {
+                SubImage image = (SubImage)list[i];
+                ListViewItem item = (ListViewItem)items[i];
+                item.Text = image.Name;
+                item.Tag = image;
+                image.BindItem = item;
+            }
         }
 
         #endregion Methods
@@ -96,8 +235,9 @@ namespace ImageSetEditor.EditControl
                 {
                     ListViewItem newItem = new ListViewItem();
                     SubImage newImage = new SubImage(file);
+                    newImage.BindItem = newItem;
                     newItem.Tag = newImage;
-                    newItem.Text = newImage.ToString();
+                    newItem.Text = newImage.Name;
                     unusedListView.Items.Add(newItem);
                 }
             }
@@ -140,6 +280,8 @@ namespace ImageSetEditor.EditControl
             foreach (ListViewItem item in unusedListView.SelectedItems)
             {
                 ListViewItem newItem = (ListViewItem)item.Clone();
+
+                ((SubImage)newItem.Tag).BindItem = newItem;
 
                 usedListView.Items.Add(newItem);
 
@@ -187,6 +329,8 @@ namespace ImageSetEditor.EditControl
             {
                 ListViewItem newItem = (ListViewItem)item.Clone();
 
+                ((SubImage)newItem.Tag).BindItem = newItem;
+
                 unusedListView.Items.Add(newItem);
 
                 item.Remove();
@@ -217,6 +361,73 @@ namespace ImageSetEditor.EditControl
             
         }
 
+        private void unusedListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (unusedListView.SelectedItems.Count != 1)
+                return;
+            SetSelect((SubImage)unusedListView.SelectedItems[0].Tag);
+        }
+
+        private void nameToolStripTextBox_Leave(object sender, EventArgs e)
+        {
+            nameToolStripTextBox.Text = m_select.Name;
+        }
+
+        private void nameToolStripTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (nameToolStripTextBox.Text.Length == 0)
+                {
+                    nameToolStripTextBox.Text = m_select.Name;
+                    return;
+                }
+                m_select.Name = nameToolStripTextBox.Text;
+                m_select.BindItem.Text = m_select.Name;
+            }
+        }
+
+        private void unusedListView_Leave(object sender, EventArgs e)
+        {
+            previrePanel.Visible = false;
+        }
+
+        private void unusedListView_Enter(object sender, EventArgs e)
+        {
+            if (m_select != null)
+            {
+                previrePanel.Visible = true;
+            }
+        }
+
+        private void usedSelectSortNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (usedListView.SelectedItems.Count == 0)
+                return;
+            SortItems(SortTypes.Name, usedListView.SelectedItems);
+        }
+
+        private void usedSelectSortNameReverseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (usedListView.SelectedItems.Count == 0)
+                return;
+            SortItems(SortTypes.NameReverse, usedListView.SelectedItems);
+        }
+
+        private void usedSelectSortSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (usedListView.SelectedItems.Count == 0)
+                return;
+            SortItems(SortTypes.Size, usedListView.SelectedItems);
+        }
+
+        private void usedSelectSortSizeReverseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (usedListView.SelectedItems.Count == 0)
+                return;
+            SortItems(SortTypes.SizeReverse, usedListView.SelectedItems);
+        }
+
         #endregion Events
 
         #region Constructors
@@ -225,6 +436,7 @@ namespace ImageSetEditor.EditControl
         {
             m_canvas = new Canvas();
             InitializeComponent();
+            SetSelect(null);
         }
 
         #endregion Constructors
@@ -327,6 +539,8 @@ namespace ImageSetEditor.EditControl
         private Point m_position;
         private Bitmap m_image;
         private string m_filePath;
+        private string m_name;
+        private ListViewItem m_bindItem;
 
         #endregion Fields
 
@@ -361,11 +575,6 @@ namespace ImageSetEditor.EditControl
             }
         }
 
-        public override string ToString()
-        {
-            return string.Format("{0} ({1}*{2})", m_filePath.Split('\\').Last(), Size.Width.ToString(), Size.Height.ToString());
-        }
-
         public void Dispose()
         {
             Dispose(true);
@@ -393,6 +602,23 @@ namespace ImageSetEditor.EditControl
             get { return m_image; }
         }
 
+        public string FilePath
+        {
+            get { return m_filePath; }
+        }
+
+        public string Name
+        {
+            get { return m_name; }
+            set { m_name = value; }
+        }
+
+        public ListViewItem BindItem
+        {
+            get { return m_bindItem; }
+            set { m_bindItem = value; }
+        }
+
         #endregion Properties
 
         #region Constructors
@@ -402,6 +628,8 @@ namespace ImageSetEditor.EditControl
             m_position = new Point(0, 0);
             m_image = new Bitmap(file);
             m_filePath = file;
+            m_name = m_filePath.Split('\\').Last().Split('.').First();
+            m_bindItem = null;
         }
 
         #endregion Constructors
