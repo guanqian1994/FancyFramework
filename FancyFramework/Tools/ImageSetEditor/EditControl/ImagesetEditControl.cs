@@ -1,4 +1,33 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////
+/// Copyright(c) 2014, frimin
+/// All rights reserved.
+/// 
+/// Redistribution and use in source and binary forms, with or without modification,
+/// are permitted provided that the following conditions are met :
+/// 
+/// * Redistributions of source code must retain the above copyright notice, this
+/// list of conditions and the following disclaimer.
+/// 
+/// * Redistributions in binary form must reproduce the above copyright notice, this
+/// list of conditions and the following disclaimer in the documentation and / or
+/// other materials provided with the distribution.
+/// 
+/// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+/// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+/// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+/// DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+/// ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+/// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+/// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/// ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+/// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+///
+///        file :   ImagesetEditControl.cs
+///  created by :   frimin
+/// modified by :   frimin/(add your name)
+////////////////////////////////////////////////////////////////////////////////
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +65,31 @@ namespace ImageSetEditor.EditControl
         /// 当前选中的图片
         /// </summary>
         private SubImage m_select;
+
+        /// <summary>
+        /// 当前选中的图片组
+        /// </summary>
+        private List<SubImage> m_selects;
+
+        /// <summary>
+        /// 开始拖拽图片时的鼠标起始位置
+        /// </summary>
+        private Point m_dragBeginMousePos;
+
+        /// <summary>
+        /// 拖拽图片时的鼠标位置
+        /// </summary>
+        private Point m_dragCurMousePos;
+
+        /// <summary>
+        /// 正在拖动选择已选择图片
+        /// </summary>
+        private bool m_dragSelects;
+
+        /// <summary>
+        /// 鼠标在已选择的图片范围内
+        /// </summary>
+        private bool m_inSelects;
 
         private enum SortTypes
         {
@@ -75,7 +129,6 @@ namespace ImageSetEditor.EditControl
         {
             if (select == null)
             {
-                previewPictureBox.Image = null;
                 nameToolStripTextBox.Text = "不可用";
                 rectToolStripTextBox.Text = "不可用";
                 sizeToolStripTextBox.Text = "不可用";
@@ -83,7 +136,6 @@ namespace ImageSetEditor.EditControl
             }
             else
             {
-                previewPictureBox.Image = select.Image;
                 nameToolStripTextBox.Text = select.Name;
                 rectToolStripTextBox.Text =
                     String.Format("{0},{1}", select.Position.X, select.Position.Y);
@@ -210,6 +262,115 @@ namespace ImageSetEditor.EditControl
 
         private void imageSetBox_SizeChanged(object sender, EventArgs e)
         {
+            m_canvas.ViewSize = imageSetBox.Size;
+
+            /// 可视范围比画布大
+            if (m_canvas.ViewSize.Height >= m_canvas.Size.Height)
+            {
+                vScrollBar.Visible = false;
+            }
+            else
+            {
+                vScrollBar.Maximum = m_canvas.Size.Height;
+                vScrollBar.LargeChange = m_canvas.ViewSize.Height;
+                vScrollBar.Visible = true;
+            }
+
+            if (m_canvas.ViewSize.Width >= m_canvas.Size.Width)
+            {
+                hScrollBar.Visible = false;
+            }
+            else
+            {
+                hScrollBar.Maximum = m_canvas.Size.Width;
+                hScrollBar.LargeChange = m_canvas.ViewSize.Width;
+                hScrollBar.Visible = true;
+            }
+            
+        }
+
+        private void imageSetBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                /// 正在拖动时释放鼠标左键
+                if (m_dragSelects)
+                {
+                    m_dragSelects = false;
+
+                    Point offset = new Point(
+                        m_dragCurMousePos.X - m_dragBeginMousePos.X,
+                        m_dragCurMousePos.Y - m_dragBeginMousePos.Y);
+
+                    foreach (SubImage image in m_selects)
+                    {
+                        image.Position = new Point(
+                            image.Position.X + offset.X, 
+                            image.Position.Y + offset.Y);
+                    }
+
+                    if (m_select != null)
+                    {
+                        SetSelect(m_select);
+                    }
+
+                    imageSetBoxUpdate();
+                }
+            }
+        }
+
+        private void imageSetBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                if (m_inSelects)
+                {
+                    m_dragSelects = true;
+                    m_dragBeginMousePos = e.Location;
+                }
+            }
+        }
+
+        private void imageSetBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            /// 正在拖动
+            if (m_dragSelects == true)
+            {
+                m_dragCurMousePos = e.Location;
+
+                imageSetBoxUpdate();
+
+                return;
+            }
+
+            /// 鼠标移动到已经选择的图片里时变更光标
+
+            m_inSelects = false;
+
+            
+            foreach (SubImage image in m_selects)
+            {
+                if (image.Rectangle.Contains(new Point(
+                    e.X + m_canvas.ViewPos.X,
+                    e.Y + m_canvas.ViewPos.Y)))
+                {
+                    m_inSelects = true;
+                    break;
+                }
+            }
+
+            if (m_inSelects)
+            {
+                imageSetBox.Cursor = Cursors.SizeAll;
+            }
+            else
+            {
+                imageSetBox.Cursor = Cursors.Default;
+            }
+        }
+
+        private void imageSetBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
             
         }
 
@@ -219,12 +380,51 @@ namespace ImageSetEditor.EditControl
 
             foreach (ListViewItem item in usedListView.Items)
             {
-                m_canvas.DrawImage((SubImage)item.Tag);
+                if (m_dragSelects)
+                {
+                    if (item.Selected)
+                        break;
+                }
+
+                SubImage image = (SubImage)item.Tag;
+                m_canvas.DrawImage(image);
             }
 
-            m_canvas.Graphics.DrawLine(new Pen(Color.Black), new Point(0, 0), new Point(50, 50));
+            if (m_dragSelects)
+            {
+                Point offset = new Point(
+                    m_dragCurMousePos.X - m_dragBeginMousePos.X, 
+                    m_dragCurMousePos.Y - m_dragBeginMousePos.Y);
+
+                foreach (SubImage image in m_selects)
+                {
+                    m_canvas.DrawImage(image, offset);
+                    m_canvas.DrawImageArea(image, offset);
+                }
+            }
+            else
+            {
+                foreach (SubImage image in m_selects)
+                {
+                    m_canvas.DrawImageArea(image);
+                }
+            }
 
             m_canvas.End(); 
+        }
+
+        private void vScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            m_canvas.ViewPos = new Point(hScrollBar.Value, vScrollBar.Value);
+
+            imageSetBoxUpdate();
+        }
+
+        private void hScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            m_canvas.ViewPos = new Point(hScrollBar.Value, vScrollBar.Value);
+
+            imageSetBoxUpdate();
         }
 
         private void addImageMenuItem_Click(object sender, EventArgs e)
@@ -284,12 +484,22 @@ namespace ImageSetEditor.EditControl
         private void sizeSetToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int n = int.Parse(((ToolStripComboBox)sender).Text.Split('*')[0]);
-            
+
+            m_canvas.Size = new Size(n, n);
+
+            m_canvas.ViewPos = new Point(0, 0);
+            hScrollBar.Value = 0;
+            vScrollBar.Value = 0;
+
+            imageSetBox_SizeChanged(null, null);
+
+            imageSetBoxUpdate();
         }
 
         private void nameToolStripTextBox_Leave(object sender, EventArgs e)
         {
-            nameToolStripTextBox.Text = m_select.Name;
+            if (m_select != null)
+                nameToolStripTextBox.Text = m_select.Name;
         }
 
         private void nameToolStripTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -342,29 +552,15 @@ namespace ImageSetEditor.EditControl
             }
         }
 
-        private void imageSetBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            imageSetBox.Select();
-        }
-
         private void usedListView_SizeChanged(object sender, EventArgs e)
         {
             usedColumnHeader.Width = usedListView.Width;
         }
 
-        private void usedListView_Enter(object sender, EventArgs e)
-        {
-            previewPictureBox.Visible = true;
-        }
-
-        private void usedListView_Leave(object sender, EventArgs e)
-        {
-            previewPictureBox.Visible = false;
-        }
-
         private void usedListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (usedListView.SelectedItems.Count != 1)
+            int n = usedListView.SelectedItems.Count;
+            if (n != 1)
             {
                 SetSelect(null);
             }
@@ -372,6 +568,14 @@ namespace ImageSetEditor.EditControl
             {
                 SetSelect((SubImage)usedListView.SelectedItems[0].Tag);
             }
+
+            m_selects.Clear();
+            foreach (ListViewItem item in usedListView.SelectedItems)
+            {
+                m_selects.Add((SubImage)item.Tag);
+            }
+
+            imageSetBoxUpdate();
         }
 
         #endregion Events
@@ -381,11 +585,17 @@ namespace ImageSetEditor.EditControl
         public ImagesetEditControl()
         {
             m_canvas = new Canvas();
+            m_selects = new List<SubImage>();
             InitializeComponent();
             SetSelect(null);
+            sizeSetToolStripComboBox.SelectedIndex = 3;
+            
+            
         }
 
-        #endregion Constructors    
+        #endregion Constructors
+
+        
     }
 
     /// <summary>
@@ -420,6 +630,12 @@ namespace ImageSetEditor.EditControl
         /// </summary>
         private Size m_size;
 
+        private Pen m_dashedPen;
+
+        private Pen m_blackPen;
+
+        private Pen m_whitePen;
+
         #endregion Fields
 
         #region Methods
@@ -427,15 +643,80 @@ namespace ImageSetEditor.EditControl
         public void Begin(Graphics viewGraph)
         {
             m_viewGraph = viewGraph;
+            m_viewGraph.FillRectangle(
+                m_whitePen.Brush,
+                -m_viewPosition.X,
+                -m_viewPosition.Y,
+                m_size.Width,
+                m_size.Height);
         }
 
         public void End()
         {
+            m_viewGraph.DrawRectangle(
+                m_dashedPen,
+                -m_viewPosition.X,
+                -m_viewPosition.Y,
+                m_size.Width,
+                m_size.Height);
+        }
+
+        public void DrawImage(SubImage image, Point offset)
+        {
+            m_viewGraph.DrawImage(
+                image.Image,
+                image.Position.X - m_viewPosition.X + offset.X,
+                image.Position.Y - m_viewPosition.Y + offset.Y,
+                image.Size.Width,
+                image.Size.Height);
         }
 
         public void DrawImage(SubImage image)
         {
-            m_viewGraph.DrawImage(image.Image, image.Position);
+            m_viewGraph.DrawImage(
+                image.Image,
+                image.Position.X - m_viewPosition.X, 
+                image.Position.Y - m_viewPosition.Y,
+                image.Size.Width,
+                image.Size.Height);
+        }
+
+        public void DrawImageArea(SubImage image)
+        {
+            DrawSmallBox(image.Position.X, image.Position.Y);
+            DrawSmallBox(image.Position.X + image.Size.Width, image.Position.Y);
+            DrawSmallBox(image.Position.X + image.Size.Width, image.Position.Y + image.Size.Height);
+            DrawSmallBox(image.Position.X, image.Position.Y + image.Size.Height);
+
+            m_viewGraph.DrawRectangle(
+                m_dashedPen,
+                image.Position.X - m_viewPosition.X,
+                image.Position.Y - m_viewPosition.Y,
+                image.Size.Width,
+                image.Size.Height);
+        }
+
+        public void DrawImageArea(SubImage image, Point offset)
+        {
+            Point p = new Point(image.Position.X + offset.X, image.Position.Y + offset.Y);
+
+            DrawSmallBox(p.X, p.Y);
+            DrawSmallBox(p.X + image.Size.Width, p.Y);
+            DrawSmallBox(p.X + image.Size.Width, p.Y + image.Size.Height);
+            DrawSmallBox(p.X, p.Y + image.Size.Height);
+
+            m_viewGraph.DrawRectangle(
+                m_dashedPen,
+                p.X - m_viewPosition.X,
+                p.Y - m_viewPosition.Y,
+                image.Size.Width,
+                image.Size.Height);
+        }
+
+        public void DrawSmallBox(int x, int y)
+        {
+            m_viewGraph.FillRectangle(
+                m_blackPen.Brush, x - 3 - m_viewPosition.X, y - 3 - m_viewPosition.Y, 6, 6);
         }
 
         #endregion Methods
@@ -472,6 +753,13 @@ namespace ImageSetEditor.EditControl
         public Canvas()
         {
             m_viewGraph = null;
+
+            m_dashedPen = new Pen(Color.Gray);
+            m_dashedPen.DashStyle = DashStyle.DashDot;
+
+            m_blackPen = new Pen(Color.Black);
+
+            m_whitePen = new Pen(Color.White);
         }
 
         #endregion Constructors
@@ -484,6 +772,7 @@ namespace ImageSetEditor.EditControl
 
         private Point m_position;
         private Bitmap m_image;
+        private Rectangle m_rect;
         private string m_filePath;
         private string m_name;
         private ListViewItem m_bindItem;
@@ -498,12 +787,14 @@ namespace ImageSetEditor.EditControl
         /// <returns></returns>
         public bool Intersect(SubImage image)
         {
-            return false;
+            Rectangle rect = new Rectangle(image.Position, image.Size);
+
+            return Rectangle.IntersectsWith(rect);
         }
 
         public bool Intersect(Rectangle rect)
         {
-            return false;
+            return Rectangle.IntersectsWith(rect);
         }
 
         private void Dispose(bool disposing)
@@ -535,7 +826,7 @@ namespace ImageSetEditor.EditControl
         public Point Position
         {
             get { return m_position; }
-            set { m_position = value; }
+            set { m_position = value; m_rect = new Rectangle(this.Position, this.Size); }
         }
 
         public Size Size
@@ -565,6 +856,11 @@ namespace ImageSetEditor.EditControl
             set { m_bindItem = value; }
         }
 
+        public Rectangle Rectangle
+        {
+            get { return m_rect; }
+        }
+
         #endregion Properties
 
         #region Constructors
@@ -576,6 +872,7 @@ namespace ImageSetEditor.EditControl
             m_filePath = file;
             m_name = m_filePath.Split('\\').Last().Split('.').First();
             m_bindItem = null;
+            m_rect = new Rectangle(this.Position, this.Size);
         }
 
         #endregion Constructors
