@@ -47,6 +47,16 @@ namespace ImageSetEditor.EditControl
         #region Fields
 
         /// <summary>
+        /// 当前鼠标状态
+        /// </summary>
+        enum MouseStatus
+        {
+            Normal, /// 正常
+            Drag,   /// 拖拽图片
+            Select, /// 选择图片
+        };
+
+        /// <summary>
         /// 当前文档路径
         /// </summary>
         private string m_documentPath;
@@ -72,19 +82,19 @@ namespace ImageSetEditor.EditControl
         private List<SubImage> m_selects;
 
         /// <summary>
-        /// 开始拖拽图片时的鼠标起始位置
+        /// 操作开始时鼠标起始位置
         /// </summary>
-        private Point m_dragBeginMousePos;
+        private Point m_beginMousePos;
 
         /// <summary>
-        /// 拖拽图片时的鼠标位置
+        /// 当前鼠标位置
         /// </summary>
-        private Point m_dragCurMousePos;
+        private Point m_curMousePos;
 
         /// <summary>
-        /// 正在拖动选择已选择图片
+        /// 当前鼠标状态
         /// </summary>
-        private bool m_dragSelects;
+        private MouseStatus m_MouseStatus;
 
         /// <summary>
         /// 鼠标在已选择的图片范围内
@@ -293,28 +303,51 @@ namespace ImageSetEditor.EditControl
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                /// 正在拖动时释放鼠标左键
-                if (m_dragSelects)
+
+                switch (m_MouseStatus)
                 {
-                    m_dragSelects = false;
+                    case MouseStatus.Drag:
+                        {
+                            m_MouseStatus = MouseStatus.Normal;
 
-                    Point offset = new Point(
-                        m_dragCurMousePos.X - m_dragBeginMousePos.X,
-                        m_dragCurMousePos.Y - m_dragBeginMousePos.Y);
+                            Point offset = new Point(
+                                m_curMousePos.X - m_beginMousePos.X,
+                                m_curMousePos.Y - m_beginMousePos.Y);
 
-                    foreach (SubImage image in m_selects)
-                    {
-                        image.Position = new Point(
-                            image.Position.X + offset.X, 
-                            image.Position.Y + offset.Y);
-                    }
+                            foreach (SubImage image in m_selects)
+                            {
+                                image.Position = new Point(
+                                    image.Position.X + offset.X,
+                                    image.Position.Y + offset.Y);
+                            }
 
-                    if (m_select != null)
-                    {
-                        SetSelect(m_select);
-                    }
+                            if (m_select != null)
+                            {
+                                SetSelect(m_select);
+                            }
 
-                    imageSetBoxUpdate();
+                            imageSetBoxUpdate();
+                        }
+                        break;
+                    case MouseStatus.Select:
+                        {
+                            /*
+                            if (m_selects.Count != 0)
+                            {
+                                m_selects.Clear();
+                                SetSelect(null);
+                            }
+
+                            foreach (ListViewItem item in usedListView.Items)
+                            {
+                                SubImage image = (SubImage)item.Tag;
+
+                            }
+
+                            imageSetBoxUpdate();
+                             * */
+                        }
+                        break;
                 }
             }
         }
@@ -325,18 +358,24 @@ namespace ImageSetEditor.EditControl
             {
                 if (m_inSelects)
                 {
-                    m_dragSelects = true;
-                    m_dragBeginMousePos = e.Location;
+                    m_MouseStatus = MouseStatus.Drag;
+                    m_beginMousePos = e.Location;
+                    m_curMousePos = e.Location;
+                }
+                else
+                {
+                    m_MouseStatus = MouseStatus.Select;
+                    m_beginMousePos = e.Location;
+                    m_curMousePos = e.Location;
                 }
             }
         }
 
         private void imageSetBox_MouseMove(object sender, MouseEventArgs e)
         {
-            /// 正在拖动
-            if (m_dragSelects == true)
+            if (m_MouseStatus != MouseStatus.Normal)
             {
-                m_dragCurMousePos = e.Location;
+                m_curMousePos = e.Location;
 
                 imageSetBoxUpdate();
 
@@ -380,21 +419,21 @@ namespace ImageSetEditor.EditControl
 
             foreach (ListViewItem item in usedListView.Items)
             {
-                if (m_dragSelects)
+                if (m_MouseStatus == MouseStatus.Drag)
                 {
                     if (item.Selected)
-                        break;
+                        continue;
                 }
 
                 SubImage image = (SubImage)item.Tag;
                 m_canvas.DrawImage(image);
             }
 
-            if (m_dragSelects)
+            if (m_MouseStatus == MouseStatus.Drag)
             {
                 Point offset = new Point(
-                    m_dragCurMousePos.X - m_dragBeginMousePos.X, 
-                    m_dragCurMousePos.Y - m_dragBeginMousePos.Y);
+                    m_curMousePos.X - m_beginMousePos.X, 
+                    m_curMousePos.Y - m_beginMousePos.Y);
 
                 foreach (SubImage image in m_selects)
                 {
@@ -408,6 +447,11 @@ namespace ImageSetEditor.EditControl
                 {
                     m_canvas.DrawImageArea(image);
                 }
+            }
+
+            if (m_MouseStatus == MouseStatus.Select)
+            {
+
             }
 
             m_canvas.End(); 
@@ -586,16 +630,17 @@ namespace ImageSetEditor.EditControl
         {
             m_canvas = new Canvas();
             m_selects = new List<SubImage>();
+
+            m_MouseStatus = MouseStatus.Normal;
+
             InitializeComponent();
+
             SetSelect(null);
+
             sizeSetToolStripComboBox.SelectedIndex = 3;
-            
-            
         }
 
         #endregion Constructors
-
-        
     }
 
     /// <summary>

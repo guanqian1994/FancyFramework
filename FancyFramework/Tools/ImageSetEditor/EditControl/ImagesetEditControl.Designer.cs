@@ -65,6 +65,9 @@
             this.sizeToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.imageSetBoxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -73,6 +76,7 @@
             this.usedToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageSetBox)).BeginInit();
             this.toolStrip.SuspendLayout();
+            this.imageSetBoxContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -234,6 +238,7 @@
             // imageSetBox
             // 
             this.imageSetBox.BackColor = System.Drawing.Color.Gray;
+            this.imageSetBox.ContextMenuStrip = this.imageSetBoxContextMenuStrip;
             this.imageSetBox.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.imageSetBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageSetBox.Location = new System.Drawing.Point(0, 27);
@@ -376,6 +381,25 @@
             this.openFileDialog.Filter = "图片文件(png,bmp,jpg)|*.png;*.bmp;*.jpg;";
             this.openFileDialog.Multiselect = true;
             // 
+            // imageSetBoxContextMenuStrip
+            // 
+            this.imageSetBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
+            this.删除ToolStripMenuItem});
+            this.imageSetBoxContextMenuStrip.Name = "imageSetBoxContextMenuStrip";
+            this.imageSetBoxContextMenuStrip.Size = new System.Drawing.Size(176, 62);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(172, 6);
+            // 
+            // 删除ToolStripMenuItem
+            // 
+            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.删除ToolStripMenuItem.Text = "删除";
+            // 
             // ImagesetEditControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -396,6 +420,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageSetBox)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.imageSetBoxContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -438,5 +463,8 @@
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader usedColumnHeader;
         private System.Windows.Forms.ToolStripMenuItem addImageMenuItem;
+        private System.Windows.Forms.ContextMenuStrip imageSetBoxContextMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
     }
 }
