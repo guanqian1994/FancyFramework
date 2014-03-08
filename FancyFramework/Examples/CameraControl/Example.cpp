@@ -137,8 +137,8 @@ private:
 
     fDouble m_delay;
     fDouble m_elapse;
-    ffSpriteRef m_pScaleSprite;
-    ffSpriteRef m_pMoveSprite;
+    ffSprite::Ref m_pScaleSprite;
+    ffSprite::Ref m_pMoveSprite;
     ffCameraStatus targetStatus;
     wchar_t m_buffer[128];
 };

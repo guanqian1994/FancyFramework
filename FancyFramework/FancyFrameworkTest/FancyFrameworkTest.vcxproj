@@ -39,11 +39,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(SolutionDir)\FancyFrameworkImageset\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\Extern\Visual Leak Detector\lib\Win32;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFrameworkImageset\;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -54,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>FancyFramework_d.lib;fancy2D_d.lib;fancylib_d.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FancyFramework_d.lib;FancyFrameworkImageset_d.lib;fancy2D_d.lib;fancylib_d.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,7 +70,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>FancyFramework.lib;fancy2D.lib;fancylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FancyFramework.lib;FancyFrameworkImageset.lib;fancy2D.lib;fancylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -109,7 +109,7 @@ private:
 
     fFloat m_endRotation;
 
-    ffSpriteRef m_pSprite;
+    ffSprite::Ref m_pSprite;
 };
 
 int main() {
