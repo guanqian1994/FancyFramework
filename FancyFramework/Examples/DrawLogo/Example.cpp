@@ -37,6 +37,7 @@ public:
         ffApp::Run(this, 800, 600, L"DrawLogo - FancyFramework " FF_VERSION_W);
     }
 
+protected:
     void OnCreate(ffApp &app) {
         app.SetBackgroundColor(ffColors::White);
 

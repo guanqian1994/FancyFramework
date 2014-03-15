@@ -30,7 +30,7 @@
 #pragma once
 
 class SceneA : public ffScene {
-public:
+protected:
     bool OnMsg(const ffMsg &msg);
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 };

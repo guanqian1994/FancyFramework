@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,46 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUIMsg.h
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-class SceneB : public ffScene {
-protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
+#include <fcyMath.h>
+
+enum ffMouseButton {
+    None = 0,
+    Left = 1048576,
+    Right = 2097152,
+    Middle = 4194304,
+};
+
+struct ffUIEvent { };
+
+struct ffUIMouseEvent : public ffUIEvent {
+    ffUIMouseEvent(ffMouseButton button,
+        fInt x, 
+        fInt y,
+        fDouble wheel) : Button(button), X(x), Y(y) , Wheel(wheel) { }
+    ffMouseButton Button;
+    fInt X, Y;
+    fDouble Wheel;
+};
+
+struct ffUIKeyEvent : public ffUIEvent {
+    ffUIKeyEvent(fInt key) : Key(key) { }
+    fInt Key;
+};
+
+struct ffUpdateEvent : public ffUIEvent {
+    ffUpdateEvent(fDouble elapsedTime, const fcyRect &dest) : ElapsedTime(elapsedTime), Dest(dest) { }
+    fDouble ElapsedTime;
+    fcyRect Dest;
+};
+
+struct ffRenderEvent : public ffUpdateEvent {
+    ffRenderEvent(fDouble elapsedTime, const fcyRect &area, ffGraphics *pGraph_) 
+        : ffUpdateEvent(elapsedTime, area), pGraph(pGraph_) { }
+    ffGraphics *pGraph;
 };

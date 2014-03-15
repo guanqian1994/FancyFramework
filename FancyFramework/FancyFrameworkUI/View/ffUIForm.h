@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,36 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUIForm.h
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
+#include "..\ffUIView.h"
 
-class SceneB : public ffScene {
+class ffUIForm : public ffUIView {
+public:
+    static ffUIForm *Create(ffUIView *pParent, ffPoint local, ffSize size);
+
+    void SetAllowDrag(fBool b);
+
+    fBool GetAllowDrag() const;
+
 protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
+    virtual fBool OnMouseLeave(ffUIEvent *pEvent);
+
+    virtual fBool OnMouseDown(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnMouseUp(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnMouseMove(ffUIEvent *pEvent);
+
+private:
+    ffUIForm(ffUIView *pParent);
+
+    fBool m_allowDrag;
+
+    fBool m_isDrag;
+
+    fBool m_beginPos;
 };

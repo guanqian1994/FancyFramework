@@ -1,5 +1,5 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+////////////////////////////////////////////////
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,24 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUIButton.cpp
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "ffUIButton.h"
 
-class SceneB : public ffScene {
-protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
-};
+ffUIButton *ffUIButton::Create(ffUIView *pParent, ffPoint local, ffSize size) {
+    if (pParent) {
+        ffUIButton *pButton = new ffUIButton(pParent);
+
+        pButton->SetLocation(local);
+        pButton->SetSize(size);
+
+        return pButton;
+    }
+    return NULL;
+}
+
+ffUIButton::ffUIButton(ffUIView *pParent) : ffUIView(pParent) {
+    
+}

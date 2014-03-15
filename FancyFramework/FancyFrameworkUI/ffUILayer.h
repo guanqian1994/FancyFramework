@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,42 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUILayer.h
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-class SceneB : public ffScene {
+#include "ffLayer.h"
+#include "ffUIView.h"
+
+class ffUILayer : public ffLayer, public ffUIView {
+    friend class ffUIView;
+public:
+    static ffUILayer *Create();
+
+    void DebugRender(ffGraphics *pGraph);
+
+    ffUIView *GetSelected();
+
+    void SetSelected(ffUIView *pView);
+
 protected:
-    bool OnMsg(const ffMsg &msg);
+    ffUIView *GetMouseOn();
+
+    void SetMouseOn(ffUIView *pView);
+
+    fBool OnMsg(const ffMsg &msg);
+
+    void OnUpdate(fDouble elapsedTime);
+
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
+
+
+private:
+    ffUILayer();
+
+    ffUIView *m_pSelected;
+
+    ffUIView *m_pMouseOn;
 };

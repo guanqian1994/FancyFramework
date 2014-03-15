@@ -40,6 +40,7 @@ typedef std::vector<ffLayers> ffLayerGroup;
 /// @brief 场景类
 ////////////////////////////////////////////////////////////////////////////////
 class ffScene {
+    friend class ffAppImpl;
 public:
     ffScene();
 
@@ -47,40 +48,8 @@ public:
 
     virtual void Release();
 
-    /// @brief 被创建时调用
-    virtual void OnCreate();
-
-    /// @brief 被销毁时调用
-    virtual void OnDestroy();
-
-    /// @bridef 场景层被移除时调用
-    virtual void OnRemoveLayer(ffLayer *pLayer);
-
-    /// @brief 有消息需要处理时被调用
-    virtual fBool OnMsg(const ffMsg &msg);
-
-    /// @brief 更新时被调用
-    virtual void OnUpdate(fDouble elapsedTime);
-
-    /// @brief 画面更新时被调用
-    virtual void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
-
-    /// @brief 处理消息
-    /// @note 不可重写，上层消息首先将消息发送给此方法，如果消息没有经过处理则调用 OnMsg 供场景
-    /// 来处理。若场景没有处理则交给框架来处理这个消息。
-    bool HandleMsg(const ffMsg &msg);
-
-    /// @brief 处理更新
-    void HandleUpdate(fDouble elapsedTime);
-
-    /// @brief 处理渲染
-    void HandleRender(fDouble elapsedTime, ffGraphics *pGraph);
-
     /// @brief 当前场景是否已经被创建
     bool IsCreated();
-
-    /// @brief 设置当前场景已经被初始化
-    void SetCreated();
 
     /// @brief 添加场景层
     void AddLayer(ffLayer *pLayer, fInt group = 0);
@@ -123,6 +92,39 @@ public:
 
     /// @brief 检查是否存在制定场景层
     fBool HasLayer(ffLayer *pLayer, fInt group = 0) const;
+
+protected:
+    /// @brief 被创建时调用
+    virtual void OnCreate();
+
+    /// @brief 被销毁时调用
+    virtual void OnDestroy();
+
+    /// @bridef 场景层被移除时调用
+    virtual void OnRemoveLayer(ffLayer *pLayer);
+
+    /// @brief 有消息需要处理时被调用
+    virtual fBool OnMsg(const ffMsg &msg);
+
+    /// @brief 更新时被调用
+    virtual void OnUpdate(fDouble elapsedTime);
+
+    /// @brief 画面更新时被调用
+    virtual void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
+
+    /// @brief 处理消息
+    /// @note 不可重写，上层消息首先将消息发送给此方法，如果消息没有经过处理则调用 OnMsg 供场景
+    /// 来处理。若场景没有处理则交给框架来处理这个消息。
+    bool HandleMsg(const ffMsg &msg);
+
+    /// @brief 处理更新
+    void HandleUpdate(fDouble elapsedTime);
+
+    /// @brief 处理渲染
+    void HandleRender(fDouble elapsedTime, ffGraphics *pGraph);
+
+    /// @brief 设置当前场景已经被初始化
+    void SetCreated();
 
 private:
     fBool m_created;

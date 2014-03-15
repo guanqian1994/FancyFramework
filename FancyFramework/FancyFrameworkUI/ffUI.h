@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,16 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUI.h
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-class SceneB : public ffScene {
-protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
-};
+#include "ffUIView.h"
+#include "ffUILayer.h"
+#include "ffUIEvent.h"
+
+#include "View\ffUIButton.h"
+#include "View\ffUIImage.h"
+#include "View\ffUIForm.h"

@@ -46,3 +46,4 @@
 #include "fflayer.h"
 #include "ffRes.h"
 #include "ffConstants.h"
+#include "ffImageset.h"

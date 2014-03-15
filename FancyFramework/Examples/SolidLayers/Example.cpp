@@ -40,6 +40,7 @@ public:
         m_elapse = 0;
     }
 
+protected:
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
         pGraph->Begin();
 
@@ -73,6 +74,7 @@ public:
         m_color = color;
     }
 
+protected:
     void OnUpdate(fDouble elapsedTime) {
         m_scale -= elapsedTime / 10;
         if (m_scale <= 0) {
@@ -103,7 +105,7 @@ private:
 };
 
 class ExampleScene : public ffScene {
-public:
+protected:
     void OnCreate() {
         this->AddLayer(new SolidLayer(1.2f, ffColors::White));
         this->AddLayer(new SolidLayer(1.1f, ffColors::Black));
@@ -130,6 +132,7 @@ public:
         ffApp::Run(this, 800, 600, L"SolidLayers - FancyFramework " FF_VERSION_W);
     }
 
+protected:
     void OnCreate(ffApp &app) {
         app.SetBackgroundColor(ffColors::White);
         app.AddScene(new ExampleScene);

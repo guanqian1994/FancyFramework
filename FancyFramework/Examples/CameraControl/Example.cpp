@@ -50,6 +50,7 @@ public:
         m_pMoveSprite.Release();
     }
 
+protected:
     bool OnMsg(const ffMsg &msg) {
         switch (msg.GetType()) {
         case F2DMSG_WINDOW_ONMOUSEWHEEL: {
@@ -79,8 +80,8 @@ public:
         ffMouse &mouse = ffMouse::Get();
 
         if (mouse.IsLeftDown()) {
-            fFloat xCenter = ffApp::Get().GetWindowSize().x / 2.f;
-            fFloat yCenter = ffApp::Get().GetWindowSize().y / 2.f;
+            fFloat xCenter = ffApp::Get().GetBufferSize().x / 2.f;
+            fFloat yCenter = ffApp::Get().GetBufferSize().y / 2.f;
             targetStatus.position.x += (mouse.GetPos().x - xCenter) * elapsedTime;
             targetStatus.position.y += (mouse.GetPos().y - yCenter) * elapsedTime;
         }
@@ -149,6 +150,7 @@ public:
         this->AddLayer(new CameraStatusPrintLayer);
     }
 
+protected:
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
         pGraph->Begin(ffGraphics::Camera);
 

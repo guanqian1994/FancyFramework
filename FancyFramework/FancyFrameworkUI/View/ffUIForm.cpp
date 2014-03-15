@@ -1,5 +1,5 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+////////////////////////////////////////////////
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,24 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUIButton.cpp
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "ffUIForm.h"
 
-class SceneB : public ffScene {
-protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
-};
+ffUIForm *ffUIForm::Create(ffUIView *pParent, ffPoint local, ffSize size) {
+    if (pParent) {
+        ffUIForm *pForm = new ffUIForm(pParent);
+
+        pForm->SetLocation(local);
+        pForm->SetSize(size);
+
+        return pForm;
+    }
+    return NULL;
+}
+
+ffUIForm::ffUIForm(ffUIView *pParent) : ffUIView(pParent) {
+    
+}

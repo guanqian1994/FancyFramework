@@ -38,6 +38,7 @@ public:
         ffApp::Run(this, 800, 600, L"Helloworld - FancyFramework " FF_VERSION_W);
     }
 
+protected:
     void OnCreate(ffApp &app) {
         ShowCursor(FALSE);
         app.SetBackgroundColor(ffColors::Brown);

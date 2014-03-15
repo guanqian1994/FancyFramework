@@ -1,5 +1,5 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Copyright(c) 2013, frimin
+////////////////////////////////////////////////
+/// Copyright(c) 2014, frimin
 /// All rights reserved.
 /// 
 /// Redistribution and use in source and binary forms, with or without modification,
@@ -23,14 +23,49 @@
 /// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 /// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///
-///        file :   SceneB.h
+///        file :   ffUIImage.cpp
 ///  created by :   frimin
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "ffUIImage.h"
 
-class SceneB : public ffScene {
-protected:
-    bool OnMsg(const ffMsg &msg);
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
-};
+ffUIImage *ffUIImage::Create(ffUIView *pParent, ffPoint local, fcStrW imageResPath) {
+    ffSprite *pSprite = ffSprite::Create(imageResPath);
+
+    return Create(pParent, local, pSprite);
+}
+
+ffUIImage *ffUIImage::Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite) {
+    if (pParent) {
+        if (pSprite == NULL) {
+            return NULL;
+        }
+        ffUIImage *pImage = new ffUIImage(pParent, pSprite);
+
+        pImage->SetLocation(local);
+        pImage->SetSize(fcyVec2(
+            pSprite->Get()->GetTexRect().GetWidth(), 
+            pSprite->Get()->GetTexRect().GetHeight()));
+
+        return pImage;
+    }
+    return NULL;
+}
+
+void ffUIImage::SetImage(ffSprite *pSprite) {
+    m_image = pSprite;
+}
+
+ffSprite *ffUIImage::GetImage() {
+    return m_image.GetPtr();
+}
+
+fBool ffUIImage::OnRender(ffRenderEvent *pEvent) {
+    if (m_image.Valid())
+        m_image->Draw(pEvent->pGraph, pEvent->Dest);
+    return true;
+}
+
+ffUIImage::ffUIImage(ffUIView *pParent, ffSprite *pSprite) : ffUIView(pParent), m_image(pSprite) {
+
+}
