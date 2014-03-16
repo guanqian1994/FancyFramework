@@ -45,7 +45,7 @@ protected:
 
     virtual fBool OnMouseUp(ffUIMouseEvent *pEvent);
 
-    virtual fBool OnMouseMove(ffUIEvent *pEvent);
+    virtual fBool OnMouseMove(ffUIMouseEvent *pEvent);
 
 private:
     ffUIForm(ffUIView *pParent);
@@ -54,5 +54,5 @@ private:
 
     fBool m_isDrag;
 
-    fBool m_beginPos;
+    ffPoint m_moveOffset;
 };

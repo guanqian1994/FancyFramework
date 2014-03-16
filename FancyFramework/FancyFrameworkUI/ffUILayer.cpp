@@ -91,8 +91,9 @@ void ffUILayer::DebugRender(ffGraphics *pGraph) {
     }
 }
 
-ffUILayer::ffUILayer() : ffUIView(NULL) {
+ffUILayer::ffUILayer() : ffUIView(NULL), m_pDragView(NULL) {
     this->SetSize(ffApp::Get().GetBufferSize());
+    SetUILayer(this);
 }
 
 fBool ffUILayer::OnMsg(const ffMsg &msg) {
@@ -103,7 +104,12 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
 
     switch (msg.GetType())
     {
-    case F2DMSG_WINDOW_ONMOUSEMOVE:
+    case F2DMSG_WINDOW_ONMOUSEMOVE: {
+        if (m_pDragView) {
+            m_pDragView->TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
+            break;
+        }
+    }
     case F2DMSG_WINDOW_ONMOUSELUP:
     case F2DMSG_WINDOW_ONMOUSELDOWN:
     case F2DMSG_WINDOW_ONMOUSELDOUBLE:
@@ -113,7 +119,7 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
     case F2DMSG_WINDOW_ONMOUSEMUP:
     case F2DMSG_WINDOW_ONMOUSEMDOWN:
     case F2DMSG_WINDOW_ONMOUSEMDOUBLE: {
-        TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), this, msg);
+        TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
         break;
     }
 
@@ -187,7 +193,7 @@ void ffUILayer::SetSelected(ffUIView *pView) {
     if (m_pSelected == NULL) {
         m_pSelected = pView;
 
-        if (m_pMouseOn) {
+        if (m_pSelected) {
             m_pSelected->OnEnter(NULL);
         }
     }
@@ -224,4 +230,12 @@ void ffUILayer::SetMouseOn(ffUIView *pView) {
             m_pMouseOn->OnMouseEnter(NULL);
         }
     }
+}
+
+void ffUILayer::SetDragView(ffUIView *pView) {
+    m_pDragView = pView;
+}
+
+ffUIView *ffUILayer::GetDragView() {
+    return m_pDragView;
 }

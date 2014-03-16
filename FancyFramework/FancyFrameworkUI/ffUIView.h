@@ -124,13 +124,13 @@ public:
     void SetName(fcStrW name);
     
     /// @brief 获得位置
-    ffPoint GetLocation() const;
+    const ffPoint &GetLocation() const;
 
     /// @brief 设置位置
     void SetLocation(ffPoint p);
 
     /// @brief 获得尺寸
-    ffSize GetSize() const;
+    const ffSize &GetSize() const;
 
     /// @brief 设置尺寸
     void SetSize(ffSize size);
@@ -169,7 +169,7 @@ protected:
 
     virtual fBool OnMouseDoubleClick(ffUIEvent *pEvent);
 
-    virtual fBool OnMouseMove(ffUIEvent *pEvent);
+    virtual fBool OnMouseMove(ffUIMouseEvent *pEvent);
 
     virtual fBool OnMouseWheel(ffUIMouseEvent *pEvent);
 
@@ -181,14 +181,20 @@ protected:
 
     virtual fBool OnRender(ffRenderEvent *pEvent);
 
-    fBool TryHandleMouseMsg(ffPoint mousePos, ffPoint clientLocal, ffUILayer *pUILayer, const ffMsg &msg);
+    fBool TryHandleMouseMsg(ffPoint mousePos, ffPoint parentGlobalLocal, const ffMsg &msg);
 
     fBool OnMsg(const ffMsg &msg);
 
     void SetParentView(ffUIView *pView);
 
+    ffUILayer *GetUILayer() { return m_pUILayer; };
+
+    void SetUILayer(ffUILayer *pLayer) { m_pUILayer = pLayer; };
+
 private:
     std::wstring m_name;
+
+    ffUILayer *m_pUILayer;
 
     ffViewList m_childs;
 

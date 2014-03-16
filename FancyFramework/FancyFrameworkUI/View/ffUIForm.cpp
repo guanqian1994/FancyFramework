@@ -28,6 +28,7 @@
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #include "ffUIForm.h"
+#include "..\ffUILayer.h"
 
 ffUIForm *ffUIForm::Create(ffUIView *pParent, ffPoint local, ffSize size) {
     if (pParent) {
@@ -41,6 +42,48 @@ ffUIForm *ffUIForm::Create(ffUIView *pParent, ffPoint local, ffSize size) {
     return NULL;
 }
 
-ffUIForm::ffUIForm(ffUIView *pParent) : ffUIView(pParent) {
+void ffUIForm::SetAllowDrag(fBool b) {
+}
+
+fBool ffUIForm::GetAllowDrag() const {
+    return m_allowDrag;
+}
+
+fBool ffUIForm::OnMouseLeave(ffUIEvent *pEvent) {
+    return true;
+}
+
+fBool ffUIForm::OnMouseDown(ffUIMouseEvent *pEvent) {
+    if (m_isDrag == false) {
+        m_isDrag = true;
+        ffMouse &mouse = ffMouse::Get();
+
+        m_moveOffset.x = pEvent->X - this->GetLocation().x;
+        m_moveOffset.y = pEvent->Y - this->GetLocation().y;
+
+        GetUILayer()->SetDragView(this);
+    }
+    return true;
+}
+
+fBool ffUIForm::OnMouseUp(ffUIMouseEvent *pEvent) {
+    if (m_isDrag == true) {
+        m_isDrag = false;
+        GetUILayer()->SetDragView(NULL);
+    }
+    return true;
+}
+
+fBool ffUIForm::OnMouseMove(ffUIMouseEvent *pEvent) {
+    if (m_isDrag == true) {
+        this->SetLocation(ffPoint(pEvent->X, pEvent->Y) - m_moveOffset);
+    }
+    return true;
+}
+
+ffUIForm::ffUIForm(ffUIView *pParent) 
+    : ffUIView(pParent), 
+      m_allowDrag(true),
+      m_isDrag(false) {
     
 }

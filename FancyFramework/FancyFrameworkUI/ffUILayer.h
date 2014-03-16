@@ -43,10 +43,14 @@ public:
 
     void SetSelected(ffUIView *pView);
 
+    void SetMouseOn(ffUIView *pView);
+
+    void SetDragView(ffUIView *pView);
+
+    ffUIView *GetDragView();
+
 protected:
     ffUIView *GetMouseOn();
-
-    void SetMouseOn(ffUIView *pView);
 
     fBool OnMsg(const ffMsg &msg);
 
@@ -54,11 +58,12 @@ protected:
 
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 
-
 private:
     ffUILayer();
 
     ffUIView *m_pSelected;
 
     ffUIView *m_pMouseOn;
+
+    ffUIView *m_pDragView;
 };

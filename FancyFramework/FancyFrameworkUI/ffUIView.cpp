@@ -100,11 +100,12 @@ ffUIView::ffUIView(ffUIView *pParent)
     if (pParent != NULL) {
         this->SetParentView(pParent);
         pParent->Add(this);
+        SetUILayer(pParent->GetUILayer());
     }
 }
 
 ffUIView::~ffUIView() {
-    
+    m_childs.RemoveAll();
 }
 
 void ffUIView::Add(ffUIView *pView) {
@@ -123,7 +124,7 @@ void ffUIView::SetName(fcStrW name) {
     m_name = name;
 }
 
-ffPoint ffUIView::GetLocation() const {
+const ffPoint &ffUIView::GetLocation() const {
     return m_location;
 }
 
@@ -131,7 +132,7 @@ void ffUIView::SetLocation(ffPoint p) {
     m_location = p;
 }
 
-ffSize ffUIView::GetSize() const {
+const ffSize &ffUIView::GetSize() const {
     return m_size;
 }
 
@@ -167,24 +168,75 @@ const ffViewList &ffUIView::GetChilds() const {
     return m_childs;
 }
 
-fBool ffUIView::TryHandleMouseMsg(ffPoint mousePos, ffPoint clientLocal, ffUILayer *pUILayer, const ffMsg &msg) {
-    if (false == fcyRect(clientLocal + GetLocation(),
-        clientLocal + GetLocation() + GetSize()).Contain(mousePos)) {
+fBool ffUIView::TryHandleMouseMsg(ffPoint mousePos, ffPoint parentGlobalLocal, const ffMsg &msg) {
+    if (m_enabled == false || m_visible == false) {
         return false;
     }
 
+    ffPoint curGlobalLocal = parentGlobalLocal + m_location;
+
     for (fInt i = m_childs.Size() - 1; i != -1; --i) {
-        if (m_childs.GetView(i)->TryHandleMouseMsg(mousePos, clientLocal + m_location, pUILayer, msg)) {
+        ffUIView *pChild = m_childs.GetView(i);
+        if (false == fcyRect(curGlobalLocal + pChild->GetLocation(),
+            curGlobalLocal + pChild->GetLocation() + pChild->GetSize()).Contain(mousePos)) {
+            continue;
+        }
+        if (m_childs.GetView(i)->TryHandleMouseMsg(mousePos, curGlobalLocal, msg)) {
             return true;
         }
     }
 
     switch (msg.GetType()) {
-    case F2DMSG_WINDOW_ONMOUSEMOVE:
-        return OnMouseMove(NULL) ? (pUILayer->SetMouseOn(this), true) : false;
+    case F2DMSG_WINDOW_ONMOUSEMOVE: {
+        ffUIMouseEvent event(ffMouseButton::None, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+
+        if (m_pUILayer->GetDragView() != NULL) {
+            if (m_pUILayer->GetDragView() != this) {
+                return false;
+            }
+        }
+
+        return OnMouseMove(&event) ? (m_pUILayer->SetMouseOn(this), true) : false;
+    }
     case F2DMSG_WINDOW_ONMOUSELUP: {
-        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseUp(NULL) ? (pUILayer->SetSelected(this), true) : false;
+        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseUp(&event) ? (m_pUILayer->SetSelected(this), true) : false;
+    }
+    case F2DMSG_WINDOW_ONMOUSELDOWN: {
+        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDown(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSELDOUBLE: {
+        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDoubleClick(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSERUP: {
+        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseUp(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSERDOWN: {
+        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDown(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSERDOUBLE: {
+        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDoubleClick(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSEMUP: {
+        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseUp(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSEMDOWN: {
+        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDown(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSEMDOUBLE: {
+        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, 0);
+        return OnMouseDoubleClick(&event);
+    }
+    case F2DMSG_WINDOW_ONMOUSEWHEEL: {
+        ffUIMouseEvent event(ffMouseButton::None, msg[0].ToInt() - (fInt)parentGlobalLocal.x, msg[1].ToInt() - (fInt)parentGlobalLocal.y, msg[2].ToDouble());
+        return OnMouseWheel(&event);
     }
     }
 
@@ -192,50 +244,12 @@ fBool ffUIView::TryHandleMouseMsg(ffPoint mousePos, ffPoint clientLocal, ffUILay
 }
 
 fBool ffUIView::OnMsg(const ffMsg &msg) {
-    if (m_enabled == false || m_visible == false) {
-        return false;
-    }
-
+    /*
     switch (msg.GetType())
     {
-    case F2DMSG_WINDOW_ONMOUSELDOWN: {
-        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDown(&event);
+    
     }
-    case F2DMSG_WINDOW_ONMOUSELDOUBLE: {
-        ffUIMouseEvent event(ffMouseButton::Left, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDoubleClick(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSERUP: {
-        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseUp(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSERDOWN: {
-        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDown(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSERDOUBLE: {
-        ffUIMouseEvent event(ffMouseButton::Right, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDoubleClick(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSEMUP: {
-        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseUp(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSEMDOWN: {
-        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDown(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSEMDOUBLE: {
-        ffUIMouseEvent event(ffMouseButton::Middle, msg[0].ToInt(), msg[1].ToInt(), 0);
-        return OnMouseDoubleClick(&event);
-    }
-    case F2DMSG_WINDOW_ONMOUSEWHEEL: {
-        ffUIMouseEvent event(ffMouseButton::None, msg[0].ToInt(), msg[1].ToInt(), msg[2].ToDouble());
-        return OnMouseWheel(&event);
-    }
-    }
-
+    */
     return false; 
 }
 
@@ -278,7 +292,7 @@ fBool ffUIView::OnMouseDoubleClick(ffUIEvent *pEvent) {
     return true;
 }
 
-fBool ffUIView::OnMouseMove(ffUIEvent *pEvent) {
+fBool ffUIView::OnMouseMove(ffUIMouseEvent *pEvent) {
     MouseMove.Do(this, pEvent);
     return true;
 }

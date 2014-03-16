@@ -46,8 +46,6 @@ public:
         return (m_pObj->*m_pMethod)(pSender, pEvent);
     }
 private:
-    
-
     methodPtr m_pMethod;
     classT *m_pObj;
 };
@@ -62,8 +60,6 @@ public:
         return m_pFunc(pSender, pEvent);
     }
 private:
-    
-
     funcPtr *m_pFunc;
 };
 
