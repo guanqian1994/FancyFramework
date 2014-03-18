@@ -93,6 +93,12 @@ void ffViewList::RemoveAll() {
 /// @brief 可视对象
 ////////////////////////////////////////////////////////////////////////////////
 
+unsigned int ffUIView::s_viewCount = 0;
+
+unsigned int ffUIView::GetViewCount() {
+    return s_viewCount;
+}
+
 ffUIView::ffUIView(ffUIView *pParent)
     : m_pParent(NULL), 
       m_enabled(true), 
@@ -102,18 +108,16 @@ ffUIView::ffUIView(ffUIView *pParent)
         pParent->Add(this);
         SetUILayer(pParent->GetUILayer());
     }
+    ++s_viewCount;
 }
 
 ffUIView::~ffUIView() {
     m_childs.RemoveAll();
+    --s_viewCount;
 }
 
 void ffUIView::Add(ffUIView *pView) {
     m_childs.Add(pView);
-}
-
-void ffUIView::Remove() {
-
 }
 
 fcStrW ffUIView::GetName() const {
@@ -130,6 +134,14 @@ const ffPoint &ffUIView::GetLocation() const {
 
 void ffUIView::SetLocation(ffPoint p) {
     m_location = p;
+}
+
+fFloat ffUIView::GetWidth() const {
+    return m_size.x;
+}
+
+fFloat ffUIView::GetHeight() const {
+    return m_size.y;
 }
 
 const ffSize &ffUIView::GetSize() const {
@@ -263,7 +275,7 @@ fBool ffUIView::OnEnter(ffUIEvent *pEvent) {
 }
 
 fBool ffUIView::OnLeave(ffUIEvent *pEvent) {
-    Enter.Do(this, pEvent);
+    Leave.Do(this, pEvent);
     return true;
 }
 

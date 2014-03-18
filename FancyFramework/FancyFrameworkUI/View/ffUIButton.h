@@ -28,12 +28,50 @@
 /// modified by :   frimin/(add your name)
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include "..\ffUIView.h"
+#include "ffUILable.h"
 
-class ffUIButton : public ffUIView {
+class ffUIButton : public ffUILable {
 public:
     static ffUIButton *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
+    enum Status {
+        Normal = 0, ///< @brief 默认显示的图片
+        Activate = 1,  ///< @brief 当光标进入时显示的图片
+        Push = 2,   ///< @brief 按下时的图片
+        Num = 3,
+    };
+
+    void SetImage(Status status, ffSprite *pSprite);
+
+    ffSprite *GetImage(Status status);
+
+    Status GetState() {
+        return m_curState;
+    }
+
+protected:
+    virtual fBool OnMouseEnter(ffUIEvent *pEvent);
+
+    virtual fBool OnMouseLeave(ffUIEvent *pEvent);
+
+    virtual fBool OnMouseDown(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnMouseUp(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnMouseDoubleClick(ffUIEvent *pEvent);
+
+    virtual fBool OnMouseMove(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnMouseWheel(ffUIMouseEvent *pEvent);
+
+    virtual fBool OnRender(ffRenderEvent *pEvent);
+
+    void OnRenderOriginal(ffRenderEvent *pEvent);
+
 private:
     ffUIButton(ffUIView *pParent);
+
+    Status m_curState;
+
+    ffSprite::Ref m_sprite[Status::Num];
 };

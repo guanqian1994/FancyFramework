@@ -44,6 +44,9 @@
     <ClInclude Include="View\ffUIForm.h">
       <Filter>View\header</Filter>
     </ClInclude>
+    <ClInclude Include="View\ffUILable.h">
+      <Filter>View\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ffUILayer.cpp">
@@ -59,6 +62,9 @@
       <Filter>View\source</Filter>
     </ClCompile>
     <ClCompile Include="View\ffUIForm.cpp">
+      <Filter>View\source</Filter>
+    </ClCompile>
+    <ClCompile Include="View\ffUILable.cpp">
       <Filter>View\source</Filter>
     </ClCompile>
   </ItemGroup>

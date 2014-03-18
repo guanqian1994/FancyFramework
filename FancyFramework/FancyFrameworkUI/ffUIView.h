@@ -108,14 +108,13 @@ public:
     ffEventHandler Render;
 
 public:
+    static unsigned int GetViewCount();
+
     ffUIView(ffUIView *pParent);
 
     virtual ~ffUIView();
 
     void Add(ffUIView *pView);
-
-    /// @brief 移除当前可视对象，并且释放内存
-    void Remove();
 
     /// @brief 获得名称
     fcStrW GetName() const;
@@ -128,6 +127,12 @@ public:
 
     /// @brief 设置位置
     void SetLocation(ffPoint p);
+
+    /// @brief 获得宽度
+    fFloat GetWidth() const;
+
+    /// @brief 获得高度
+    fFloat GetHeight() const;
 
     /// @brief 获得尺寸
     const ffSize &GetSize() const;
@@ -192,6 +197,8 @@ protected:
     void SetUILayer(ffUILayer *pLayer) { m_pUILayer = pLayer; };
 
 private:
+    static unsigned int s_viewCount;
+
     std::wstring m_name;
 
     ffUILayer *m_pUILayer;

@@ -37,6 +37,8 @@ class ffUILayer : public ffLayer, public ffUIView {
 public:
     static ffUILayer *Create();
 
+    virtual ~ffUILayer();
+
     void DebugRender(ffGraphics *pGraph);
 
     ffUIView *GetSelected();

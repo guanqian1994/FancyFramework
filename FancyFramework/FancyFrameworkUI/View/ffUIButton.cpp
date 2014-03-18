@@ -41,6 +41,88 @@ ffUIButton *ffUIButton::Create(ffUIView *pParent, ffPoint local, ffSize size) {
     return NULL;
 }
 
-ffUIButton::ffUIButton(ffUIView *pParent) : ffUIView(pParent) {
+void ffUIButton::SetImage(Status status, ffSprite *pSprite) {
+    m_sprite[status] = pSprite;
+}
+
+ffSprite *ffUIButton::GetImage(Status status) {
+    return m_sprite[status].GetPtr();
+}
+
+fBool ffUIButton::OnMouseEnter(ffUIEvent *pEvent) {
+    m_curState = Activate;
     
+    MouseEnter.Do(this, pEvent);
+    return true;
+}
+
+fBool ffUIButton::OnMouseLeave(ffUIEvent *pEvent) {
+    m_curState = Normal;
+
+    MouseLeave.Do(this, pEvent);
+    return true;
+}
+
+fBool ffUIButton::OnMouseDown(ffUIMouseEvent *pEvent) {
+    if (pEvent->Button == ffMouseButton::Left) {
+        m_curState = Push;
+    }
+
+    MouseDown.Do(this, pEvent);
+    return true;
+}
+
+fBool ffUIButton::OnMouseUp(ffUIMouseEvent *pEvent) {
+    if (pEvent->Button == ffMouseButton::Left) {
+        m_curState = Activate;
+    }
+
+    MouseUp.Do(this, pEvent);
+    return true;
+}
+
+fBool ffUIButton::OnMouseDoubleClick(ffUIEvent *pEvent) {
+    return ffUIView::OnMouseDoubleClick(pEvent);
+}
+
+fBool ffUIButton::OnMouseMove(ffUIMouseEvent *pEvent) {
+    return ffUIView::OnMouseMove(pEvent);
+}
+
+fBool ffUIButton::OnMouseWheel(ffUIMouseEvent *pEvent) {
+    return ffUIView::OnMouseWheel(pEvent);
+}
+
+fBool ffUIButton::OnRender(ffRenderEvent *pEvent) {
+    ffUIButton::OnRenderOriginal(pEvent);
+    ffUILable::OnRenderOriginal(pEvent);
+    Render.Do(this, pEvent);
+    return true;
+}
+
+void ffUIButton::OnRenderOriginal(ffRenderEvent *pEvent) {
+    ffSprite::Ref *pSprite = &m_sprite[Normal];
+
+    switch (m_curState)
+    {
+    case Activate:
+        if (m_sprite[Activate].Valid()) {
+            pSprite = &m_sprite[Activate];
+        }
+        break;
+    case Push:
+        if (m_sprite[Push].Valid()) {
+            pSprite = &m_sprite[Push];
+        }
+        break;
+    default:
+        break;
+    }
+
+    if (pSprite->Valid())
+        (*pSprite)->Draw(pEvent->pGraph, pEvent->Dest);
+}
+
+ffUIButton::ffUIButton(ffUIView *pParent) : ffUILable(pParent), m_curState(Status::Normal) {
+
 }

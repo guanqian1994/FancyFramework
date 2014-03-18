@@ -45,9 +45,15 @@ protected:
 
     virtual fBool OnMouseUp(ffUIMouseEvent *pEvent) { return false; }
 
-    virtual fBool OnMouseMove(ffUIEvent *pEvent){ return false; }
+    virtual fBool OnMouseDoubleClick(ffUIEvent *pEvent) { return false; }
+
+    virtual fBool OnMouseMove(ffUIMouseEvent *pEvent) { return false; }
+
+    virtual fBool OnMouseWheel(ffUIMouseEvent *pEvent) { return false; }
 
     virtual fBool OnRender(ffRenderEvent *pEvent);
+
+    void OnRenderOriginal(ffRenderEvent *pEvent);
 
 private:
     ffUIImage(ffUIView *pParent, ffSprite *pSprite);

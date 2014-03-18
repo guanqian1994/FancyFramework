@@ -56,9 +56,10 @@ struct ffUIKeyEvent : public ffUIEvent {
 };
 
 struct ffUpdateEvent : public ffUIEvent {
-    ffUpdateEvent(fDouble elapsedTime, const fcyRect &dest) : ElapsedTime(elapsedTime), Dest(dest) { }
+    ffUpdateEvent(fDouble elapsedTime, const fcyRect &dest) : ElapsedTime(elapsedTime), Dest(dest), Handled(false) {}
     fDouble ElapsedTime;
     fcyRect Dest;
+    fBool Handled;
 };
 
 struct ffRenderEvent : public ffUpdateEvent {

@@ -61,9 +61,14 @@ ffSprite *ffUIImage::GetImage() {
 }
 
 fBool ffUIImage::OnRender(ffRenderEvent *pEvent) {
+    OnRenderOriginal(pEvent);
+    Render.Do(this, pEvent);
+    return true;
+}
+
+void ffUIImage::OnRenderOriginal(ffRenderEvent *pEvent) {
     if (m_image.Valid())
         m_image->Draw(pEvent->pGraph, pEvent->Dest);
-    return true;
 }
 
 ffUIImage::ffUIImage(ffUIView *pParent, ffSprite *pSprite) : ffUIView(pParent), m_image(pSprite) {
