@@ -58,15 +58,6 @@ fBool ffViewList::Contain(ffUIView *pView) const {
     return false;
 }
 
-fBool ffViewList::Contain(fcStrW name) const {
-    for (auto iter = m_list.begin(); iter != m_list.end(); ++iter) {
-        if (wcscmp((*iter)->GetName(), name) == 0) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void ffViewList::Remove(ffUIView *pView) {
     for (auto iter = m_list.begin(); iter != m_list.end(); ++iter) {
         if ((*iter) == pView) {
@@ -118,14 +109,6 @@ ffUIView::~ffUIView() {
 
 void ffUIView::Add(ffUIView *pView) {
     m_childs.Add(pView);
-}
-
-fcStrW ffUIView::GetName() const {
-    return m_name.c_str();
-}
-
-void ffUIView::SetName(fcStrW name) {
-    m_name = name;
 }
 
 const ffPoint &ffUIView::GetLocation() const {
@@ -270,38 +253,31 @@ void ffUIView::SetParentView(ffUIView *pView) {
 }
 
 fBool ffUIView::OnEnter(ffUIEvent *pEvent) {
-    Enter.Do(this, pEvent);
-    return true; 
+    return Enter.Do(this, pEvent);
 }
 
 fBool ffUIView::OnLeave(ffUIEvent *pEvent) {
-    Leave.Do(this, pEvent);
-    return true;
+    return Leave.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseEnter(ffUIEvent *pEvent) {
-    MouseEnter.Do(this, pEvent);
-    return true;
+    return MouseEnter.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseLeave(ffUIEvent *pEvent) {
-    MouseLeave.Do(this, pEvent);
-    return true;
+    return MouseLeave.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseDown(ffUIMouseEvent *pEvent) {
-    MouseDown.Do(this, pEvent);
-    return true;
+    return MouseDown.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseUp(ffUIMouseEvent *pEvent) {
-    MouseUp.Do(this, pEvent);
-    return true;
+    return MouseUp.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseDoubleClick(ffUIEvent *pEvent) {
-    MouseDoubleClick.Do(this, pEvent);
-    return true;
+    return MouseDoubleClick.Do(this, pEvent);
 }
 
 fBool ffUIView::OnMouseMove(ffUIMouseEvent *pEvent) {
@@ -310,25 +286,20 @@ fBool ffUIView::OnMouseMove(ffUIMouseEvent *pEvent) {
 }
 
 fBool ffUIView::OnMouseWheel(ffUIMouseEvent *pEvent) {
-    MouseWheel.Do(this, pEvent);
-    return true;
+    return MouseWheel.Do(this, pEvent);
 }
 fBool ffUIView::OnKeyDown(ffUIKeyEvent *pEvent) {
-    KeyDown.Do(this, pEvent);
-    return true;
+    return KeyDown.Do(this, pEvent);
 }
 
 fBool ffUIView::OnKeyUp(ffUIKeyEvent *pEvent) {
-    KeyUp.Do(this, pEvent);
-    return true;
+    return KeyUp.Do(this, pEvent);
 }
 
 fBool ffUIView::OnUpdate(ffUpdateEvent *pEvent) {
-    Update.Do(this, pEvent);
-    return true;
+    return Update.Do(this, pEvent);
 }
 
 fBool ffUIView::OnRender(ffRenderEvent *pEvent) {
-    Render.Do(this, pEvent);
-    return true;
+    return Render.Do(this, pEvent);
 }

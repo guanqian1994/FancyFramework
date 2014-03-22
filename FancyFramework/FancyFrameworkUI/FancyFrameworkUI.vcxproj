@@ -73,7 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ffBind.h" />
+    <ClInclude Include="ffUIBind.h" />
     <ClInclude Include="ffUI.h" />
     <ClInclude Include="ffUILayer.h" />
     <ClInclude Include="ffUIEvent.h" />

@@ -32,6 +32,7 @@
 #include "ffAssert.h"
 #include "ffUIEvent.h"
 
+/// 迭代访问子UI树结构
 struct viewTraversalStackElement {
     viewTraversalStackElement(ffUIView *view,
         ffPoint clientLocal, 
@@ -48,6 +49,11 @@ ffUILayer *ffUILayer::Create() {
 
 ffUILayer::~ffUILayer() {
     
+}
+
+void ffUILayer::SetCursorImage(ffSprite *pSprite)  {
+    m_cursor = pSprite;
+    m_cursor->SetHotSpot(m_cursor->GetTexRect().a);
 }
 
 void ffUILayer::DebugRender(ffGraphics *pGraph) {
@@ -112,9 +118,11 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
     switch (msg.GetType())
     {
     case F2DMSG_WINDOW_ONMOUSEMOVE: {
+        m_cursorPos.x = msg[0].ToInt();
+        m_cursorPos.y = msg[1].ToInt();
+
         if (m_pDragView) {
-            m_pDragView->TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
-            break;
+            return m_pDragView->TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
         }
     }
     case F2DMSG_WINDOW_ONMOUSELUP:
@@ -126,15 +134,13 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
     case F2DMSG_WINDOW_ONMOUSEMUP:
     case F2DMSG_WINDOW_ONMOUSEMDOWN:
     case F2DMSG_WINDOW_ONMOUSEMDOUBLE: {
-        TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
-        break;
+        return TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
     }
 
     default: {
         if (m_pSelected) {
             return m_pSelected->OnMsg(msg);
         }
-        break;
     }
     }
     return false;
@@ -222,6 +228,10 @@ void ffUILayer::OnRender(fDouble elapsedTime, ffGraphics *pGraph)
 
             ++pStackElement->Index;
         }
+    }
+
+    if (m_cursor.Valid()) {
+        m_cursor->Draw(pGraph, m_cursorPos);
     }
 
     pGraph->End();

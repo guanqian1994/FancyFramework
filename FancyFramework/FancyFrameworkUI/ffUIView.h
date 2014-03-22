@@ -37,7 +37,7 @@ typedef fcyVec2 ffSize;
 
 typedef fcyVec2 ffPoint;
 
-#include "ffBind.h"
+#include "ffUIBind.h"
 #include "ffUIEvent.h"
 
 class ffUIView;
@@ -58,8 +58,6 @@ public:
     /// @brief 是否包含指定可视对象
     fBool Contain(ffUIView *pView) const;
 
-    fBool Contain(fcStrW name) const;
-
     /// @brief 移除指定对象
     void Remove(ffUIView *pView);
 
@@ -67,6 +65,7 @@ public:
 
     void Remove(fcStrW name);
 
+    /// @brief 移除所有对象
     void RemoveAll();
     
 private:
@@ -80,31 +79,43 @@ class ffUIView {
     friend class ffViewList;
     friend class ffUILayer;
 public:
-    // Events
+    /// @brief 被选中事件
     ffEventHandler Enter;
 
+    /// @brief 被取消选中事件
     ffEventHandler Leave;
 
+    /// @brief 鼠标进入事件
     ffEventHandler MouseEnter;
 
+    /// @brief 鼠标离开事件
     ffEventHandler MouseLeave;
 
+    /// @brief 鼠标按键按下事件
     ffEventHandler MouseDown;
 
+    /// @brief 鼠标按键放开事件
     ffEventHandler MouseUp;
 
+    /// @brief 鼠标双击事件
     ffEventHandler MouseDoubleClick;
 
+    /// @brief 鼠标移动事件
     ffEventHandler MouseMove;
 
+    /// @brief 鼠标滚轮滚动事件
     ffEventHandler MouseWheel;
 
+    /// @brief 键盘按键按下事件
     ffEventHandler KeyDown;
 
+    /// @brief 键盘按键放开事件
     ffEventHandler KeyUp;
 
+    /// @brief 更新事件
     ffEventHandler Update;
 
+    /// @brief 渲染事件
     ffEventHandler Render;
 
 public:
@@ -114,13 +125,8 @@ public:
 
     virtual ~ffUIView();
 
+    /// @brief 添加子对象
     void Add(ffUIView *pView);
-
-    /// @brief 获得名称
-    fcStrW GetName() const;
-
-    /// @brief 设置名称
-    void SetName(fcStrW name);
     
     /// @brief 获得位置
     const ffPoint &GetLocation() const;
@@ -152,6 +158,7 @@ public:
     /// @brief 设置可视
     void SetVisible(fBool b);
 
+    /// @brief 获得父对象
     ffUIView *GetParentView();
 
     /// @brief 获得子对象列表
@@ -198,8 +205,6 @@ protected:
 
 private:
     static unsigned int s_viewCount;
-
-    std::wstring m_name;
 
     ffUILayer *m_pUILayer;
 

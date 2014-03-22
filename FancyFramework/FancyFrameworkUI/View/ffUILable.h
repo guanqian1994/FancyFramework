@@ -30,10 +30,13 @@
 #pragma once
 #include "..\ffUIView.h"
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 标签
+////////////////////////////////////////////////////////////////////////////////
 class ffUILable : public ffUIView {
     friend class ffUIButton;
 public:
-    /// @brief 水平对齐
+    /// @brief 水平对齐模式
     enum HalignMode
     {
         HalignMode_Left,
@@ -41,7 +44,7 @@ public:
         HalignMode_Right,
     };
 
-    /// @brief 垂直对齐
+    /// @brief 垂直对齐模式
     enum ValignMode
     {
         ValignMode_Left,
@@ -49,22 +52,32 @@ public:
         ValignMode_Right,
     };
 
+    /// @brief 创建一个标签
     static ffUILable *Create(ffUIView *pParent, ffPoint local, ffSize size, fcStrW text);
 
+    /// @brief 获得文本
     fcStrW GetText() const;
 
+    /// @brief 设置文本
     void SetText(fcStrW text);
 
+    /// @brief 获得字体
     ffFont *GetFont() const;
 
+    /// @brief 设置字体
+    /// @warning 字体对象需要手动释放
     void SetFont(ffFont *pFont);
 
+    /// @brief 获得颜色
     fcyColor GetColor() const;
 
+    /// @brief 设置颜色
     void SetColor(const fcyColor &color);
 
+    /// @brief 设置水平对齐模式
     void SetHalignMode(HalignMode mode);
 
+    /// @brief 设置垂直对齐模式
     void SetValignMode(ValignMode mode);
 
 protected:

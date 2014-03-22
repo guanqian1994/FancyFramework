@@ -36,11 +36,12 @@ protected:
     void OnCreate() {
         AddLayer(pUI = ffUILayer::Create());
 
+        pUI->SetCursorImage(ffSprite::Create(L"Res\\cursor.png"));
+
         m_debugRender = false;
         m_en = true;
 
         ffImageset *imageset = ffImageset::Create(L"Res\\button.xml");
-
 
         pDebugRenderButton = ffUIButton::Create(pUI, ffPoint(290, 265), ffSize(220, 70));
 
@@ -124,10 +125,6 @@ public:
 
     bool OnMsg(const ffMsg &msg) {
         switch (msg.GetType()) {
-        case F2DMSG_WINDOW_ONMOUSEMOVE:
-            m_mousePos.x = msg[0].ToInt();
-            m_mousePos.y = msg[1].ToInt();
-            return true;
         case F2DMSG_WINDOW_ONCLOSE:
             if (IDYES == MessageBoxW(NULL, L"Are you sure to exit the program ?", L"Exit",
                 MB_YESNO | MB_ICONQUESTION))
@@ -138,20 +135,6 @@ public:
             return false;
         }
     }
-
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
-        pGraph->Begin();
-
-        ffDrawer &drawer = ffDrawer::Get();
-
-        drawer.SetColor(ffColors::Black);
-        drawer.DrawSolidRectangle(pGraph, fcyRect(m_mousePos, m_mousePos + fcyVec2(20, 20)));
-
-        pGraph->End();
-    }
-
-private:
-    fcyVec2 m_mousePos;
 };
 
 int main() {

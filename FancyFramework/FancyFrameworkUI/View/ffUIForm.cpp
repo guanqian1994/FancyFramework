@@ -49,10 +49,6 @@ fBool ffUIForm::GetAllowDrag() const {
     return m_allowDrag;
 }
 
-fBool ffUIForm::OnMouseLeave(ffUIEvent *pEvent) {
-    return true;
-}
-
 fBool ffUIForm::OnMouseDown(ffUIMouseEvent *pEvent) {
     if (m_isDrag == false) {
         m_isDrag = true;
@@ -63,6 +59,9 @@ fBool ffUIForm::OnMouseDown(ffUIMouseEvent *pEvent) {
 
         GetUILayer()->SetDragView(this);
     }
+
+    MouseDown.Do(this, pEvent);
+
     return true;
 }
 
@@ -71,6 +70,9 @@ fBool ffUIForm::OnMouseUp(ffUIMouseEvent *pEvent) {
         m_isDrag = false;
         GetUILayer()->SetDragView(NULL);
     }
+
+    MouseUp.Do(this, pEvent);
+
     return true;
 }
 
@@ -78,6 +80,9 @@ fBool ffUIForm::OnMouseMove(ffUIMouseEvent *pEvent) {
     if (m_isDrag == true) {
         this->SetLocation(ffPoint(pEvent->X, pEvent->Y) - m_moveOffset);
     }
+
+    MouseMove.Do(this, pEvent);
+
     return true;
 }
 

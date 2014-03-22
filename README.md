@@ -10,11 +10,4 @@ FancyFrameworks是基于Fancy2D的一个轻量级框架，它可以让你方便�
 Module
 ==============
 * FancyFramework : 基础框架
-* FancyFrameworkImageSet (Future) : 图片集合扩展
-* FancyFrameworkUI (Future) : UI扩展
-* FancyFrameworkLayers (Future) : 场景&层渲染扩展
-* FancyFrameworkLua (Future) : Lua脚本绑定扩展
-
-Bugs
-==============
-None
+* FancyFrameworkUI : UI扩展，提供简单的UI功能

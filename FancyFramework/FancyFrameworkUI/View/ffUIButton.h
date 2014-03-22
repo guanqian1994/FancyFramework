@@ -30,21 +30,28 @@
 #pragma once
 #include "ffUILable.h"
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 按钮
+////////////////////////////////////////////////////////////////////////////////
 class ffUIButton : public ffUILable {
 public:
+    /// @brief 创建一个按钮
     static ffUIButton *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
     enum Status {
-        Normal = 0, ///< @brief 默认显示的图片
-        Activate = 1,  ///< @brief 当光标进入时显示的图片
-        Push = 2,   ///< @brief 按下时的图片
+        Normal = 0,  ///< @brief 默认显示的图片
+        Activate = 1,///< @brief 当光标进入时显示的图片
+        Push = 2,    ///< @brief 按下时的图片
         Num = 3,
     };
 
+    /// @brief 设置按钮图片
     void SetImage(Status status, ffSprite *pSprite);
 
+    /// @brief 获得按钮图片
     ffSprite *GetImage(Status status);
 
+    /// @brief 获得当前按钮状态
     Status GetState() {
         return m_curState;
     }
@@ -73,5 +80,5 @@ private:
 
     Status m_curState;
 
-    ffSprite::Ref m_sprite[Status::Num];
+    ffSprite::Ref m_sprite[Status::Num]; 
 };

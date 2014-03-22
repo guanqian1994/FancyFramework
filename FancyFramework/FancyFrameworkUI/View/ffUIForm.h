@@ -30,17 +30,22 @@
 #pragma once
 #include "..\ffUIView.h"
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 对话框
+/// @note 提供组合UI对象和拖动功能
+////////////////////////////////////////////////////////////////////////////////
 class ffUIForm : public ffUIView {
 public:
+    /// @brief 创建一个对话框
     static ffUIForm *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
+    /// @brief 设置是否允许拖动
     void SetAllowDrag(fBool b);
 
+    /// @brief 获得是否允许拖动
     fBool GetAllowDrag() const;
 
 protected:
-    virtual fBool OnMouseLeave(ffUIEvent *pEvent);
-
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent);
 
     virtual fBool OnMouseUp(ffUIMouseEvent *pEvent);

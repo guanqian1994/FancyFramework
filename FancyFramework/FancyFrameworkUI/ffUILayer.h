@@ -32,23 +32,38 @@
 #include "ffLayer.h"
 #include "ffUIView.h"
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief UI层
+/// @note 实例化该层并且加入到当前场景中来显示UI内容
+////////////////////////////////////////////////////////////////////////////////
 class ffUILayer : public ffLayer, public ffUIView {
     friend class ffUIView;
 public:
+    /// @brief 创建一个UI层对象
     static ffUILayer *Create();
 
     virtual ~ffUILayer();
 
+    /// @brief 设置光标图片
+    /// @note 图片热点位置会被设置为图片左上角
+    void SetCursorImage(ffSprite *pSprite);
+
+    /// @brief 调试绘制UI对象
     void DebugRender(ffGraphics *pGraph);
 
+    /// @brief 获得当前被选中的对象
     ffUIView *GetSelected();
 
+    /// @brief 设置当前被选中的对象
     void SetSelected(ffUIView *pView);
 
+    /// @brief 设置鼠标位置所在的对象
     void SetMouseOn(ffUIView *pView);
 
+    /// @brief 设置正在被拖动的对象
     void SetDragView(ffUIView *pView);
 
+    /// @brief 获得正在被拖动的对象
     ffUIView *GetDragView();
 
 protected:
@@ -62,6 +77,10 @@ protected:
 
 private:
     ffUILayer();
+
+    ffSprite::Ref m_cursor;
+
+    ffPoint m_cursorPos;
 
     ffUIView *m_pSelected;
 

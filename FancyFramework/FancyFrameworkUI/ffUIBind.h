@@ -31,7 +31,9 @@
 
 class ffUIView;
 struct ffUIEvent;
-
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 绑定对象接口
+////////////////////////////////////////////////////////////////////////////////
 struct ffBind {
     virtual void Do(ffUIView *pSender, ffUIEvent *pEvent) = 0;
 };
@@ -63,6 +65,9 @@ private:
     funcPtr *m_pFunc;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 事件处理对象
+////////////////////////////////////////////////////////////////////////////////
 class ffEventHandler {
 public:
     ffEventHandler() : m_pBind(NULL){}
@@ -73,10 +78,12 @@ public:
         }
     }
 
-    void Do(ffUIView *pSender, ffUIEvent* pEvent) {
+    fBool Do(ffUIView *pSender, ffUIEvent* pEvent) {
         if (m_pBind != NULL) {
             m_pBind->Do(pSender, pEvent);
         }
+
+        return m_pBind != NULL;
     }
 
     ffEventHandler *operator=(ffBind *pBind) {
@@ -91,10 +98,12 @@ private:
     ffBind *m_pBind;;
 };
 
+/// @brief 绑定一个成员方法
 template<typename classT> ffBindMethod<classT> *ffBindWith(typename ffBindMethod<classT>::methodPtr method, classT *pObj) {
     return new ffBindMethod<classT>(method, pObj);
 }
 
+/// @brief 绑定一个函数
 template<typename classT> ffBindFunction *ffBindWith(typename ffBindFunction::funcPtr func) {
     return new ffBindFunction(func);
 }

@@ -30,14 +30,20 @@
 #pragma once
 #include "..\ffUIView.h"
 
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 图片
+////////////////////////////////////////////////////////////////////////////////
 class ffUIImage : public ffUIView {
 public:
+    /// @brief 创建一个图片
     static ffUIImage *Create(ffUIView *pParent, ffPoint local, fcStrW imageResPath);
 
     static ffUIImage *Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite);
 
+    /// @brief 设置图片
     void SetImage(ffSprite *pSprite);
 
+    /// @brief 获得图片
     ffSprite *GetImage();
 
 protected:

@@ -43,6 +43,7 @@ ffUIImage *ffUIImage::Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite
         ffUIImage *pImage = new ffUIImage(pParent, pSprite);
 
         pImage->SetLocation(local);
+
         pImage->SetSize(fcyVec2(
             pSprite->Get()->GetTexRect().GetWidth(), 
             pSprite->Get()->GetTexRect().GetHeight()));
