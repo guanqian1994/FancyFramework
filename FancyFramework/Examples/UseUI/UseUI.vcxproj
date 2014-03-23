@@ -39,12 +39,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFrameworkUI;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFrameworkUI;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <IntDir>obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\FancyFrameworkUI;$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
+    <IntDir>obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

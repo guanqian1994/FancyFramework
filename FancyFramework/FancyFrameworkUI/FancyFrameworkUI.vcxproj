@@ -40,11 +40,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Extern\fancy2D;$(ProjectDir)..\FancyFramework;$(ProjectDir)..\Extern\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Extern\fancy2D;$(ProjectDir)..\FancyFramework;$(ProjectDir)..\Extern\fancylib;$(IncludePath)</IncludePath>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <LibraryPath>$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

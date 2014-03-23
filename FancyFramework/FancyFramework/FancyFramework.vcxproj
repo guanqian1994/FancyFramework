@@ -40,13 +40,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\DSS;$(SolutionDir)\Extern\;$(SolutionDir)\Extern\fancy2D\;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\Extern\luaPlus\;$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Include;$(SolutionDir)\Extern\fancyLib\;$(SolutionDir)\Extern\Profile\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Extern\;$(ProjectDir)..\Extern\fancy2D\;$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Include;$(ProjectDir)..\Extern\fancyLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d</TargetName>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\Extern\DSS;$(SolutionDir)\Extern\;$(SolutionDir)\Extern\fancy2D\;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\Extern\luaPlus\;$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Include;$(SolutionDir)\Extern\fancyLib\;$(SolutionDir)\Extern\Profile\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Extern\;$(ProjectDir)..\Extern\fancy2D\;$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Include;$(ProjectDir)..\Extern\fancyLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Extern\fancy2D\extern\DXSDK\Lib\x86;$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
