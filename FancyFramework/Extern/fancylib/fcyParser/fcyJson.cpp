@@ -35,7 +35,7 @@ void fcyJsonValue::writeToStr(std::wstring& OutStr)
 	switch(m_Type)
 	{
 	case FCYJSONVALUETYPE_NULL:
-		OutStr += L"null";
+		OutStr += L"NULL";
 		break;
 	case FCYJSONVALUETYPE_BOOL:
 		if(m_ValueBool)
@@ -455,7 +455,7 @@ fcyJsonValue* fcyJson::parseValue(fcyLexicalReader& Context)
 		break;
 	case L'n':
 		{
-			Context.Match(L"null", false);
+			Context.Match(L"NULL", false);
 
 			tRet = new fcyJsonValue();
 		}

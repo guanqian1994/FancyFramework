@@ -64,14 +64,14 @@ public:  // 用于接口转换
 	virtual fcyJsonList* ToList();     ///< @brief 转换到数组
 	virtual fcyJsonDict* ToDict();     ///< @brief 转换到字典
 public: // 值类型操作, 非值类型返回false
-	fBool SetValue();                  ///< @brief  设置为null
+	fBool SetValue();                  ///< @brief  设置为NULL
 	                                   ///< @return 如果对象不是值类型，则返回假
 	fBool SetValue(fBool Value);       ///< @brief  设置为bool
 	                                   ///< @return 如果对象不是值类型，则返回假
 	fBool SetValue(fDouble Value);     ///< @brief  设置为数字
 	                                   ///< @return 如果对象不是值类型，则返回假
 public: // 用于手动创建
-	fcyJsonValue();                      ///< @brief 创建为null值类型
+	fcyJsonValue();                      ///< @brief 创建为NULL值类型
 	fcyJsonValue(fBool Value);           ///< @brief 创建为bool值类型
 	fcyJsonValue(fDouble Value);         ///< @brief 创建为数值类型
 	fcyJsonValue(FCYJSONVALUETYPE Type); ///< @brief 创建为String/List/Dict

@@ -34,13 +34,10 @@
 
 /// 迭代访问子UI树结构
 struct viewTraversalStackElement {
-    viewTraversalStackElement(ffUIView *view,
-        ffPoint clientLocal, 
-        fInt index) : Handled(false), pView(view), ClientLocal(clientLocal), Index(index) { }
-    fBool Handled;
     ffUIView *pView;
     ffPoint ClientLocal;
     fInt Index;
+    fBool Handled;
 };
 
 ffUILayer *ffUILayer::Create() {
@@ -48,7 +45,7 @@ ffUILayer *ffUILayer::Create() {
 }
 
 ffUILayer::~ffUILayer() {
-    
+
 }
 
 void ffUILayer::SetCursorImage(ffSprite *pSprite)  {
@@ -58,13 +55,11 @@ void ffUILayer::SetCursorImage(ffSprite *pSprite)  {
 
 void ffUILayer::DebugRender(ffGraphics *pGraph) {
     ffDrawer &drawer = ffDrawer::Get();
-   
+
     std::stack<viewTraversalStackElement> viewListStack;
 
-    viewListStack.push(viewTraversalStackElement(
-        this,
-        ffPoint(0, 0),
-        0));
+    viewListStack.push(viewTraversalStackElement 
+    {this, ffPoint(0, 0), 0, false});
 
     while (!viewListStack.empty()) {
         viewTraversalStackElement *pStackElement =
@@ -72,7 +67,7 @@ void ffUILayer::DebugRender(ffGraphics *pGraph) {
 
         if (pStackElement->Index == pStackElement->pView->GetChilds().Size()) {
 
-            if (pStackElement->pView->IsEnabled() == false) {
+            if (pStackElement->pView->Enabled() == false) {
                 drawer.SetColor(ffColors::Gray);
             } else if (pStackElement->pView == m_pSelected) {
                 drawer.SetColor(ffColors::Blue);
@@ -83,8 +78,8 @@ void ffUILayer::DebugRender(ffGraphics *pGraph) {
             }
 
             ffDrawer::Get().DrawRectangle(pGraph,
-                fcyRect(pStackElement->ClientLocal + pStackElement->pView->GetLocation(),
-                pStackElement->ClientLocal + pStackElement->pView->GetLocation() + pStackElement->pView->GetSize()));
+                fcyRect(pStackElement->ClientLocal + pStackElement->pView->Location.Get(),
+                pStackElement->ClientLocal + pStackElement->pView->Location.Get() + pStackElement->pView->Size.Get()));
 
             viewListStack.pop();
 
@@ -94,18 +89,18 @@ void ffUILayer::DebugRender(ffGraphics *pGraph) {
         if (pStackElement->pView->GetChilds().Size() != 0) {
             ffUIView *childView = pStackElement->pView->GetChilds().GetView(pStackElement->Index);
 
-            viewListStack.push(viewTraversalStackElement(
+            viewListStack.push(viewTraversalStackElement {
                 childView,
-                ffPoint(pStackElement->pView->GetLocation() + pStackElement->ClientLocal),
-                0));
+                ffPoint(pStackElement->pView->Location.Get() + pStackElement->ClientLocal),
+                0, false});
         }
 
         ++pStackElement->Index;
     }
 }
 
-ffUILayer::ffUILayer() : ffUIView(NULL), m_pDragView(NULL) {
-    this->SetSize(ffApp::Get().GetBufferSize());
+ffUILayer::ffUILayer() : ffUIView(NULL) {
+    this->Size.Set(ffApp::Get().GetBufferSize());
     SetUILayer(this);
 }
 
@@ -122,7 +117,7 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
         m_cursorPos.y = msg[1].ToInt();
 
         if (m_pDragView) {
-            return m_pDragView->TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
+            return m_pDragView->TryHandleMouseMsg(mouse.GetPos(), this->Location.Get(), msg);
         }
     }
     case F2DMSG_WINDOW_ONMOUSELUP:
@@ -134,7 +129,7 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
     case F2DMSG_WINDOW_ONMOUSEMUP:
     case F2DMSG_WINDOW_ONMOUSEMDOWN:
     case F2DMSG_WINDOW_ONMOUSEMDOUBLE: {
-        return TryHandleMouseMsg(mouse.GetPos(), this->GetLocation(), msg);
+        return TryHandleMouseMsg(mouse.GetPos(), this->Location.Get(), msg);
     }
 
     default: {
@@ -149,10 +144,8 @@ fBool ffUILayer::OnMsg(const ffMsg &msg) {
 void ffUILayer::OnUpdate(fDouble elapsedTime) {
     std::stack<viewTraversalStackElement> viewListStack;
 
-    viewListStack.push(viewTraversalStackElement(
-        this,
-        ffPoint(0, 0),
-        0));
+    viewListStack.push(viewTraversalStackElement 
+    { this, ffPoint(0, 0), 0, false });
 
     ffUpdateEvent event(elapsedTime, fcyRect());
 
@@ -161,9 +154,9 @@ void ffUILayer::OnUpdate(fDouble elapsedTime) {
             &viewListStack.top();
 
         if (pStackElement->Handled == false) {
-            if (pStackElement->pView->IsEnabled()) {
-                event.Dest.a = pStackElement->ClientLocal + pStackElement->pView->GetLocation();
-                event.Dest.b = event.Dest.a + pStackElement->pView->GetSize();
+            if (pStackElement->pView->Enabled.Get()) {
+                event.Dest.a = pStackElement->ClientLocal + pStackElement->pView->Location.Get();
+                event.Dest.b = event.Dest.a + pStackElement->pView->Size.Get();
                 pStackElement->pView->OnUpdate(&event);
             }
             pStackElement->Handled = true;
@@ -177,10 +170,10 @@ void ffUILayer::OnUpdate(fDouble elapsedTime) {
         if (pStackElement->pView->GetChilds().Size() != 0) {
             ffUIView *childView = pStackElement->pView->GetChilds().GetView(pStackElement->Index);
 
-            viewListStack.push(viewTraversalStackElement(
+            viewListStack.push(viewTraversalStackElement{
                 childView,
-                ffPoint(pStackElement->pView->GetLocation() + pStackElement->ClientLocal),
-                0));
+                ffPoint(pStackElement->pView->Location.Get() + pStackElement->ClientLocal),
+                0, false });
 
             ++pStackElement->Index;
         }
@@ -193,10 +186,8 @@ void ffUILayer::OnRender(fDouble elapsedTime, ffGraphics *pGraph)
 
     std::stack<viewTraversalStackElement> viewListStack;
 
-    viewListStack.push(viewTraversalStackElement(
-        this,
-        ffPoint(0, 0),
-        0));
+    viewListStack.push(viewTraversalStackElement {
+        this, ffPoint(0, 0), 0, false} );
 
     ffRenderEvent event(elapsedTime, fcyRect(), pGraph);
 
@@ -205,9 +196,9 @@ void ffUILayer::OnRender(fDouble elapsedTime, ffGraphics *pGraph)
             &viewListStack.top();
 
         if (pStackElement->Handled == false) {
-            if (pStackElement->pView->IsVisible()) {
-                event.Dest.a = pStackElement->ClientLocal + pStackElement->pView->GetLocation();
-                event.Dest.b = event.Dest.a + pStackElement->pView->GetSize();
+            if (pStackElement->pView->Visible.Get()) {
+                event.Dest.a = pStackElement->ClientLocal + pStackElement->pView->Location.Get();
+                event.Dest.b = event.Dest.a + pStackElement->pView->Size.Get();
                 pStackElement->pView->OnRender(&event);
             }
             pStackElement->Handled = true;
@@ -221,10 +212,10 @@ void ffUILayer::OnRender(fDouble elapsedTime, ffGraphics *pGraph)
         if (pStackElement->pView->GetChilds().Size() != 0) {
             ffUIView *childView = pStackElement->pView->GetChilds().GetView(pStackElement->Index);
 
-            viewListStack.push(viewTraversalStackElement(
+            viewListStack.push(viewTraversalStackElement {
                 childView,
-                ffPoint(pStackElement->pView->GetLocation() + pStackElement->ClientLocal),
-                0));
+                ffPoint(pStackElement->pView->Location.Get() + pStackElement->ClientLocal),
+                0});
 
             ++pStackElement->Index;
         }

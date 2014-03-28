@@ -40,25 +40,18 @@ ffUIImage *ffUIImage::Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite
         if (pSprite == NULL) {
             return NULL;
         }
+
         ffUIImage *pImage = new ffUIImage(pParent, pSprite);
 
-        pImage->SetLocation(local);
+        pImage->Location = local;
 
-        pImage->SetSize(fcyVec2(
+        pImage->Size = fcyVec2(
             pSprite->Get()->GetTexRect().GetWidth(), 
-            pSprite->Get()->GetTexRect().GetHeight()));
+            pSprite->Get()->GetTexRect().GetHeight());
 
         return pImage;
     }
     return NULL;
-}
-
-void ffUIImage::SetImage(ffSprite *pSprite) {
-    m_image = pSprite;
-}
-
-ffSprite *ffUIImage::GetImage() {
-    return m_image.GetPtr();
 }
 
 fBool ffUIImage::OnRender(ffRenderEvent *pEvent) {
@@ -72,6 +65,10 @@ void ffUIImage::OnRenderOriginal(ffRenderEvent *pEvent) {
         m_image->Draw(pEvent->pGraph, pEvent->Dest);
 }
 
-ffUIImage::ffUIImage(ffUIView *pParent, ffSprite *pSprite) : ffUIView(pParent), m_image(pSprite) {
+ffUIImage::ffUIImage(ffUIView *pParent, ffSprite *pSprite) : ffUIView(pParent), m_image(pSprite),
+    Image(
+    [&](ffSprite *p)->void { m_image = p; },
+    [&]()->ffSprite *{ return m_image.GetPtr(); })
+{
 
 }

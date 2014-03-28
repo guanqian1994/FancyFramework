@@ -971,7 +971,7 @@ void fcyXmlDocument::Save(std::wstring& Out)const
 	if(m_pRootElement)
 		m_pRootElement->Save(Out, 0);
 	else
-		throw fcyException("fcyXmlDocument::Save", "Root element is null.");
+		throw fcyException("fcyXmlDocument::Save", "Root element is NULL.");
 }
 
 void fcyXmlDocument::Save(fcyStream* pOut)const
@@ -981,7 +981,7 @@ void fcyXmlDocument::Save(fcyStream* pOut)const
 	if(m_pRootElement)
 		m_pRootElement->Save(tOutStr, 0);
 	else
-		throw fcyException("fcyXmlDocument::Save", "Root element is null.");
+		throw fcyException("fcyXmlDocument::Save", "Root element is NULL.");
 
 	// UTF 16 BOM
 	fByte tUTF16LE[2] = { 0xFF, 0xFE };

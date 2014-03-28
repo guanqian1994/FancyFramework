@@ -24,7 +24,7 @@ LRESULT CALLBACK f2dWindowClass::WndProc(HWND Handle, UINT Msg, WPARAM wParam, L
 	f2dWindowImpl* pWindow = s_WindowCallBack[Handle];
 
 	// 如果无指针，交给系统处理
-	if (pWindow == nullptr)
+	if (pWindow == NULL)
 	{
 		return DefWindowProc(Handle,Msg,wParam,lParam);
 	}

@@ -93,13 +93,34 @@ unsigned int ffUIView::GetViewCount() {
 ffUIView::ffUIView(ffUIView *pParent)
     : m_pParent(NULL), 
       m_enabled(true), 
-      m_visible(true) {
+      m_visible(true),
+
+      Location(
+      [&](const ffPoint& p)->void { m_location = p; },
+      [&]()->const ffPoint&{ return m_location;} ),
+
+      Size (
+      [&](const ffSize& p)->void { m_size = p; }, 
+      [&]()->const ffSize&{ return m_size; }),
+
+      Enabled(
+      [&](const fBool& p)->void { m_enabled = p; },
+      [&]()->const fBool&{ return m_enabled; }),
+        
+      Visible(
+      [&](const fBool& p)->void { m_visible = p; },
+      [&]()->const fBool&{ return m_visible; })
+
+{
+
     if (pParent != NULL) {
         this->SetParentView(pParent);
         pParent->Add(this);
         SetUILayer(pParent->GetUILayer());
     }
+
     ++s_viewCount;
+
 }
 
 ffUIView::~ffUIView() {
@@ -109,46 +130,6 @@ ffUIView::~ffUIView() {
 
 void ffUIView::Add(ffUIView *pView) {
     m_childs.Add(pView);
-}
-
-const ffPoint &ffUIView::GetLocation() const {
-    return m_location;
-}
-
-void ffUIView::SetLocation(ffPoint p) {
-    m_location = p;
-}
-
-fFloat ffUIView::GetWidth() const {
-    return m_size.x;
-}
-
-fFloat ffUIView::GetHeight() const {
-    return m_size.y;
-}
-
-const ffSize &ffUIView::GetSize() const {
-    return m_size;
-}
-
-void ffUIView::SetSize(ffSize size) {
-    m_size = size;
-}
-
-fBool ffUIView::IsEnabled() const {
-    return m_enabled;
-}
-
-void ffUIView::SetEnabled(fBool b) {
-    m_enabled = b;
-}
-
-fBool ffUIView::IsVisible() const {
-    return m_visible;
-}
-
-void ffUIView::SetVisible(fBool b) {
-    m_visible = b;
 }
 
 ffUIView *ffUIView::GetParentView() {
@@ -168,17 +149,22 @@ fBool ffUIView::TryHandleMouseMsg(ffPoint mousePos, ffPoint parentGlobalLocal, c
         return false;
     }
 
-    ffPoint curGlobalLocal = parentGlobalLocal + m_location;
+    ffPoint curGlobalLocal = parentGlobalLocal + this->Location.Get();
 
     for (fInt i = m_childs.Size() - 1; i != -1; --i) {
         ffUIView *pChild = m_childs.GetView(i);
-        if (false == fcyRect(curGlobalLocal + pChild->GetLocation(),
-            curGlobalLocal + pChild->GetLocation() + pChild->GetSize()).Contain(mousePos)) {
+        if (false == fcyRect(curGlobalLocal + pChild->Location.Get(),
+            curGlobalLocal + pChild->Location.Get() + pChild->Size.Get()).Contain(mousePos)) {
             continue;
         }
         if (m_childs.GetView(i)->TryHandleMouseMsg(mousePos, curGlobalLocal, msg)) {
             return true;
         }
+    }
+
+    /// 如果当前对象时UI层，则不作任何处理
+    if (this == m_pUILayer) {
+        return false;
     }
 
     switch (msg.GetType()) {

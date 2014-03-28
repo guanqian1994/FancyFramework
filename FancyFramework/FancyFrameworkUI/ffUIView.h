@@ -39,6 +39,7 @@ typedef fcyVec2 ffPoint;
 
 #include "ffUIBind.h"
 #include "ffUIEvent.h"
+#include "ffUIProperty.h"
 
 class ffUIView;
 
@@ -79,6 +80,8 @@ class ffUIView {
     friend class ffViewList;
     friend class ffUILayer;
 public:
+    /// 事件
+
     /// @brief 被选中事件
     ffEventHandler Enter;
 
@@ -119,6 +122,21 @@ public:
     ffEventHandler Render;
 
 public:
+    /// 属性
+
+    /// @brief 位置
+    ffUIProperty::Value<ffPoint> Location;
+
+    /// @brief 尺寸
+    ffUIProperty::Value<ffSize> Size;
+
+    /// @brief 启用
+    ffUIProperty::Value<fBool> Enabled;
+
+    /// @brief 可视
+    ffUIProperty::Value<fBool> Visible;
+
+public:
     static unsigned int GetViewCount();
 
     ffUIView(ffUIView *pParent);
@@ -127,36 +145,6 @@ public:
 
     /// @brief 添加子对象
     void Add(ffUIView *pView);
-    
-    /// @brief 获得位置
-    const ffPoint &GetLocation() const;
-
-    /// @brief 设置位置
-    void SetLocation(ffPoint p);
-
-    /// @brief 获得宽度
-    fFloat GetWidth() const;
-
-    /// @brief 获得高度
-    fFloat GetHeight() const;
-
-    /// @brief 获得尺寸
-    const ffSize &GetSize() const;
-
-    /// @brief 设置尺寸
-    void SetSize(ffSize size);
-
-    /// @brief 是否启用
-    fBool IsEnabled() const;
-
-    /// @brief 设置启用
-    void SetEnabled(fBool b);
-
-    /// @brief 是否可视
-    fBool IsVisible() const;
-
-    /// @brief 设置可视
-    void SetVisible(fBool b);
 
     /// @brief 获得父对象
     ffUIView *GetParentView();

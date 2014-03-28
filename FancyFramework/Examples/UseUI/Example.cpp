@@ -45,20 +45,20 @@ protected:
 
         pDebugRenderButton = ffUIButton::Create(pUI, ffPoint(290, 265), ffSize(220, 70));
 
-        pDebugRenderButton->SetImage(ffUIButton::Normal, imageset->CreateSprite(L"Normal"));
-        pDebugRenderButton->SetImage(ffUIButton::Activate, imageset->CreateSprite(L"Push"));
-        pDebugRenderButton->SetText(L"Debug render");
-        pDebugRenderButton->SetValignMode(ffUIButton::ValignMode_Center);
-        pDebugRenderButton->SetColor(ffColors::White);
+        pDebugRenderButton->ImageNormal = imageset->CreateSprite(L"Normal");
+        pDebugRenderButton->ImagePush = imageset->CreateSprite(L"Push");
+        pDebugRenderButton->Text = L"Debug render";
+        pDebugRenderButton->Valign = ffUIButton::ValignMode_Center;
+        pDebugRenderButton->Color = ffColors::White;
         pDebugRenderButton->MouseUp = ffBindWith(&ExampleScene::OnDebugRenderButtonMouseUp, this);
 
         pChangeLanguageButton = ffUIButton::Create(pUI, ffPoint(290, 320), ffSize(220, 70));
 
-        pChangeLanguageButton->SetImage(ffUIButton::Normal, imageset->CreateSprite(L"Normal"));
-        pChangeLanguageButton->SetImage(ffUIButton::Activate, imageset->CreateSprite(L"Push"));
-        pChangeLanguageButton->SetText(L"Change the language");
-        pChangeLanguageButton->SetValignMode(ffUIButton::ValignMode_Center);
-        pChangeLanguageButton->SetColor(ffColors::White);
+        pChangeLanguageButton->ImageNormal = imageset->CreateSprite(L"Normal");
+        pChangeLanguageButton->ImagePush = imageset->CreateSprite(L"Push");
+        pChangeLanguageButton->Text = L"Change the language";
+        pChangeLanguageButton->Valign = ffUIButton::ValignMode_Center;
+        pChangeLanguageButton->Color = ffColors::White;
         pChangeLanguageButton->MouseUp = ffBindWith(&ExampleScene::OnChangeLanguageButtonMouseUp, this);
 
         pLable = ffUILable::Create(pUI, ffPoint(290, 250), ffSize(220, 24), L"hello world :)");
@@ -77,13 +77,13 @@ protected:
             return;
         }
         if (m_en) {
-            pLable->SetText(L"你好世界！");
-            pDebugRenderButton->SetText(L"调试绘制模式");
-            pChangeLanguageButton->SetText(L"变更语言");
+            pLable->Text = L"你好世界！";
+            pDebugRenderButton->Text = L"调试绘制模式";
+            pChangeLanguageButton->Text = L"变更语言";
         } else {
-            pLable->SetText(L"hello world :)");
-            pDebugRenderButton->SetText(L"Debug render");
-            pChangeLanguageButton->SetText(L"Change the language");
+            pLable->Text = L"hello world :)";
+            pDebugRenderButton->Text = L"Debug render";
+            pChangeLanguageButton->Text = L"Change the language";
         }
 
         m_en = !m_en;

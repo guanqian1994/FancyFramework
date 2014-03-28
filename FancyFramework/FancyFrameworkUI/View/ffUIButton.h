@@ -35,26 +35,30 @@
 ////////////////////////////////////////////////////////////////////////////////
 class ffUIButton : public ffUILable {
 public:
-    /// @brief 创建一个按钮
-    static ffUIButton *Create(ffUIView *pParent, ffPoint local, ffSize size);
-
     enum Status {
-        Normal = 0,  ///< @brief 默认显示的图片
-        Activate = 1,///< @brief 当光标进入时显示的图片
-        Push = 2,    ///< @brief 按下时的图片
+        Normal = 0,
+        Activate = 1,
+        Push = 2,
         Num = 3,
     };
 
-    /// @brief 设置按钮图片
-    void SetImage(Status status, ffSprite *pSprite);
+    /// 属性
 
-    /// @brief 获得按钮图片
-    ffSprite *GetImage(Status status);
+    /// @brief 默认显示的图片
+    ffUIProperty::Ptr<ffSprite> ImageNormal;
+    
+    /// @brief 当光标进入时显示的图片
+    ffUIProperty::Ptr<ffSprite> ImageActivate;
 
-    /// @brief 获得当前按钮状态
-    Status GetState() {
-        return m_curState;
-    }
+    /// @brief 按下时的图片
+    ffUIProperty::Ptr<ffSprite> ImagePush;
+
+    /// @brief 当前状态
+    ffUIProperty::Value<Status> State;
+
+public:
+    /// @brief 创建一个按钮
+    static ffUIButton *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
 protected:
     virtual fBool OnMouseEnter(ffUIEvent *pEvent);

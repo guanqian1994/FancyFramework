@@ -36,7 +36,7 @@
 /// @brief UI层
 /// @note 实例化该层并且加入到当前场景中来显示UI内容
 ////////////////////////////////////////////////////////////////////////////////
-class ffUILayer : public ffLayer, public ffUIView {
+class ffUILayer final : public ffLayer, public ffUIView {
     friend class ffUIView;
 public:
     /// @brief 创建一个UI层对象
@@ -82,9 +82,9 @@ private:
 
     ffPoint m_cursorPos;
 
-    ffUIView *m_pSelected;
+    ffUIView *m_pSelected = nullptr;
 
-    ffUIView *m_pMouseOn;
+    ffUIView *m_pMouseOn = nullptr;
 
-    ffUIView *m_pDragView;
+    ffUIView *m_pDragView = nullptr;
 };

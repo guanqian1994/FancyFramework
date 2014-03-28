@@ -93,6 +93,12 @@ public:
     /// @brief 检查是否存在制定场景层
     fBool HasLayer(ffLayer *pLayer, fInt group = 0) const;
 
+    /// @brief 执行更新
+    void DoUpdate(fDouble elapsedTime) { OnUpdate(elapsedTime); }
+
+    /// @brief 执行渲染
+    void DoRender(fDouble elapsedTime, ffGraphics *pGraph) { OnRender(elapsedTime, pGraph); }
+
 protected:
     /// @brief 被创建时调用
     virtual void OnCreate();
@@ -112,6 +118,7 @@ protected:
     /// @brief 画面更新时被调用
     virtual void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 
+protected:
     /// @brief 处理消息
     /// @note 不可重写，上层消息首先将消息发送给此方法，如果消息没有经过处理则调用 OnMsg 供场景
     /// 来处理。若场景没有处理则交给框架来处理这个消息。

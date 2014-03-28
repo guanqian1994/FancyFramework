@@ -80,6 +80,7 @@
     <ClInclude Include="ffUI.h" />
     <ClInclude Include="ffUILayer.h" />
     <ClInclude Include="ffUIEvent.h" />
+    <ClInclude Include="ffUIProperty.h" />
     <ClInclude Include="ffUIView.h" />
     <ClInclude Include="View\ffUIButton.h" />
     <ClInclude Include="View\ffUIForm.h" />

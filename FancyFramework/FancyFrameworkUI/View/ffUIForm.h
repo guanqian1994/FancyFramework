@@ -36,14 +36,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 class ffUIForm : public ffUIView {
 public:
+    /// 属性
+
+    /// @brief 允许拖动
+    ffUIProperty::Value<fBool> AllowDrag;
+
+public:
     /// @brief 创建一个对话框
     static ffUIForm *Create(ffUIView *pParent, ffPoint local, ffSize size);
-
-    /// @brief 设置是否允许拖动
-    void SetAllowDrag(fBool b);
-
-    /// @brief 获得是否允许拖动
-    fBool GetAllowDrag() const;
 
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent);

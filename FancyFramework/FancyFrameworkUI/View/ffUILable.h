@@ -52,33 +52,28 @@ public:
         ValignMode_Right,
     };
 
+    /// 属性
+
+    /// @brief 水平对齐模式
+    ffUIProperty::Value<HalignMode> Halign;
+
+    /// @brief 水平对齐模式
+    ffUIProperty::Value<ValignMode> Valign;
+
+    /// @brief 文本颜色
+    ffUIProperty::Value<fcyColor> Color;
+
+    /// @brief 文本
+    ffUIProperty::Value<std::wstring> Text;
+
+    /// @brief 文本字体
+    /// @warning 字体对象需要用户管理内存
+    ffUIProperty::Ptr<ffFont> Font;
+
+public:
+
     /// @brief 创建一个标签
     static ffUILable *Create(ffUIView *pParent, ffPoint local, ffSize size, fcStrW text);
-
-    /// @brief 获得文本
-    fcStrW GetText() const;
-
-    /// @brief 设置文本
-    void SetText(fcStrW text);
-
-    /// @brief 获得字体
-    ffFont *GetFont() const;
-
-    /// @brief 设置字体
-    /// @warning 字体对象需要手动释放
-    void SetFont(ffFont *pFont);
-
-    /// @brief 获得颜色
-    fcyColor GetColor() const;
-
-    /// @brief 设置颜色
-    void SetColor(const fcyColor &color);
-
-    /// @brief 设置水平对齐模式
-    void SetHalignMode(HalignMode mode);
-
-    /// @brief 设置垂直对齐模式
-    void SetValignMode(ValignMode mode);
 
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent) { return false; }

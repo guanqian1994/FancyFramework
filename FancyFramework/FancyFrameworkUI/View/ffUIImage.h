@@ -35,16 +35,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 class ffUIImage : public ffUIView {
 public:
+    /// 属性
+
+    /// @brief 显示的图片
+    ffUIProperty::Ptr<ffSprite> Image;
+
+public:
     /// @brief 创建一个图片
     static ffUIImage *Create(ffUIView *pParent, ffPoint local, fcStrW imageResPath);
 
     static ffUIImage *Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite);
-
-    /// @brief 设置图片
-    void SetImage(ffSprite *pSprite);
-
-    /// @brief 获得图片
-    ffSprite *GetImage();
 
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent) { return false; }
