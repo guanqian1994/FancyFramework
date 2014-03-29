@@ -46,9 +46,9 @@ public:
     /// @brief 垂直对齐模式
     enum ValignMode
     {
-        ValignMode_Left,
+        ValignMode_Top,
         ValignMode_Center,
-        ValignMode_Right,
+        ValignMode_Bottom,
     };
 
     /// 属性

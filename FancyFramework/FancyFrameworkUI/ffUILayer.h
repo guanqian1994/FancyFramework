@@ -70,11 +70,11 @@ public:
 protected:
     ffUIView *GetMouseOn();
 
-    fBool OnMsg(const ffMsg &msg);
+    fBool OnMsg(const ffMsg &msg) final;
 
-    void OnUpdate(fDouble elapsedTime);
+    void OnUpdate(fDouble elapsedTime) final;
 
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
+    void OnRender(fDouble elapsedTime, ffGraphics *pGraph) final;
 
 private:
 

@@ -54,10 +54,10 @@ void ffUILable::OnRenderOriginal(ffRenderEvent *pEvent) {
         m_pFont ? m_pFont : ffDrawer::Get().GetFont();
 
     pFont->Get()->SetColor(m_color);
-
+    
     // 一行行绘制
     f2dFontProvider *pFontProvider = pFont->Get()->GetFontProvider();
-
+    //MeasureString
     float tAscender = pFontProvider->GetAscender();
     float tDescender = pFontProvider->GetDescender();
     float tLineHeight = pFontProvider->GetLineHeight();
@@ -80,13 +80,13 @@ void ffUILable::OnRenderOriginal(ffRenderEvent *pEvent) {
 
         // 纵向位置
         switch (m_vAlign) {
-        case ValignMode_Left:
+        case ValignMode_Top:
             tPos.y = tAscender + tLineHeight * i;
             break;
         case ValignMode_Center:
             tPos.y = Size.Get().y / 2.f - m_textHeight / 2.f + tAscender;
             break;
-        case ValignMode_Right:
+        case ValignMode_Bottom:
             tPos.y = Size.Get().y + tDescender - tLineHeight * i;
             break;
         }
@@ -100,7 +100,7 @@ ffUILable::ffUILable(ffUIView *pParent)
       m_color(ffColors::Black), 
       m_pFont(NULL),
       m_hAlign(HalignMode_Center),
-      m_vAlign(ValignMode_Left),
+      m_vAlign(ValignMode_Center),
 
     Halign(
     [&](const HalignMode &p)->void { m_hAlign = p; },
@@ -124,7 +124,7 @@ ffUILable::ffUILable(ffUIView *pParent)
             m_pFont ? m_pFont : ffDrawer::Get().GetFont();
 
         for (fuInt i = 0; i < m_lines.size(); ++i) {
-            m_lineWidth[i] = pFont->Get()->MeasureStringWidth(m_lines[i].c_str()) + 2.f;
+            m_lineWidth[i] = pFont->Get()->MeasureStringWidth(m_lines[i].c_str());
         }
 
         m_textHeight = m_lines.size() * pFont->Get()->GetFontProvider()->GetLineHeight();
@@ -132,7 +132,10 @@ ffUILable::ffUILable(ffUIView *pParent)
     [&]()->const std::wstring &{ return m_text; }),
 
     Font(
-    [&](ffFont *p)->void { m_pFont = p; },
+    [&](ffFont *p)->void { 
+        m_pFont = p; 
+        Text = m_text;
+    },
     [&]()->ffFont *{ return m_pFont; })
 {
     
