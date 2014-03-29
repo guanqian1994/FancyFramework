@@ -36,11 +36,12 @@
 /// @brief UI层
 /// @note 实例化该层并且加入到当前场景中来显示UI内容
 ////////////////////////////////////////////////////////////////////////////////
-class ffUILayer final : public ffLayer, public ffUIView {
+class ffUILayer : public ffLayer, public ffUIView {
     friend class ffUIView;
 public:
-    /// @brief 创建一个UI层对象
     static ffUILayer *Create();
+
+    ffUILayer();
 
     virtual ~ffUILayer();
 
@@ -76,7 +77,6 @@ protected:
     void OnRender(fDouble elapsedTime, ffGraphics *pGraph);
 
 private:
-    ffUILayer();
 
     ffSprite::Ref m_cursor;
 

@@ -34,7 +34,6 @@
 /// @brief 标签
 ////////////////////////////////////////////////////////////////////////////////
 class ffUILable : public ffUIView {
-    friend class ffUIButton;
 public:
     /// @brief 水平对齐模式
     enum HalignMode
@@ -71,9 +70,10 @@ public:
     ffUIProperty::Ptr<ffFont> Font;
 
 public:
-
     /// @brief 创建一个标签
     static ffUILable *Create(ffUIView *pParent, ffPoint local, ffSize size, fcStrW text);
+
+    ffUILable(ffUIView *pParent);
 
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent) { return false; }
@@ -91,7 +91,6 @@ protected:
     void OnRenderOriginal(ffRenderEvent *pEvent);
 
 private:
-    ffUILable(ffUIView *pParent);
 
     ffFont *m_pFont;
 

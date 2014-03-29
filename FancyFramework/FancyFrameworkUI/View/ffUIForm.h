@@ -45,6 +45,8 @@ public:
     /// @brief 创建一个对话框
     static ffUIForm *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
+    ffUIForm(ffUIView *pParent);
+
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent);
 
@@ -53,8 +55,6 @@ protected:
     virtual fBool OnMouseMove(ffUIMouseEvent *pEvent);
 
 private:
-    ffUIForm(ffUIView *pParent);
-
     fBool m_allowDrag;
 
     fBool m_isDrag;

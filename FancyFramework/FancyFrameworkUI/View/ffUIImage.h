@@ -46,6 +46,8 @@ public:
 
     static ffUIImage *Create(ffUIView *pParent, ffPoint local, ffSprite *pSprite);
 
+    ffUIImage(ffUIView *pParent, ffSprite *pSprite);
+
 protected:
     virtual fBool OnMouseDown(ffUIMouseEvent *pEvent) { return false; }
 
@@ -62,7 +64,5 @@ protected:
     void OnRenderOriginal(ffRenderEvent *pEvent);
 
 private:
-    ffUIImage(ffUIView *pParent, ffSprite *pSprite);
-
     ffSprite::Ref m_image;
 };

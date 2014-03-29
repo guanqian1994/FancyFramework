@@ -60,6 +60,8 @@ public:
     /// @brief 创建一个按钮
     static ffUIButton *Create(ffUIView *pParent, ffPoint local, ffSize size);
 
+    ffUIButton(ffUIView *pParent);
+
 protected:
     virtual fBool OnMouseEnter(ffUIEvent *pEvent);
 
@@ -80,8 +82,6 @@ protected:
     void OnRenderOriginal(ffRenderEvent *pEvent);
 
 private:
-    ffUIButton(ffUIView *pParent);
-
     Status m_curState;
 
     ffSprite::Ref m_sprite[Status::Num]; 

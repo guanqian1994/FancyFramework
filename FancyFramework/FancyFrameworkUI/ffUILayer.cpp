@@ -32,6 +32,10 @@
 #include "ffAssert.h"
 #include "ffUIEvent.h"
 
+ffUILayer *ffUILayer::Create() {
+    return new ffUILayer;
+}
+
 /// 迭代访问子UI树结构
 struct viewTraversalStackElement {
     ffUIView *pView;
@@ -40,8 +44,9 @@ struct viewTraversalStackElement {
     fBool Handled;
 };
 
-ffUILayer *ffUILayer::Create() {
-    return new ffUILayer();
+ffUILayer::ffUILayer() : ffUIView(NULL) {
+    this->Size.Set(ffApp::Get().GetBufferSize());
+    SetUILayer(this);
 }
 
 ffUILayer::~ffUILayer() {
@@ -97,11 +102,6 @@ void ffUILayer::DebugRender(ffGraphics *pGraph) {
 
         ++pStackElement->Index;
     }
-}
-
-ffUILayer::ffUILayer() : ffUIView(NULL) {
-    this->Size.Set(ffApp::Get().GetBufferSize());
-    SetUILayer(this);
 }
 
 fBool ffUILayer::OnMsg(const ffMsg &msg) {
