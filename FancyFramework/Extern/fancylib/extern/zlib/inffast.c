@@ -32,7 +32,7 @@
 /*
    Decode literal, length, and distance codes and write out the resulting
    literal and match bytes until either not enough input or output is
-   available, an end-of-block is encountered, or a data error is encountered.
+   avaiLabel, an end-of-block is encountered, or a data error is encountered.
    When large enough input and output buffers are supplied to inflate(), for
    example, a 16K input buffer and a 64K output buffer, more than 95% of the
    inflate execution time is spent in this routine.
@@ -47,7 +47,7 @@
 
    On return, state->mode is one of:
 
-        LEN -- ran out of enough output space or enough available input
+        LEN -- ran out of enough output space or enough avaiLabel input
         TYPE -- reached end of block code, inflate() to interpret next block
         BAD -- error in block data
 
@@ -57,7 +57,7 @@
       length code, 5 bits for the length extra, 15 bits for the distance code,
       and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
       Therefore if strm->avail_in >= 6, then there is enough input to avoid
-      checking for available input while decoding.
+      checking for avaiLabel input while decoding.
 
     - The maximum bytes that a single length/distance pair can output is 258
       bytes, which is the maximum length that can be coded.  inflate_fast()
@@ -70,10 +70,10 @@ unsigned start;         /* inflate()'s starting value for strm->avail_out */
 {
     struct inflate_state FAR *state;
     unsigned char FAR *in;      /* local strm->next_in */
-    unsigned char FAR *last;    /* while in < last, enough input available */
+    unsigned char FAR *last;    /* while in < last, enough input avaiLabel */
     unsigned char FAR *out;     /* local strm->next_out */
     unsigned char FAR *beg;     /* inflate()'s initial strm->next_out */
-    unsigned char FAR *end;     /* while out < end, enough space available */
+    unsigned char FAR *end;     /* while out < end, enough space avaiLabel */
 #ifdef INFLATE_STRICT
     unsigned dmax;              /* maximum distance from zlib header */
 #endif

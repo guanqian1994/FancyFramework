@@ -84,7 +84,7 @@ struct internal_state;
 
 typedef struct z_stream_s {
     z_const Bytef *next_in;     /* next input byte */
-    uInt     avail_in;  /* number of bytes available at next_in */
+    uInt     avail_in;  /* number of bytes avaiLabel at next_in */
     uLong    total_in;  /* total number of input bytes read so far */
 
     Bytef    *next_out; /* next output byte should be put there */
@@ -279,7 +279,7 @@ ZEXTERN int ZEXPORT deflate OF((z_streamp strm, int flush));
 
     If the parameter flush is set to Z_SYNC_FLUSH, all pending output is
   flushed to the output buffer and the output is aligned on a byte boundary, so
-  that the decompressor can get all input data available so far.  (In
+  that the decompressor can get all input data avaiLabel so far.  (In
   particular avail_in is zero after the call if enough output space has been
   provided before the call.) Flushing may degrade compression for some
   compression algorithms and so it should be used only when necessary.  This
@@ -289,7 +289,7 @@ ZEXTERN int ZEXPORT deflate OF((z_streamp strm, int flush));
 
     If flush is set to Z_PARTIAL_FLUSH, all pending output is flushed to the
   output buffer, but the output is not aligned to a byte boundary.  All of the
-  input data so far will be available to the decompressor, as for Z_SYNC_FLUSH.
+  input data so far will be avaiLabel to the decompressor, as for Z_SYNC_FLUSH.
   This completes the current deflate block and follows it with an empty fixed
   codes block that is 10 bits long.  This assures that enough bytes are output
   in order for the decompressor to finish the block before the empty fixed code
@@ -665,12 +665,12 @@ ZEXTERN int ZEXPORT deflateParams OF((z_streamp strm,
    interpretation of level and strategy is as in deflateInit2.  This can be
    used to switch between compression and straight copy of the input data, or
    to switch to a different kind of input data requiring a different strategy.
-   If the compression level is changed, the input available so far is
+   If the compression level is changed, the input avaiLabel so far is
    compressed with the old level (and may be flushed); the new level will take
    effect only at the next call of deflate().
 
      Before the call of deflateParams, the stream state must be set as for
-   a call of deflate(), since the currently available input may have to be
+   a call of deflate(), since the currently avaiLabel input may have to be
    compressed and flushed.  In particular, strm->avail_out must be non-zero.
 
      deflateParams returns Z_OK if success, Z_STREAM_ERROR if the source
@@ -715,8 +715,8 @@ ZEXTERN int ZEXPORT deflatePending OF((z_streamp strm,
                                        int *bits));
 /*
      deflatePending() returns the number of bytes and bits of output that have
-   been generated, but not yet provided in the available output.  The bytes not
-   provided would be due to the available output space having being consumed.
+   been generated, but not yet provided in the avaiLabel output.  The bytes not
+   provided would be due to the avaiLabel output space having being consumed.
    The number of bits of output not provided are between 0 and 7, where they
    await more bits to join them in order to fill out a full byte.  If pending
    or bits are Z_NULL, then those values are not set.
@@ -753,7 +753,7 @@ ZEXTERN int ZEXPORT deflateSetHeader OF((z_streamp strm,
    ignored -- the extra flags are set according to the compression level).  The
    caller must assure that, if not Z_NULL, name and comment are terminated with
    a zero byte, and that if extra is not Z_NULL, that extra_len bytes are
-   available there.  If hcrc is true, a gzip header crc is included.  Note that
+   avaiLabel there.  If hcrc is true, a gzip header crc is included.  Note that
    the current versions of the command-line version of gzip (up through version
    1.3.x) do not support header crc's, and will report that it is a "multi-part
    gzip file" and give up.
@@ -843,7 +843,7 @@ ZEXTERN int ZEXPORT inflateSync OF((z_streamp strm));
 /*
      Skips invalid compressed data until a possible full flush point (see above
    for the description of deflate with Z_FULL_FLUSH) can be found, or until all
-   available input is skipped.  No output is provided.
+   avaiLabel input is skipped.  No output is provided.
 
      inflateSync searches for a 00 00 FF FF pattern in the compressed data.
    All full flush points have this pattern, but not all occurences of this
@@ -1042,7 +1042,7 @@ ZEXTERN int ZEXPORT inflateBack OF((z_streamp strm,
    parameters and return types are defined above in the in_func and out_func
    typedefs.  inflateBack() will call in(in_desc, &buf) which should return the
    number of bytes of provided input, and a pointer to that input in buf.  If
-   there is no input available, in() must return zero--buf is ignored in that
+   there is no input avaiLabel, in() must return zero--buf is ignored in that
    case--and inflateBack() will return a buffer error.  inflateBack() will call
    out(out_desc, buf, len) to write the uncompressed data buf[0..len-1].  out()
    should return zero on success, or non-zero on failure.  If out() returns
@@ -1306,7 +1306,7 @@ ZEXTERN int ZEXPORT gzread OF((gzFile file, voidp buf, unsigned len));
    that remaining trailing garbage is ignored (and no error is returned).
 
      gzread can be used to read a gzip file that is being concurrently written.
-   Upon reaching the end of the input, gzread will return with the available
+   Upon reaching the end of the input, gzread will return with the avaiLabel
    data.  If the error code returned by gzerror is Z_OK or Z_BUF_ERROR, then
    gzclearerr can be used to clear the end of file indicator in order to permit
    gzread to be tried again.  Z_OK indicates that a gzip stream was completed
@@ -1340,7 +1340,7 @@ ZEXTERN int ZEXPORTVA gzprintf Z_ARG((gzFile file, const char *format, ...));
    nothing written.  In this case, there may also be a buffer overflow with
    unpredictable consequences, which is possible only if zlib was compiled with
    the insecure functions sprintf() or vsprintf() because the secure snprintf()
-   or vsnprintf() functions were not available.  This can be determined using
+   or vsnprintf() functions were not avaiLabel.  This can be determined using
    zlibCompileFlags().
 */
 
@@ -1526,7 +1526,7 @@ ZEXTERN const char * ZEXPORT gzerror OF((gzFile file, int *errnum));
      The application must not modify the returned string.  Future calls to
    this function may invalidate the previously returned string.  If file is
    closed, then the string previously returned by gzerror will no longer be
-   available.
+   avaiLabel.
 
      gzerror() should be used to distinguish errors from end-of-file for those
    functions above that do not distinguish those cases in their return values.

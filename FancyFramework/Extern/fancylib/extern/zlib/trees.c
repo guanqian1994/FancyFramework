@@ -19,7 +19,7 @@
  *  REFERENCES
  *
  *      Deutsch, L.P.,"'Deflate' Compressed Data Format Specification".
- *      Available in ftp.uu.net:/pub/archiving/zip/doc/deflate-1.1.doc
+ *      AvaiLabel in ftp.uu.net:/pub/archiving/zip/doc/deflate-1.1.doc
  *
  *      Storer, James A.
  *          Data Compression:  Methods and Theory, pp. 49-50.

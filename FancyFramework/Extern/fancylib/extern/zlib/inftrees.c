@@ -24,7 +24,7 @@ const char inflate_copyright[] =
    lens shorts, which is used as a work area.  type is the type of code
    to be generated, CODES, LENS, or DISTS.  On return, zero is success,
    -1 is an invalid code, and +1 means that ENOUGH isn't enough.  table
-   on return points to the next available entry's address.  bits is the
+   on return points to the next avaiLabel entry's address.  bits is the
    requested root table index bits, and on return it is the actual root
    table index bits.  It will differ if the request is greater than the
    longest code or if it is less than the shortest code.
@@ -43,7 +43,7 @@ unsigned short FAR *work;
     unsigned root;              /* number of index bits for root table */
     unsigned curr;              /* number of index bits for current table */
     unsigned drop;              /* code bits to drop for sub-table */
-    int left;                   /* number of prefix codes available */
+    int left;                   /* number of prefix codes avaiLabel */
     unsigned used;              /* code entries in table used */
     unsigned huff;              /* Huffman code */
     unsigned incr;              /* for incrementing code, index */
@@ -51,7 +51,7 @@ unsigned short FAR *work;
     unsigned low;               /* low bits for current root entry */
     unsigned mask;              /* mask for low root bits */
     code here;                  /* table entry for duplication */
-    code FAR *next;             /* next available space in table */
+    code FAR *next;             /* next avaiLabel space in table */
     const unsigned short FAR *base;     /* base value table to use */
     const unsigned short FAR *extra;    /* extra bits table to use */
     int end;                    /* use base and extra for symbol > end */
@@ -207,7 +207,7 @@ unsigned short FAR *work;
     used = 1U << root;          /* use root table entries */
     mask = used - 1;            /* mask for comparing low */
 
-    /* check available table space */
+    /* check avaiLabel table space */
     if ((type == LENS && used >= ENOUGH_LENS) ||
         (type == DISTS && used >= ENOUGH_DISTS))
         return 1;

@@ -75,7 +75,7 @@ HRESULT f2dVideoStream::Read(PBYTE pbBuffer, DWORD dwBytesToRead, BOOL bAlign, L
 	}
 }
 
-LONGLONG f2dVideoStream::Size(LONGLONG* pSizeAvailable)
+LONGLONG f2dVideoStream::Size(LONGLONG* pSizeAvaiLabel)
 {
 	fLen tLength = 0;
 
@@ -83,8 +83,8 @@ LONGLONG f2dVideoStream::Size(LONGLONG* pSizeAvailable)
 	tLength = m_pStream->GetLength();
 	m_pStream->Unlock();
 
-	if(pSizeAvailable)
-		*pSizeAvailable = tLength;
+	if(pSizeAvaiLabel)
+		*pSizeAvaiLabel = tLength;
 	return tLength;
 }
 

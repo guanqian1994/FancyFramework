@@ -85,7 +85,7 @@
     <ClInclude Include="View\ffUIButton.h" />
     <ClInclude Include="View\ffUIForm.h" />
     <ClInclude Include="View\ffUIImage.h" />
-    <ClInclude Include="View\ffUILable.h" />
+    <ClInclude Include="View\ffUILabel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ffUILayer.cpp" />
@@ -93,7 +93,7 @@
     <ClCompile Include="View\ffUIButton.cpp" />
     <ClCompile Include="View\ffUIForm.cpp" />
     <ClCompile Include="View\ffUIImage.cpp" />
-    <ClCompile Include="View\ffUILable.cpp" />
+    <ClCompile Include="View\ffUILabel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

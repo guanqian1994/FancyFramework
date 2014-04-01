@@ -36,14 +36,14 @@ void fcyModelMeshFile::Load(fcyStream* pStream, fBool IgnoreUnsupportLabel)
 	// 读取块
 	for(fuInt i = 0; i<tBlockCount; ++i)
 	{
-		fuLong tLable = tReader.ReadUInt64(); // 块标签头
+		fuLong tLabel = tReader.ReadUInt64(); // 块标签头
 		fuInt tLen = tReader.ReadUInt32();    // 块大小
 
 		// 记录当前的读取位置
 		fLen tPos = pStream->GetPosition();
 
 		// 读取标签
-		fcyModelLabelFactory::CreatorFunction* tFunc = fcyModelLabel::GetFactory().GetCreator(tLable);
+		fcyModelLabelFactory::CreatorFunction* tFunc = fcyModelLabel::GetFactory().GetCreator(tLabel);
 		if(!tFunc)
 		{
 			if(IgnoreUnsupportLabel)
