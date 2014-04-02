@@ -8,7 +8,7 @@ f2dFontRendererImpl::f2dFontRendererImpl(f2dFontProvider* pProvider)
 	: m_pListener(NULL), m_pProvider(pProvider), m_FlipType(F2DSPRITEFLIP_NONE), m_ZValue(1.f)
 {
 	if(!m_pProvider)
-		throw fcyException("f2dFontRendererImpl::f2dFontRendererImpl", "Param 'pProvider' is NULL.");
+		throw fcyException("f2dFontRendererImpl::f2dFontRendererImpl", "Param 'pProvider' is null.");
 
 	m_pProvider->AddRef();
 }

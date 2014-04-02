@@ -10,7 +10,7 @@ f2dFontTexProvider::f2dFontTexProvider(f2dStream* pDefineFile, f2dTexture2D* pTe
 	: m_OrgTex(pTex)
 {
 	if(!m_OrgTex)
-		throw fcyException("f2dFontTexProvider::f2dFontTexProvider", "Param 'pTex' is NULL.");
+		throw fcyException("f2dFontTexProvider::f2dFontTexProvider", "Param 'pTex' is null.");
 	fcyXmlDocument tXml(pDefineFile);
 
 	loadDefine(tXml);
@@ -22,7 +22,7 @@ f2dFontTexProvider::f2dFontTexProvider(fcStrW pDefineFile, f2dTexture2D* pTex)
 	: m_OrgTex(pTex)
 {
 	if(!m_OrgTex)
-		throw fcyException("f2dFontTexProvider::f2dFontTexProvider", "Param 'pTex' is NULL.");
+		throw fcyException("f2dFontTexProvider::f2dFontTexProvider", "Param 'pTex' is null.");
 	fcyXmlDocument tXml(pDefineFile);
 
 	loadDefine(tXml);

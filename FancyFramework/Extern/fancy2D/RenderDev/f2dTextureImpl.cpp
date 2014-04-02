@@ -10,7 +10,7 @@ f2dTexture2DStatic::f2dTexture2DStatic(f2dRenderDevice* pDev, f2dStream* pStream
 	: m_Width(Width), m_Height(Height), m_pTex(NULL)
 {
 	if(!pStream)
-		throw fcyException("f2dTexture2DStatic::f2dTexture2DStatic", "Param 'pStream' is NULL.");
+		throw fcyException("f2dTexture2DStatic::f2dTexture2DStatic", "Param 'pStream' is null.");
 	
 	// 读取整个流
 	fByte* tData = new fByte[(size_t)pStream->GetLength()];
@@ -80,7 +80,7 @@ f2dTexture2DDynamic::f2dTexture2DDynamic(f2dRenderDevice* pDev, f2dStream* pStre
 	: m_pParent(pDev), m_Width(Width), m_Height(Height), m_pTex(NULL)
 {
 	if(!pStream)
-		throw fcyException("f2dTexture2DDynamic::f2dTexture2DDynamic", "Param 'pStream' is NULL.");
+		throw fcyException("f2dTexture2DDynamic::f2dTexture2DDynamic", "Param 'pStream' is null.");
 
 	// 读取整个流
 	fByte* tData = new fByte[(size_t)pStream->GetLength()];

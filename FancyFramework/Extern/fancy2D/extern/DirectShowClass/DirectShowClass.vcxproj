@@ -71,7 +71,6 @@
     <ClCompile Include="cprop.cpp" />
     <ClCompile Include="ctlutil.cpp" />
     <ClCompile Include="ddmm.cpp" />
-    <ClCompile Include="dllentry.cpp" />
     <ClCompile Include="dllsetup.cpp" />
     <ClCompile Include="mtype.cpp" />
     <ClCompile Include="outputq.cpp" />

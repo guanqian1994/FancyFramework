@@ -893,6 +893,9 @@ fcyXmlDocument::fcyXmlDocument(const std::wstring& Str)
 fcyXmlDocument::fcyXmlDocument(fcyStream* pStream)
 	: m_pRootElement(NULL)
 {
+	if(!pStream)
+		throw fcyException("fcyXmlDocument::fcyXmlDocument", "Param 'pStream' is null.");
+
 	fcyLexicalReader tReader(preprocessXml(pStream));
 
 	// È¥Ô¤´¦Àí
@@ -971,7 +974,7 @@ void fcyXmlDocument::Save(std::wstring& Out)const
 	if(m_pRootElement)
 		m_pRootElement->Save(Out, 0);
 	else
-		throw fcyException("fcyXmlDocument::Save", "Root element is NULL.");
+		throw fcyException("fcyXmlDocument::Save", "Root element is null.");
 }
 
 void fcyXmlDocument::Save(fcyStream* pOut)const
@@ -981,7 +984,7 @@ void fcyXmlDocument::Save(fcyStream* pOut)const
 	if(m_pRootElement)
 		m_pRootElement->Save(tOutStr, 0);
 	else
-		throw fcyException("fcyXmlDocument::Save", "Root element is NULL.");
+		throw fcyException("fcyXmlDocument::Save", "Root element is null.");
 
 	// UTF 16 BOM
 	fByte tUTF16LE[2] = { 0xFF, 0xFE };

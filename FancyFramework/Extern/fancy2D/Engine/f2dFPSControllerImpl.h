@@ -31,6 +31,8 @@ protected:
 	fuInt m_FPSMax;       ///< @brief 最大FPS
 	fDouble m_FrameDelay; ///< @brief 帧时间间隔
 public: // 公开
+	/// @brief 更新FPS控制器
+	/// @note  获得两个时间点之间的流逝时间并更新FPS计数器
 	fDouble Update(fcyStopWatch& Watch)
 	{
 		fDouble tElapsedTime = Watch.GetElpased();
@@ -41,7 +43,7 @@ public: // 公开
 			fuInt tTimeToSleep = (fuInt)((m_FrameDelay - tElapsedTime) * 1000.);
 
 			// Sleep限速
-			if(tTimeToSleep)
+			if(tTimeToSleep > 1)
 				Sleep(tTimeToSleep - 1);
 
 			// 自旋精确限速
@@ -78,6 +80,7 @@ public: // 接口实现
 	void SetLimitedFPS(fuInt iMaxFPS)
 	{
 		m_FPSMax = iMaxFPS;
+		m_FrameDelay = m_FPSMax ? 1./m_FPSMax : 0;
 	}
 	fDouble GetFPS()
 	{

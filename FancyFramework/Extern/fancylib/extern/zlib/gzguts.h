@@ -67,7 +67,7 @@
 #    define NO_vsnprintf
 #  endif
 #  ifdef WIN32
-/* In Win32, vsnprintf is avaiLabel as the "non-ANSI" _vsnprintf. */
+/* In Win32, vsnprintf is available as the "non-ANSI" _vsnprintf. */
 #    if !defined(vsnprintf) && !defined(NO_vsnprintf)
 #      if !defined(_MSC_VER) || ( defined(_MSC_VER) && _MSC_VER < 1500 )
 #         define vsnprintf _vsnprintf
@@ -145,7 +145,7 @@
 typedef struct {
         /* exposed contents for gzgetc() macro */
     struct gzFile_s x;      /* "x" for exposed */
-                            /* x.have: number of bytes avaiLabel at x.next */
+                            /* x.have: number of bytes available at x.next */
                             /* x.next: next output data to deliver or write */
                             /* x.pos: current position in uncompressed data */
         /* used for both reading and writing */

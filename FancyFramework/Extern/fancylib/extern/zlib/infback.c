@@ -153,7 +153,7 @@ struct inflate_state FAR *state;
         bits = 0; \
     } while (0)
 
-/* Assure that some input is avaiLabel.  If input is requested, but denied,
+/* Assure that some input is available.  If input is requested, but denied,
    then return a Z_BUF_ERROR from inflateBack(). */
 #define PULL() \
     do { \
@@ -168,7 +168,7 @@ struct inflate_state FAR *state;
     } while (0)
 
 /* Get a byte of input into the bit accumulator, or return from inflateBack()
-   with an error if there is no input avaiLabel. */
+   with an error if there is no input available. */
 #define PULLBYTE() \
     do { \
         PULL(); \
@@ -178,7 +178,7 @@ struct inflate_state FAR *state;
     } while (0)
 
 /* Assure that there are at least n bits in the bit accumulator.  If there is
-   not enough avaiLabel input to do that, then return from inflateBack() with
+   not enough available input to do that, then return from inflateBack() with
    an error. */
 #define NEEDBITS(n) \
     do { \
@@ -204,7 +204,7 @@ struct inflate_state FAR *state;
         bits -= bits & 7; \
     } while (0)
 
-/* Assure that some output space is avaiLabel, by writing out the window
+/* Assure that some output space is available, by writing out the window
    if it's full.  If the write fails, return from inflateBack() with a
    Z_BUF_ERROR. */
 #define ROOM() \
@@ -257,7 +257,7 @@ void FAR *out_desc;
     struct inflate_state FAR *state;
     unsigned char FAR *next;    /* next input */
     unsigned char FAR *put;     /* next output */
-    unsigned have, left;        /* avaiLabel input and output */
+    unsigned have, left;        /* available input and output */
     unsigned long hold;         /* bit buffer */
     unsigned bits;              /* bits in bit buffer */
     unsigned copy;              /* number of stored or match bytes to copy */

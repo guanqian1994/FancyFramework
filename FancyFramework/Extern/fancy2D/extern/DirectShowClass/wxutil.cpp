@@ -761,8 +761,8 @@ bool TimeKillSynchronousFlagAvailable( void )
             ( (osverinfo.dwMajorVersion == 5) && (osverinfo.dwMinorVersion >= 1) ) ) {
             return true;
         }
-    }
-    */
+    }*/
+
     return false;
 }
 

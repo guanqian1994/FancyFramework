@@ -13,7 +13,7 @@
  *   improve code readability and style over the previous zlib inflate code
  *
  * 1.2.beta1    25 Nov 2002
- * - Use pointers for avaiLabel input and output checking in inffast.c
+ * - Use pointers for available input and output checking in inffast.c
  * - Remove input and output counters in inffast.c
  * - Change inffast.c entry and loop from avail_in >= 7 to >= 6
  * - Remove unnecessary second byte pull from length extra in inffast.c
@@ -484,7 +484,7 @@ unsigned out;
     } while (0)
 
 /* Get a byte of input into the bit accumulator, or return from inflate()
-   if there is no input avaiLabel. */
+   if there is no input available. */
 #define PULLBYTE() \
     do { \
         if (have == 0) goto inf_leave; \
@@ -494,7 +494,7 @@ unsigned out;
     } while (0)
 
 /* Assure that there are at least n bits in the bit accumulator.  If there is
-   not enough avaiLabel input to do that, then return from inflate(). */
+   not enough available input to do that, then return from inflate(). */
 #define NEEDBITS(n) \
     do { \
         while (bits < (unsigned)(n)) \
@@ -539,7 +539,7 @@ unsigned out;
    if the appropriate resources are provided, the machine proceeds to the
    next state.  The NEEDBITS() macro is usually the way the state evaluates
    whether it can proceed or should return.  NEEDBITS() does the return if
-   the requested bits are not avaiLabel.  The typical use of the BITS macros
+   the requested bits are not available.  The typical use of the BITS macros
    is:
 
         NEEDBITS(n);
@@ -550,12 +550,12 @@ unsigned out;
    input left to load n bits into the accumulator, or it continues.  BITS(n)
    gives the low n bits in the accumulator.  When done, DROPBITS(n) drops
    the low n bits off the accumulator.  INITBITS() clears the accumulator
-   and sets the number of avaiLabel bits to zero.  BYTEBITS() discards just
+   and sets the number of available bits to zero.  BYTEBITS() discards just
    enough bits to put the accumulator on a byte boundary.  After BYTEBITS()
    and a NEEDBITS(8), then BITS(8) would return the next byte in the stream.
 
-   NEEDBITS(n) uses PULLBYTE() to get an avaiLabel byte of input, or to return
-   if there is no input avaiLabel.  The decoding of variable length codes uses
+   NEEDBITS(n) uses PULLBYTE() to get an available byte of input, or to return
+   if there is no input available.  The decoding of variable length codes uses
    PULLBYTE() directly in order to pull just enough bytes to decode the next
    code, and no more.
 
@@ -577,7 +577,7 @@ unsigned out;
    As shown above, if the next state is also the next case, then the break
    is omitted.
 
-   A state may also return if there is not enough output space avaiLabel to
+   A state may also return if there is not enough output space available to
    complete that state.  Those states are copying stored data, writing a
    literal byte, and copying a matching string.
 
@@ -592,11 +592,11 @@ unsigned out;
 
    In this implementation, the flush parameter of inflate() only affects the
    return code (per zlib.h).  inflate() always writes as much as possible to
-   strm->next_out, given the space avaiLabel and the provided input--the effect
+   strm->next_out, given the space available and the provided input--the effect
    documented in zlib.h of Z_SYNC_FLUSH.  Furthermore, inflate() always defers
    the allocation of and copying into a sliding window until necessary, which
    provides the effect documented in zlib.h for Z_FINISH when the entire input
-   stream avaiLabel.  So the only thing the flush parameter actually does is:
+   stream available.  So the only thing the flush parameter actually does is:
    when flush is set to Z_FINISH, inflate() cannot return Z_OK.  Instead it
    will return Z_BUF_ERROR if it has not reached the end of the stream.
  */
@@ -608,10 +608,10 @@ int flush;
     struct inflate_state FAR *state;
     unsigned char FAR *next;    /* next input */
     unsigned char FAR *put;     /* next output */
-    unsigned have, left;        /* avaiLabel input and output */
+    unsigned have, left;        /* available input and output */
     unsigned long hold;         /* bit buffer */
     unsigned bits;              /* bits in bit buffer */
-    unsigned in, out;           /* save starting avaiLabel input and output */
+    unsigned in, out;           /* save starting available input and output */
     unsigned copy;              /* number of stored or match bytes to copy */
     unsigned char FAR *from;    /* where to copy match bytes from */
     code here;                  /* current decoding table entry */
@@ -1386,7 +1386,7 @@ z_streamp strm;
         syncsearch(&(state->have), buf, len);
     }
 
-    /* search avaiLabel input */
+    /* search available input */
     len = syncsearch(&(state->have), strm->next_in, strm->avail_in);
     strm->avail_in -= len;
     strm->next_in += len;

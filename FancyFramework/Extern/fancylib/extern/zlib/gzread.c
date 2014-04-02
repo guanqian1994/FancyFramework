@@ -47,7 +47,7 @@ local int gz_load(state, buf, len, have)
    that data has been used, no more attempts will be made to read the file.
    If strm->avail_in != 0, then the current data is moved to the beginning of
    the input buffer, and then the remainder of the buffer is loaded with the
-   avaiLabel data from the input file. */
+   available data from the input file. */
 local int gz_avail(state)
     gz_statep state;
 {
@@ -75,7 +75,7 @@ local int gz_avail(state)
 
 /* Look for gzip header, set up for inflate or copy.  state->x.have must be 0.
    If this is the first time in, allocate required memory.  state->how will be
-   left unchanged if there is no more input data avaiLabel, will be set to COPY
+   left unchanged if there is no more input data available, will be set to COPY
    if there is no gzip header and direct copying will be performed, or it will
    be set to GZIP for decompression.  If direct copying, then leftover input
    data from the input buffer will be copied to the output buffer.  In that
@@ -204,7 +204,7 @@ local int gz_decomp(state)
         }
     } while (strm->avail_out && ret != Z_STREAM_END);
 
-    /* update avaiLabel output */
+    /* update available output */
     state->x.have = had - strm->avail_out;
     state->x.next = strm->next_out - state->x.have;
 

@@ -25,7 +25,7 @@ void fcyModelMeshFile::Load(fcyStream* pStream, fBool IgnoreUnsupportLabel)
 	m_Labels.clear();
 
 	// 读取文件头并验证
-	if(FFM_MAKE_LABELNAME4("FFM\0") != tReader.ReadUInt32())
+	if(FMM_MAKE_LABELNAME4("FMM\0") != tReader.ReadUInt32())
 		throw fcyException("fcyModelMeshFile::Load", "File format error.");
 	if(Version != tReader.ReadUInt32())
 		throw fcyException("fcyModelMeshFile::Load", "Version not support.");
@@ -36,14 +36,14 @@ void fcyModelMeshFile::Load(fcyStream* pStream, fBool IgnoreUnsupportLabel)
 	// 读取块
 	for(fuInt i = 0; i<tBlockCount; ++i)
 	{
-		fuLong tLabel = tReader.ReadUInt64(); // 块标签头
+		fuLong tLable = tReader.ReadUInt64(); // 块标签头
 		fuInt tLen = tReader.ReadUInt32();    // 块大小
 
 		// 记录当前的读取位置
 		fLen tPos = pStream->GetPosition();
 
 		// 读取标签
-		fcyModelLabelFactory::CreatorFunction* tFunc = fcyModelLabel::GetFactory().GetCreator(tLabel);
+		fcyModelLabelFactory::CreatorFunction* tFunc = fcyModelLabel::GetFactory().GetCreator(tLable);
 		if(!tFunc)
 		{
 			if(IgnoreUnsupportLabel)
@@ -76,7 +76,7 @@ void fcyModelMeshFile::Save(fcyStream* pStream)
 	fcyBinaryWriter tWritter(pStream);
 
 	// 写入文件头
-	tWritter.Write((fuInt)FFM_MAKE_LABELNAME4("FFM\0"));
+	tWritter.Write((fuInt)FMM_MAKE_LABELNAME4("FMM\0"));
 	tWritter.Write((fuInt)Version);
 	tWritter.Write((fuInt)m_Labels.size());
 	fcyModelLabel::WriteString(pStream, m_Author);

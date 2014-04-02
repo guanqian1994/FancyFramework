@@ -61,13 +61,13 @@ protected:
         pChangeLanguageButton->Color = ffColors::White;
         pChangeLanguageButton->MouseUp = ffBindWith(&ExampleScene::OnChangeLanguageButtonMouseUp, this);
 
-        pLable = ffUILable::Create(pUI, ffPoint(290, 250), ffSize(220, 24), L"hello world :)");
+        pLable = ffUILabel::Create(pUI, ffPoint(290, 250), ffSize(220, 24), L"hello world :)");
     }
 
     void OnDebugRenderButtonMouseUp(ffUIView *pSender, ffUIEvent *pEvent) {
         ffUIMouseEvent *pMouseEvent = static_cast<ffUIMouseEvent*>(pEvent);
         if (pMouseEvent->Button == ffMouseButton::Left) {
-            m_debugRender = !m_debugRender;
+            pUI->SetDebugDraw(m_debugRender);
         }
     }
 
@@ -89,20 +89,11 @@ protected:
         m_en = !m_en;
     }
 
-    void OnRender(fDouble elapsedTime, ffGraphics *pGraph) {
-        pGraph->Begin();
-
-        if (m_debugRender)
-            pUI->DebugRender(pGraph);
-
-        pGraph->End();
-    }
-
 private:
     fBool m_en;
     fBool m_debugRender;
     ffUILayer *pUI;
-    ffUILable *pLable;
+    ffUILabel *pLable;
     ffUIButton *pDebugRenderButton;
     ffUIButton *pChangeLanguageButton;
 };

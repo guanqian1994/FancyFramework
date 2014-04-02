@@ -75,7 +75,7 @@ char ZLIB_INTERNAL *gz_strwinerror (error)
 local void gz_reset(state)
     gz_statep state;
 {
-    state->x.have = 0;              /* no output data avaiLabel */
+    state->x.have = 0;              /* no output data available */
     if (state->mode == GZ_READ) {   /* for reading ... */
         state->eof = 0;             /* not at end of file */
         state->past = 0;            /* have not read past end yet */
@@ -602,7 +602,7 @@ void ZLIB_INTERNAL gz_error(state, err, msg)
 
 #ifndef INT_MAX
 /* portably return maximum value for an int (when limits.h presumed not
-   avaiLabel) -- we need to do this to cover cases where 2's complement not
+   available) -- we need to do this to cover cases where 2's complement not
    used, since C standard permits 1's complement and sign-bit representations,
    otherwise we could just use ((unsigned)-1) >> 1 */
 unsigned ZLIB_INTERNAL gz_intmax()

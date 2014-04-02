@@ -71,8 +71,8 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>..\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <TargetName>$(ProjectName)_d</TargetName>
@@ -84,8 +84,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
-    <IncludePath>..\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\fancylib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LinkIncremental>false</LinkIncremental>

@@ -31,7 +31,7 @@ public:
 public:
     HRESULT SetPointer(LONGLONG llPos);
     HRESULT Read(PBYTE pbBuffer, DWORD dwBytesToRead, BOOL bAlign, LPDWORD pdwBytesRead);
-	LONGLONG Size(LONGLONG *pSizeAvaiLabel);
+	LONGLONG Size(LONGLONG *pSizeAvailable);
     DWORD Alignment();
     void Lock();
     void Unlock();

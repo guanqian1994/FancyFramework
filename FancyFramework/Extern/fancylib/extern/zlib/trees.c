@@ -19,7 +19,7 @@
  *  REFERENCES
  *
  *      Deutsch, L.P.,"'Deflate' Compressed Data Format Specification".
- *      AvaiLabel in ftp.uu.net:/pub/archiving/zip/doc/deflate-1.1.doc
+ *      Available in ftp.uu.net:/pub/archiving/zip/doc/deflate-1.1.doc
  *
  *      Storer, James A.
  *          Data Compression:  Methods and Theory, pp. 49-50.
@@ -483,7 +483,7 @@ local void pqdownheap(s, tree, k)
  * OUT assertions: the field len is set to the optimal bit length, the
  *     array bl_count contains the frequencies for each bit length.
  *     The length opt_len is updated; static_len is also updated if stree is
- *     not NULL.
+ *     not null.
  */
 local void gen_bitlen(s, desc)
     deflate_state *s;
@@ -612,7 +612,7 @@ local void gen_codes (tree, max_code, bl_count)
  * IN assertion: the field freq is set for all tree elements.
  * OUT assertions: the fields len and code are set to the optimal bit length
  *     and corresponding code. The length opt_len is updated; static_len is
- *     also updated if stree is not NULL. The field max_code is set.
+ *     also updated if stree is not null. The field max_code is set.
  */
 local void build_tree(s, desc)
     deflate_state *s;

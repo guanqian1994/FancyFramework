@@ -37,7 +37,7 @@
  *  REFERENCES
  *
  *      Deutsch, L.P.,"DEFLATE Compressed Data Format Specification".
- *      AvaiLabel in http://tools.ietf.org/html/rfc1951
+ *      Available in http://tools.ietf.org/html/rfc1951
  *
  *      A description of the Rabin and Karp algorithm is given in the book
  *         "Algorithms" by R. Sedgewick, Addison-Wesley, p252.
@@ -381,7 +381,7 @@ int ZEXPORT deflateSetDictionary (strm, dictionary, dictLength)
     s->insert = s->lookahead;
     s->lookahead = 0;
     s->match_length = s->prev_length = MIN_MATCH-1;
-    s->match_avaiLabel = 0;
+    s->match_available = 0;
     strm->next_in = next;
     strm->avail_in = avail;
     s->wrap = wrap;
@@ -1120,7 +1120,7 @@ local void lm_init (s)
     s->lookahead = 0;
     s->insert = 0;
     s->match_length = s->prev_length = MIN_MATCH-1;
-    s->match_avaiLabel = 0;
+    s->match_available = 0;
     s->ins_h = 0;
 #ifndef FASTEST
 #ifdef ASMV
@@ -1806,13 +1806,13 @@ local block_state deflate_slow(s, flush)
                     INSERT_STRING(s, s->strstart, hash_head);
                 }
             } while (--s->prev_length != 0);
-            s->match_avaiLabel = 0;
+            s->match_available = 0;
             s->match_length = MIN_MATCH-1;
             s->strstart++;
 
             if (bflush) FLUSH_BLOCK(s, 0);
 
-        } else if (s->match_avaiLabel) {
+        } else if (s->match_available) {
             /* If there was no match at the previous position, output a
              * single literal. If there was a match but the current match
              * is longer, truncate the previous match to a single literal.
@@ -1829,16 +1829,16 @@ local block_state deflate_slow(s, flush)
             /* There is no previous match to compare with, wait for
              * the next step to decide.
              */
-            s->match_avaiLabel = 1;
+            s->match_available = 1;
             s->strstart++;
             s->lookahead--;
         }
     }
     Assert (flush != Z_NO_FLUSH, "no flush?");
-    if (s->match_avaiLabel) {
+    if (s->match_available) {
         Tracevv((stderr,"%c", s->window[s->strstart-1]));
         _tr_tally_lit(s, s->window[s->strstart-1], bflush);
-        s->match_avaiLabel = 0;
+        s->match_available = 0;
     }
     s->insert = s->strstart < MIN_MATCH-1 ? s->strstart : MIN_MATCH-1;
     if (flush == Z_FINISH) {

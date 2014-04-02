@@ -102,7 +102,7 @@ f2dEffectImpl::f2dEffectImpl(f2dRenderDeviceImpl* pDev, f2dStream* pStream, fBoo
 	m_pWorldVar(NULL), m_pProjVar(NULL), m_pViewVar(NULL)
 {
 	if(!pStream)
-		throw fcyException("f2dEffectImpl::f2dEffectImpl", "Param 'pStream' is NULL.");
+		throw fcyException("f2dEffectImpl::f2dEffectImpl", "Param 'pStream' is null.");
 
 	// 读取所有代码
 	fByte *tCodes = new fByte[ (size_t)pStream->GetLength() ];

@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)\Extern\fancy2D;$(SolutionDir)\Extern\Visual Leak Detector\include;$(SolutionDir)\FancyFrameworkUI;$(SolutionDir)\FancyFramework;$(SolutionDir)\Extern\fancylib;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Extern\Visual Leak Detector\lib\Win32;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

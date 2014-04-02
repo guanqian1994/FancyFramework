@@ -200,9 +200,6 @@
     <ClCompile Include="ddmm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="dllentry.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="dllsetup.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
