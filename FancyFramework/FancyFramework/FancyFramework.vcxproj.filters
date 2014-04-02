@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="ff.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ffApp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ffScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ffAppImpl.h">
+      <Filter>App\header</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ffDrawerImpl.h">
+      <Filter>App\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ffInput.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\ffMouseImpl.h">
+      <Filter>Input\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\ffKeyboardImpl.h">
+      <Filter>Input\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ffRes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Res\ffResImpl.h">
+      <Filter>Res\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Res\ffResTypesImpl.h">
+      <Filter>Res\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ffLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ffAssert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ffCameraImpl.h">
+      <Filter>App\header</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ffGraphicsImpl.h">
+      <Filter>App\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ffConstants.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ffImageset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{2a29ce69-fee2-4c9e-a707-b64326b6a30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{3eb497ca-b7dc-49ee-a2f0-e35c16ddfe86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\header">
+      <UniqueIdentifier>{0a7d47aa-00d7-47ce-b2ec-5af73834f6ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\source">
+      <UniqueIdentifier>{279945df-6c75-4103-b376-3fa6a4a86ef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{fa35b0c8-cdd4-4bab-9ce1-1294cd3e8cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\header">
+      <UniqueIdentifier>{0d37db6a-5740-48ca-9984-03928bdde527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\source">
+      <UniqueIdentifier>{8edf3305-d098-4a2d-9adc-e92493ca119a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{17f36a48-c0b6-42cc-b0bc-dad9470fa840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res\header">
+      <UniqueIdentifier>{bc61d099-e64c-4352-accd-7f45df1eb8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res\source">
+      <UniqueIdentifier>{5b33e82a-fff2-43b0-a42f-9ecafa8dc624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{d30f84be-9d19-475b-9a51-553f8249b0a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ffApp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ffScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ffAppImpl.cpp">
+      <Filter>App\source</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ffDrawerImpl.cpp">
+      <Filter>App\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\ffMouseImpl.cpp">
+      <Filter>Input\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\ffKeyboardImpl.cpp">
+      <Filter>Input\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Res\ffResImpl.cpp">
+      <Filter>Res\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Res\ffResTypesImpl.cpp">
+      <Filter>Res\source</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ffCameraImpl.cpp">
+      <Filter>App\source</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ffGraphicsImpl.cpp">
+      <Filter>App\source</Filter>
+    </ClCompile>
+    <ClCompile Include="ffConstants.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ffImageset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

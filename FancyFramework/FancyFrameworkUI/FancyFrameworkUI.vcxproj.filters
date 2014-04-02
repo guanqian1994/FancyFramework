@@ -35,16 +35,19 @@
     <ClInclude Include="ffUIView.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ffBind.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="View\ffUIImage.h">
       <Filter>View\header</Filter>
     </ClInclude>
     <ClInclude Include="View\ffUIForm.h">
       <Filter>View\header</Filter>
     </ClInclude>
-    <ClInclude Include="View\ffUILable.h">
+    <ClInclude Include="ffUIBind.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ffUIProperty.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\ffUILabel.h">
       <Filter>View\header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -64,7 +67,7 @@
     <ClCompile Include="View\ffUIForm.cpp">
       <Filter>View\source</Filter>
     </ClCompile>
-    <ClCompile Include="View\ffUILable.cpp">
+    <ClCompile Include="View\ffUILabel.cpp">
       <Filter>View\source</Filter>
     </ClCompile>
   </ItemGroup>
