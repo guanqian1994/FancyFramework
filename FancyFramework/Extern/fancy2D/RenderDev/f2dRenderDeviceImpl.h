@@ -119,6 +119,7 @@ public: // 接口实现
 	fResult RemoveListener(f2dRenderDeviceEventListener* Listener);
 
 	fResult CreateTextureFromStream(f2dStream* pStream, fuInt Width, fuInt Height, fBool IsDynamic, fBool HasMipmap, f2dTexture2D** pOut);
+    fResult CreateTextureFromMemory(fByte* pData, fLen Len, fuInt Width, fuInt Height, fBool IsDynamic, fBool HasMipmap, f2dTexture2D** pOut);
 	fResult CreateDynamicTexture(fuInt Width, fuInt Height, f2dTexture2D** pOut);
 	fResult CreateRenderTarget(fuInt Width, fuInt Height, fBool AutoResize , f2dTexture2D** pOut);
 	fResult CreateDepthStencilSurface(fuInt Width, fuInt Height, fBool Discard, fBool AutoResize, f2dDepthStencilSurface** pOut);

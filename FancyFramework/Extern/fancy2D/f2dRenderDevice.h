@@ -638,7 +638,10 @@ struct f2dRenderDevice
 	/// @param[in]  HasMipmap 创建Mipmap链，用于加快图像渲染，对动态纹理和渲染目标无效。推荐设为true
 	/// @param[out] pOut      输出的纹理指针
 	virtual fResult CreateTextureFromStream(f2dStream* pStream, fuInt Width, fuInt Height, fBool IsDynamic, fBool HasMipmap, f2dTexture2D** pOut)=0;
-	
+
+    /// @brief      从内存中加载
+    virtual fResult CreateTextureFromMemory(fByte* pData, fLen Len, fuInt Width, fuInt Height, fBool IsDynamic, fBool HasMipmap, f2dTexture2D** pOut) = 0;
+
 	/// @brief      创建一个动态纹理
 	/// @note       动态纹理之中的数据会在设备丢失之后消失。
 	/// @param[in]  Width  宽度
