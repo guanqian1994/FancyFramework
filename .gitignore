@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+*.exe
+*.ilk
+*.pdb
+*.pdb
+*.tlog
+*.obj
